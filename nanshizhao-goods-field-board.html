@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>南食召食品旗舰店 · 商品×场域经营看板（商家版）</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--wine:#8E354A;--wine2:#a85a6e;--wine3:#6b2438;--ink:#212b36;--ink2:#37414d;
+--gray:#57626e;--gray2:#77828e;--line:#e2e8ee;--line2:#d2dce5;--paper:#fff;
+--bg:#faf7f7;--tint:#f7eef0;--tint2:#f0e0e4;--gold:#b08d57;--green:#6b9a7a}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+.topbar{background:linear-gradient(135deg,var(--wine3),var(--wine) 55%,var(--wine2));color:#fff;padding:34px 0 30px;margin-bottom:0}
+.topbar .in{max-width:1180px;margin:0 auto;padding:0 20px}
+.topbar h1{font-size:28px;line-height:1.4;font-weight:700;letter-spacing:.5px}
+.topbar h1 u{text-decoration:none;border-bottom:3px solid rgba(255,255,255,.5);padding-bottom:2px}
+.topbar .sub{margin-top:13px;font-size:14.5px;color:rgba(255,255,255,.86);line-height:1.7;max-width:920px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 15px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:.4px}
+.kpi .l{font-size:13px;color:rgba(255,255,255,.9);margin-top:3px}
+.tabs{display:flex;gap:0;background:var(--paper);border-bottom:2px solid var(--line2);position:sticky;top:0;z-index:30;overflow-x:auto}
+.tabs .in{display:flex;max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+.tab{padding:15px 21px;font-size:14.5px;font-weight:600;color:var(--gray);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.18s}
+.tab:hover{color:var(--wine);background:var(--tint)}
+.tab.on{color:var(--wine);border-bottom-color:var(--wine);background:var(--tint)}
+.pane{display:none}.pane.on{display:block}
+.sec{margin-top:30px}
+h2{font-size:20.5px;font-weight:700;color:var(--ink);padding-left:12px;border-left:4px solid var(--wine);margin-bottom:6px}
+.cap{font-size:14px;color:var(--gray);margin:0 0 16px 16px}
+.box{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--wine);border-radius:0 10px 10px 0;padding:16px 18px;margin:16px 0;box-shadow:0 1px 3px rgba(33,43,54,.05)}
+.box h3{font-size:16px;color:var(--wine);margin-bottom:9px;font-weight:700}
+.box p{font-size:14.5px;color:var(--ink2);line-height:1.85;margin-bottom:7px}
+.box p:last-child{margin-bottom:0}
+b{color:var(--wine);font-weight:700}em{color:var(--wine2);font-style:normal;font-weight:600}
+.hl{background:var(--tint2);padding:1px 5px;border-radius:3px;font-weight:600;color:var(--wine3)}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0;font-size:14px}
+th{background:var(--tint);color:var(--wine3);font-weight:700;font-size:13.5px;padding:13px 14px;text-align:left;border-bottom:2px solid var(--line2);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid #eef2f6;text-align:left;color:var(--ink2);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--tint)}
+.num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.tr-alt{background:#fbfcfe}
+.tscroll{overflow-x:auto;border-radius:10px}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+.card h4{font-size:15.5px;color:var(--wine);margin-bottom:10px;font-weight:700}
+.tag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.chartcard{padding:14px 16px 8px;background:var(--paper);border:1px solid var(--line);border-radius:11px}
+.chartcard h4{font-size:15.5px;color:var(--wine);margin-bottom:4px;font-weight:700}
+.ccbox{height:300px;width:100%}
+.chartcard.cfull .ccbox{height:380px}
+.cnote{font-size:11.5px;color:#999;margin:-2px 0 6px}
+.snote{font-size:12px;color:#8a6d1a;background:#faf5e6;border-left:3px solid #d4b25a;padding:8px 12px;border-radius:0 6px 6px 0;margin:8px 0 14px}
+.foot{margin-top:40px;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--gray);line-height:1.9}
+.foot b{color:var(--wine)}
+@media(max-width:860px){.krow{grid-template-columns:repeat(2,1fr)}.cg2,.cg3{grid-template-columns:1fr}.topbar h1{font-size:21px}.ccbox{height:260px}.chartcard.cfull .ccbox{height:300px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <h1>南食召食品旗舰店 · <u>商品×场域经营看板</u></h1>
+    <div class="sub">统计周期：<b style="color:#fff">近30天 2026-09-09 ～ 10-08</b>｜对比窗口：<b style="color:#fff">近7天 10-02 ～ 10-08</b>｜口径：下单 DGMV（未剔退款），场域=笔记 / K播 / 店播 / 商卡</div>
+    <div class="krow">
+      <div class="kpi"><div class="v">¥169.0万</div><div class="l">近30天 DGMV</div></div>
+      <div class="kpi"><div class="v">4.03万单</div><div class="l">近30天订单量</div></div>
+      <div class="kpi"><div class="v">¥24.1万</div><div class="l">近7天 DGMV（5,924单）</div></div>
+      <div class="kpi"><div class="v">960</div><div class="l">动销 SKU 数（30天）</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs"><div class="in">
+  <div class="tab on" data-p="p1">近30天 Top 品</div>
+  <div class="tab" data-p="p2">场域拆解</div>
+  <div class="tab" data-p="p3">近7天 Top 品</div>
+  <div class="tab" data-p="p5">交集与差集</div>
+  </div></div>
+
+<div class="wrap">
+
+<!-- ============ P1 近30天Top品 ============ -->
+<div class="pane on" id="p1">
+  <div class="sec">
+    <h2>近30天 Top10 商品</h2>
+    <div class="cap">按 DGMV 排序 · 含四场域拆分与主场域标注</div>
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>商品</th><th>DGMV</th><th>订单量</th><th>笔记</th><th>K播</th><th>店播</th><th>商卡</th><th>主场域</th></tr></thead>
+      <tbody id="tb30"></tbody>
+    </table></div>
+
+    <div class="cg2">
+      <div class="chartcard">
+        <h4>Top10 商品 DGMV 对比</h4>
+        <div class="cnote">单位：万元 · 30天累计</div>
+        <div class="ccbox" id="c_top30"></div>
+      </div>
+      <div class="chartcard">
+        <h4>Top10 商品场域构成</h4>
+        <div class="cnote">横向堆叠 · 笔记 / K播 / 店播 / 商卡</div>
+        <div class="ccbox" id="c_stack"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>30天头部商品解读</h3>
+      <p>GMV 王是 <b>沙丁鱼罐头</b>（5.06万），销量王是 <b>免撕银耳</b>（1,296单）——银耳客单低但走量强，两个都是「本真」系列的招牌。</p>
+      <p>Top10 中 <b>7 个商品以笔记为主场域</b>，商笔种草是南食召的基本盘；头部商品普遍呈现 <em>「笔记种草 + 商卡承接」的双场域结构</em>。</p>
+      <p><b>牛肉丸</b>是 Top10 里唯一 K播 驱动的品（K播 1.07万，占 33%），与达人专场选肉制品的逻辑吻合。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P2 场域拆解 ============ -->
+<div class="pane" id="p2">
+  <div class="sec">
+    <h2>场域拆解 · 各场域跑得最好的品</h2>
+    <div class="cap">近30天 · 分场域 Top5（单位：万元）</div>
+
+    <div class="box">
+      <h3>场域选品差异</h3>
+      <p><b>笔记</b>：沙丁鱼罐头（3.31万）断层第一，黑猪肉松、杨梅罐头、银耳、干桂花跟随——种草选品偏「健康食材/干货」。</p>
+      <p><b>K播</b>：本真虾滑（1.63万，占该品成交 75%）、牛肉干（1.36万）、墨鱼肠、牛肉丸、腊肠——<span class="hl">K播选品集中在肉制品/火锅食材，与笔记选品几乎不重叠</span>，两条选品线独立运作。</p>
+      <p><b>店播</b>：杨梅罐头（1.22万）是店播第一大品，鸡汁、虾滑、银耳、梅酱承接——<em>自播对生鲜水果罐头类目的转化更好</em>。</p>
+    </div>
+
+    <div class="cg3">
+      <div class="chartcard">
+        <h4>笔记 Top5</h4>
+        <div class="cnote">商品笔记 DGMV</div>
+        <div class="ccbox" id="c_note"></div>
+      </div>
+      <div class="chartcard">
+        <h4>K播 Top5</h4>
+        <div class="cnote">买手直播 DGMV</div>
+        <div class="ccbox" id="c_k"></div>
+      </div>
+      <div class="chartcard">
+        <h4>店播 Top5</h4>
+        <div class="cnote">商家自播 DGMV</div>
+        <div class="ccbox" id="c_live"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P3 近7天Top品 ============ -->
+<div class="pane" id="p3">
+  <div class="sec">
+    <h2>近7天 Top10 商品</h2>
+    <div class="cap">2026-10-02 ～ 10-08 · 与30天同口径对比</div>
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>商品</th><th>DGMV</th><th>订单量</th><th>笔记</th><th>K播</th><th>店播</th><th>商卡</th><th>主场域</th></tr></thead>
+      <tbody id="tb7"></tbody>
+    </table></div>
+
+    <div class="chartcard cfull">
+      <h4>近7天 Top10 DGMV</h4>
+      <div class="cnote">单位：元 · 10/2-10/8 累计</div>
+      <div class="ccbox" id="c_top7"></div>
+    </div>
+
+    <div class="box">
+      <h3>近7天变化与异动</h3>
+      <p><b>黑猪肉松</b>以 1.60万 登顶（笔记 1.44万，占 90%），是本期最亮眼的新面孔——30天榜上它仅列 20 名开外，说明<em>近一周笔记投放明显加码</em>，建议追投乘势。</p>
+      <p>K播近7天仅 0.52万（占 2.2%），对比30天均值（日均1.0万）大幅回落，<span class="hl">专场间隙期 K播 几乎归零</span>；墨鱼肠、杨梅罐头是近期 K播 仅存的动销品。</p>
+      <p>商卡占比升至 <b>41%</b>（30天为 36%），假期期间货架场景更抗跌；店播 4.6万 中鸡汁、虾滑、银耳、藕粉贡献靠前，自播盘稳定。</p>
+    </div>
+
+    <div class="foot">
+      <b>数据说明</b>：本看板数据来自小红书商家后台同源口径，供商家本人查阅：近30天=2026-09-09～10-08，近7天=2026-10-02～10-08；DGMV 为下单口径未剔退款；场域=笔记/K播/店播/商卡，四场域合计与总 DGMV 差约1.1%为其他场域；数据 T+1（截至 2026-10-08）。
+    </div>
+  </div>
+</div>
+
+<!-- ============ P5 交集与差集 ============ -->
+<div class="pane" id="p5">
+  <div class="sec">
+    <h2>两榜对比 · 交集与差集</h2>
+    <div class="cap">近30天 Top10 ∩ 近7天 Top10 · 谁一直在跑，谁新冒头，谁掉队</div>
+
+    <div class="box">
+      <h3>先记住三句话</h3>
+      <p>① 30天 Top10 和 7天 Top10 的交集有 <b>6 个品</b>：沙丁鱼罐头、银耳、干桂花、牛肉丸、梅酱、黑糖珍珠——<em>这六个是持续跑得好的基本盘</em>。</p>
+      <p>② 7天新冒头的 4 个：黑猪肉松（30天榜仅第17名，7天冲到第1）、黑虎虾滑、藕粉、头水紫菜——<span class="hl">黑猪肉松是唯一靠笔记投放起量的新晋头部</span>。</p>
+      <p>③ 掉出 7 天榜的 4 个：杨梅罐头、鲜意大利面、鸡汁、油鸡枞——都是 30 天榜 3～10 名，近一周回落明显，<em>杨梅罐头跌得最狠（3.47万→0.27万）</em>。</p>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th colspan="5" style="text-align:center;border-right:2px solid var(--line2)">✅ 两榜交集 · 持续跑得好（6品）</th><th colspan="2" style="text-align:center">近7天表现</th></tr>
+      <tr><th>#</th><th>商品</th><th>30天DGMV</th><th>30天订单</th><th style="border-right:2px solid var(--line2)">30天排名</th><th>7天DGMV</th><th>7天排名</th></tr></thead>
+      <tbody id="tbinter"></tbody>
+    </table></div>
+
+    <div class="cg2">
+      <div class="tscroll"><table>
+        <thead><tr><th colspan="6">🆕 仅近7天上榜 · 新冒头（4品）</th></tr>
+        <tr><th>#</th><th>商品</th><th>7天DGMV</th><th>7天排名</th><th>30天DGMV</th><th>30天排名</th></tr></thead>
+        <tbody id="tbonly7"></tbody>
+      </table></div>
+      <div class="tscroll"><table>
+        <thead><tr><th colspan="4">📉 仅近30天上榜 · 近期掉队（4品）</th></tr>
+        <tr><th>#</th><th>商品</th><th>30天DGMV</th><th>7天DGMV</th></tr></thead>
+        <tbody id="tbonly30"></tbody>
+      </table></div>
+    </div>
+
+    <div class="chartcard cfull">
+      <h4>交集 6 品 · 30天 vs 7天日均 DGMV</h4>
+      <div class="cnote">单位：元/天 · 看7天日均相对30天日均的衰减或反超</div>
+      <div class="ccbox" id="c_inter"></div>
+    </div>
+
+    <div class="box">
+      <h3>交集与差集解读</h3>
+      <p><b>持续跑得好的 6 个品</b>覆盖了 GMV 王沙丁鱼罐头和销量王银耳，说明南食召的头部盘不是靠单场脉冲，<em>而是笔记种草驱动的日常复利</em>；6 品合计贡献 30 天 DGMV 的 11.7%。</p>
+      <p><b>黑猪肉松</b>近 7 天 1.60万、笔记占 90%，30 天榜上只排第 17（1.72万）——即近一周贡献了它整个月的大部分销量，<span class="hl">笔记投放明显加码的新晋爆品</span>，值得追投。</p>
+      <p><b>掉队的 4 品</b>里杨梅罐头（30天 3.47万）7 天只剩 0.27万，应季性+店播依赖双因素；鸡汁、油鸡枞属于稳态盘小幅回落，不算异常。</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* ---------- Tabs ---------- */
+var charts = {};
+function showPane(pid){
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on', p.id===pid);});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on', t.dataset.p===pid);});
+  requestAnimationFrame(function(){
+    Object.keys(charts).forEach(function(k){
+      var el=document.getElementById(k);
+      if(el && el.closest('.pane') && el.closest('.pane').classList.contains('on') && charts[k]) charts[k].resize();
+    });
+  });
+}
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){ showPane(t.dataset.p); });
+});
+
+/* ---------- Data ---------- */
+var C = {note:'#8E354A', k:'#b08d57', live:'#6b9a7a', card:'#a85a6e', wine:'#8E354A', wine2:'#a85a6e', wine3:'#6b2438'};
+var FIELD_COLORS = [C.card, C.note, C.k, C.live]; // 商卡/笔记/K播/店播
+
+var top30 = [
+  ["本真沙丁鱼罐头",972,50559,33086,6578,383,10501],
+  ["免撕银耳",1296,35298,13755,7830,2953,10528],
+  ["本真杨梅罐头",466,34662,14376,12150,503,7483],
+  ["本真牛肉丸",303,32110,7462,5968,10659,7847],
+  ["本真干桂花",778,30917,13639,4706,1177,11285],
+  ["鲜意大利面",313,25489,11188,3697,5581,4926],
+  ["本真黑糖珍珠",609,24755,8977,5550,3317,6696],
+  ["梅酱",817,24076,7508,6635,120,9771],
+  ["本鲜鸡汁",643,23245,4737,7626,3928,6841],
+  ["本真油鸡枞",132,22404,13484,3694,717,4363]
+];
+var top7 = [
+  ["黑猪肉松",299,15980,14382,0,0,1596],
+  ["本真沙丁鱼罐头",148,8241,5241,932,0,2066],
+  ["免撕银耳",216,5973,2507,1350,229,1831],
+  ["本真干桂花",130,5199,2567,664,70,1896],
+  ["黑虎虾仁鲜虾滑",31,4824,1244,1445,0,2133],
+  ["本真牛肉丸",34,4140,1573,751,196,1619],
+  ["头道藕粉",80,3910,1906,1200,0,803],
+  ["梅酱",123,3605,979,1090,30,1504],
+  ["头水紫菜",109,3240,1287,802,44,1106],
+  ["本真黑糖珍珠",78,3235,1266,586,102,1278]
+];
+
+function mainField(b,k,s,c){
+  var p=[["笔记",b],["K播",k],["店播",s],["商卡",c]].sort(function(x,y){return y[1]-x[1];});
+  var sum=p[0][1]+p[1][1]+p[2][1]+p[3][1];
+  if(p[0][1] >= 0.62*sum) return {t:p[0][0], c:p[0][0]};
+  return {t:p[0][0]+"+"+p[1][0], c:p[0][0]};
+}
+var TAGC = {"笔记":C.note,"K播":C.k,"店播":C.live,"商卡":C.card,
+  "笔记+商卡":"#7d4a5e","笔记+店播":"#7d5f52","笔记+K播":"#8e5f3e","K播+商卡":"#ae7454","店播+商卡":"#8a7a60"};
+
+function fillTable(tbodyId, data){
+  var tb=document.getElementById(tbodyId), html="";
+  data.forEach(function(r,i){
+    var name=r[0], o=r[1], d=r[2], b=r[3], k=r[4], s=r[5], c=r[6];
+    var mf=mainField(b,k,s,c), tc=TAGC[mf.t]||TAGC[mf.c]||"#a85a6e";
+    html += '<tr class="'+(i%2?'tr-alt':'')+'">'
+      +'<td class="num">#'+(i+1)+'</td>'
+      +'<td>'+name+'</td>'
+      +'<td class="num" style="color:var(--wine3);font-weight:700">'+(d/10000).toFixed(2)+'万</td>'
+      +'<td class="num">'+o+'</td>'
+      +'<td class="num">'+(b/10000).toFixed(2)+'万</td>'
+      +'<td class="num">'+(k/10000).toFixed(2)+'万</td>'
+      +'<td class="num">'+(s/10000).toFixed(2)+'万</td>'
+      +'<td class="num">'+(c/10000).toFixed(2)+'万</td>'
+      +'<td><span class="tag" style="background:'+tc+'1a;color:'+tc+'">'+mf.t+'</span></td>'
+      +'</tr>';
+  });
+  tb.innerHTML=html;
+}
+fillTable('tb30', top30);
+fillTable('tb7', top7);
+
+/* ---------- ECharts base ---------- */
+var AXS = {axisLine:{lineStyle:{color:'#d2dce5'}}, axisLabel:{color:'#57626e'}, axisTick:{show:false}};
+var AXY = Object.assign({}, AXS, {splitLine:{lineStyle:{color:'#eef2f6'}}});
+function mk(id, opt){
+  var el=document.getElementById(id);
+  if(!el) return;
+  var c=echarts.init(el);
+  c.setOption(opt);
+  charts[id]=c;
+}
+
+var dates=['9/9','9/10','9/11','9/12','9/13','9/14','9/15','9/16','9/17','9/18','9/19','9/20','9/21','9/22','9/23','9/24','9/25','9/26','9/27','9/28','9/29','9/30','10/1','10/2','10/3','10/4','10/5','10/6'];
+var dgmv=[8.03,6.55,5.82,6.08,6.30,5.84,7.31,5.81,6.53,5.57,6.27,6.75,6.80,5.62,22.17,3.71,3.69,3.99,4.73,5.68,4.40,3.48,3.76,4.00,5.25,5.00,4.44,5.40];
+
+/* top30 bar */
+var n30=top30.map(function(r){return r[0];}).reverse();
+var d30=top30.map(function(r){return +(r[2]/10000).toFixed(2);}).reverse();
+mk('c_top30',{
+  color:[C.wine],
+  tooltip:{trigger:'axis',formatter:function(ps){return ps[0].name+'<br>DGMV：'+ps[0].data+' 万';}},
+  grid:{left:'2%',right:'10%',top:10,bottom:10,containLabel:true},
+  xAxis:Object.assign({type:'value'},AXY),
+  yAxis:Object.assign({type:'category',data:n30},AXS),
+  series:[{type:'bar',barWidth:14,data:d30,label:{show:true,position:'right',color:'#57626e',fontSize:11},
+    itemStyle:{color:{type:'linear',x:0,y:0,x2:1,y2:0,colorStops:[{offset:0,color:C.wine2},{offset:1,color:C.wine}]},borderRadius:[0,7,7,0]}}]
+});
+
+/* top30 stacked */
+var sn=top30.map(function(r){return r[0];}).reverse();
+function col(arr,i){return top30.map(function(r){return +(r[i]/10000).toFixed(2);}).reverse();}
+mk('c_stack',{
+  color:FIELD_COLORS,
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},valueFormatter:function(v){return v+' 万';}},
+  legend:{bottom:0,itemWidth:10,itemHeight:10,textStyle:{color:'#57626e'}},
+  grid:{left:'2%',right:'4%',top:10,bottom:36,containLabel:true},
+  xAxis:Object.assign({type:'value'},AXY),
+  yAxis:Object.assign({type:'category',data:sn},AXS),
+  series:[
+    {name:'笔记',type:'bar',stack:'t',barWidth:14,data:col(top30,3)},
+    {name:'K播',type:'bar',stack:'t',barWidth:14,data:col(top30,4)},
+    {name:'店播',type:'bar',stack:'t',barWidth:14,data:col(top30,5)},
+    {name:'商卡',type:'bar',stack:'t',barWidth:14,data:col(top30,6)}
+  ]
+});
+
+/* field top5 */
+function fieldBar(id,names,vals,color){
+  mk(id,{
+    color:[color],
+    tooltip:{trigger:'axis',formatter:function(ps){return ps[0].name+'<br>'+ps[0].data+' 万';}},
+    grid:{left:'2%',right:'14%',top:10,bottom:10,containLabel:true},
+    xAxis:Object.assign({type:'value'},AXY),
+    yAxis:Object.assign({type:'category',data:names.slice().reverse()},AXS),
+    series:[{type:'bar',barWidth:13,data:vals.slice().reverse(),
+      label:{show:true,position:'right',color:'#57626e',fontSize:11},
+      itemStyle:{color:{type:'linear',x:0,y:0,x2:1,y2:0,colorStops:[{offset:0,color:color+'99'},{offset:1,color:color}]},borderRadius:[0,6,6,0]}}]
+  });
+}
+fieldBar('c_note',['沙丁鱼罐头','黑猪肉松','杨梅罐头','免撕银耳','干桂花'],[3.31,1.46,1.44,1.38,1.36],C.note);
+fieldBar('c_k',['本真虾滑','基本牛肉干','墨鱼肠','牛肉丸','腊肠'],[1.63,1.36,1.10,1.07,0.83],C.k);
+fieldBar('c_live',['杨梅罐头','免撕银耳','本鲜鸡汁','黑虎虾滑','梅酱'],[1.22,0.78,0.76,0.74,0.66],C.live);
+
+/* top7 bar */
+var n7=top7.map(function(r){return r[0];}).reverse();
+var d7=top7.map(function(r){return r[2];}).reverse();
+mk('c_top7',{
+  color:[C.wine],
+  tooltip:{trigger:'axis',formatter:function(ps){return ps[0].name+'<br>DGMV：'+ps[0].data+' 元';}},
+  grid:{left:'2%',right:'12%',top:10,bottom:10,containLabel:true},
+  xAxis:Object.assign({type:'value'},AXY),
+  yAxis:Object.assign({type:'category',data:n7},AXS),
+  series:[{type:'bar',barWidth:14,data:d7,label:{show:true,position:'right',color:'#57626e',fontSize:11},
+    itemStyle:{color:{type:'linear',x:0,y:0,x2:1,y2:0,colorStops:[{offset:0,color:C.wine2},{offset:1,color:C.wine}]},borderRadius:[0,7,7,0]}}]
+});
+
+
+/* ---------- P5 交集与差集 ---------- */
+var interData=[
+ ["本真沙丁鱼罐头",50559,972,1,8241,2],
+ ["免撕银耳",35298,1296,2,5973,3],
+ ["本真牛肉丸",32110,303,4,4140,6],
+ ["本真干桂花",30917,778,5,5199,4],
+ ["梅酱",24076,817,8,3605,8],
+ ["本真黑糖珍珠",24755,609,7,3235,10]
+];
+var only7Data=[
+ ["黑猪肉松",15980,1,17227,17],
+ ["黑虎虾仁鲜虾滑",4824,5,22057,11],
+ ["头道藕粉",3910,7,21552,13],
+ ["头水紫菜",3240,9,20759,14]
+];
+var only30Data=[
+ ["本真杨梅罐头",34662,2734],
+ ["鲜意大利面",25489,2843],
+ ["本鲜鸡汁",23245,2956],
+ ["本真油鸡枞",22404,2954]
+];
+function fillInter(){
+ var tb=document.getElementById("tbinter"),h="";
+ interData.forEach(function(r,i){
+  h+='<tr class="'+(i%2?'tr-alt':'')+'"><td class="num">'+(i+1)+'</td><td>'+r[0]+'</td>'
+   +'<td class="num" style="color:var(--wine3);font-weight:700">'+(r[1]/10000).toFixed(2)+'万</td>'
+   +'<td class="num">'+r[2]+'</td><td class="num" style="border-right:2px solid var(--line2)">#'+r[3]+'</td>'
+   +'<td class="num">'+(r[4]/10000).toFixed(2)+'万</td><td class="num">#'+r[5]+'</td></tr>';
+ });
+ tb.innerHTML=h;
+ var tb=document.getElementById("tbonly7"),h="";
+ only7Data.forEach(function(r,i){
+  h+='<tr class="'+(i%2?'tr-alt':'')+'"><td class="num">'+(i+1)+'</td><td>'+r[0]+'</td>'
+   +'<td class="num" style="color:var(--wine3);font-weight:700">'+(r[1]/10000).toFixed(2)+'万</td>'
+   +'<td class="num">#'+r[2]+'</td><td class="num">'+(r[3]/10000).toFixed(2)+'万</td>'
+   +'<td><span style="color:#b08d57;font-weight:600">#'+r[4]+'</span></td></tr>';
+ });
+ tb.innerHTML=h;
+ var tb=document.getElementById("tbonly30"),h="";
+ only30Data.forEach(function(r,i){
+  h+='<tr class="'+(i%2?'tr-alt':'')+'"><td class="num">'+(i+1)+'</td><td>'+r[0]+'</td>'
+   +'<td class="num">'+(r[1]/10000).toFixed(2)+'万</td>'
+   +'<td class="num" style="color:#8a6d1a">'+(r[2]/10000).toFixed(2)+'万</td></tr>';
+ });
+ tb.innerHTML=h;
+}
+fillInter();
+mk('c_inter',{
+  color:[C.wine,'#d4b25a'],
+  tooltip:{trigger:'axis'},
+  legend:{bottom:0,itemWidth:10,itemHeight:10,textStyle:{color:'#57626e'}},
+  grid:{left:'2%',right:'4%',top:24,bottom:36,containLabel:true},
+  xAxis:Object.assign({type:'category',data:interData.map(function(r){return r[0];})},AXS),
+  yAxis:Object.assign({type:'value',name:'元/天'},AXY),
+  series:[
+    {name:'30天日均',type:'bar',barWidth:20,data:interData.map(function(r){return Math.round(r[1]/30);}),label:{show:true,position:'top',color:'#57626e',fontSize:11}},
+    {name:'7天日均',type:'bar',barWidth:20,data:interData.map(function(r){return Math.round(r[4]/7);}),label:{show:true,position:'top',color:'#57626e',fontSize:11}}
+  ]
+});
+
+window.addEventListener('resize',function(){Object.keys(charts).forEach(function(k){charts[k].resize();});});
+</script>
+</body>
+</html>
