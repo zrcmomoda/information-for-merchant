@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>辻利茶铺经营诊断 · P2 vs P1</title><style>
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--wine:#2f6b4f;--wine2:#4f9a72;--wine3:#1d4a36;--ink:#182720;--ink2:#2b4237;
+--gray:#4f6359;--line:#e0efe6;--line2:#cfe6d9;--paper:#fff;
+--bg:#f5faf7;--tint:#eef7f1;--tint2:#ddf0e5;--gold:#c08a2f;--green:#1f8a4d}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+.topbar{background:linear-gradient(135deg,var(--wine3),var(--wine) 55%,var(--wine2));color:#fff;padding:34px 0 30px}
+.topbar .in{max-width:1180px;margin:0 auto;padding:0 20px}
+.topbar h1{font-size:27px;line-height:1.4;font-weight:700;letter-spacing:.5px}
+.topbar h1 u{text-decoration:none;border-bottom:3px solid rgba(255,255,255,.5);padding-bottom:2px}
+.topbar .sub{margin-top:13px;font-size:14.5px;color:rgba(255,255,255,.88);line-height:1.7;max-width:940px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 15px}
+.kpi .v{font-size:23px;font-weight:700;letter-spacing:.4px}
+.kpi .l{font-size:13px;color:rgba(255,255,255,.9);margin-top:3px}
+.sec{margin-top:34px}
+h2{font-size:20.5px;font-weight:700;color:var(--ink);padding-left:12px;border-left:4px solid var(--wine);margin-bottom:6px}
+.cap{font-size:14px;color:var(--gray);margin:0 0 16px 16px}
+.box{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--wine);border-radius:0 10px 10px 0;padding:16px 18px;margin:16px 0;box-shadow:0 1px 3px rgba(43,28,23,.05)}
+.box h3{font-size:16px;color:var(--wine);margin-bottom:9px;font-weight:700}
+.box p{font-size:14.5px;color:var(--ink2);line-height:1.85;margin-bottom:7px}
+.box p:last-child{margin-bottom:0}
+b{color:var(--wine);font-weight:700}em{color:var(--wine2);font-style:normal;font-weight:600}
+.hl{background:var(--tint2);padding:1px 5px;border-radius:3px;font-weight:600;color:var(--wine3)}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0;font-size:14px}
+th{background:var(--tint);color:var(--wine3);font-weight:700;font-size:13.5px;padding:12px 13px;text-align:left;border-bottom:2px solid var(--line2);white-space:nowrap}
+td{padding:11px 13px;border-bottom:1px solid #eef6f1;text-align:left;color:var(--ink2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--tint)}
+td a{color:var(--wine2);text-decoration:none;font-weight:600}
+td a:hover{text-decoration:underline}
+.num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.up{color:var(--green);font-weight:700}.dn{color:#c0392b;font-weight:700}
+.chart{height:340px;background:#fff;border:1px solid var(--line);border-radius:10px;margin:16px 0}
+.chart-sm{height:290px}
+.foot{margin-top:40px;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--gray);line-height:1.9}
+.foot b{color:var(--wine)}
+.foot ul{margin:8px 0 0 18px}.foot li{margin-bottom:4px}
+@media(max-width:860px){.krow{grid-template-columns:repeat(2,1fr)}.topbar h1{font-size:21px}}
+
+</style></head><body>
+<div class="topbar"><div class="in"><h1>辻利茶铺 · 近30天经营诊断：<u>9.20-10.19 vs 8.21-9.19</u></h1><div class="sub">对比主轴：近30天窗口（P2，9.20-10.19）vs 前一窗口（P1，8.21-9.19），以日均口径为主。店播是这两个窗口之间最大的变化项——P1 还能撑起全店六成的商笔+店播自营盘，P2 直接塌方；K播达人场只画背景线，不展开。数据窗口 2026-08-21 ～ 2026-10-19（T+1 最新）。</div><div class="krow"><div class="kpi"><div class="v">-54.6%</div><div class="l">全店日均 P2 vs P1（8,439→3,836 元/天）</div></div><div class="kpi"><div class="v">-65.3%</div><div class="l">店播日均（5,178→1,799 元/天，缺口主角）</div></div><div class="kpi"><div class="v">+10.6%</div><div class="l">老客客单价（81.8→90.5 元，人没变便宜）</div></div><div class="kpi"><div class="v">80%</div><div class="l">货架入口占商卡比（P1 82%，基本盘稳住）</div></div></div></div></div><div class="wrap">
+
+<div class="sec"><h2>⭐ 一屏诊断</h2><div class="cap">三个判断，先说结论</div>
+<div class="box"><h3>三个判断</h3>
+<p><b>① 全店日均 -54.6%，其中店播一项解释了 62% 的缺口。</b>全店日均 8,439→3,836 元/天；分场域看，店播 5,178→1,799（-65.3%）、商笔 1,196→605（-49.4%）、商卡 1,736→1,255（-27.7%）。缺口绝对额约 4,600 元/天里，店播占约 3,400 元/天——<em>这不是全场域匀速下滑，是店播单腿塌方拖着全店走</em>。</p>
+<p><b>② 店播塌方的断点在货，不在人。</b>开播只从 26 场降到 22 场（-15.4%），场均产出却从 5,975 元掉到 2,381 元（-60.2%）。P1 直播间靠两条店播专属组合装撑着（各卖约 3.4 万，合计占 P1 全店近三成），9 月中旬两条链接退场后场均随即腰斩——<span class="hl">主播还是那个主播，是直播间货架上最能打的货下架了</span>。</p>
+<p><b>③ 人比货坚挺：客单价在涨，人群结构纹丝没动。</b>新客客单 57.7→70.3 元（+21.8%）、老客客单 81.8→90.5 元（+10.6%），31-40 岁贡献四成成交的结构两个窗口完全一致，老客频次还微升到 1.07。<em>流量少了一大半，但进来的人买得更贵、老客还在复购——掉的是「把人带到店里的量」，不是「货卖不动」。</em></p>
+</div></div>
+
+<div class="sec"><h2>📈 日趋势 · 自营两腿 + K播背景线</h2><div class="cap">柱=商笔/店播（万元/日，堆叠）· 灰虚线=K播达人场（右轴，仅背景参照）· 商卡入口占比在窗口对比表中体现</div>
+<div id="chart_daily" class="chart"></div>
+<div class="box"><h3>趋势怎么读</h3>
+<p>自营两腿（商笔+店播）在 P1 稳定在 <b>6,000~7,000 元/天</b>；<b>9 月 21 日那周整体下台阶</b>，之后店播柱从 5,000+ 元/天掉到 1,000~2,000 元/天，商笔从 1,200 元/天掉到 600 元/天上下，持续到 10.19。</p>
+<p>灰色背景线上的小尖峰是 K播达人场的脉冲——两个窗口的达人场量级都不大（P1 日均 329 元、P2 日均 177 元，且 89% 来自店铺自播号），<span class="hl">对窗口对比几乎没有扰动，不展开分析</span>。商卡是日趋势图外最稳的一条腿：两窗口日均只降 27.7%，是四个场域里最抗跌的。</p>
+</div></div>
+
+<div class="sec"><h2>🎯 窗口对比 · P2(9.20-10.19) vs P1(8.21-9.19)</h2><div class="cap">日均口径，单位元/天 · 商卡作为基本盘参考列</div>
+<div id="chart_phase" class="chart chart-sm"></div>
+<table><thead><tr><th>指标（日均）</th><th>P1（8.21-9.19）</th><th>P2（9.20-10.19）</th><th>变化</th><th>判读</th></tr></thead><tbody>
+<tr><td>全店合计</td><td class="num">8,439</td><td class="num">3,836</td><td class="dn">-54.6%</td><td>主跌幅</td></tr>
+<tr><td>├ 店播</td><td class="num">5,178</td><td class="num">1,799</td><td class="dn">-65.3%</td><td>缺口主角，占缺口 62%</td></tr>
+<tr><td>├ 商笔</td><td class="num">1,196</td><td class="num">605</td><td class="dn">-49.4%</td><td>随种草量收缩</td></tr>
+<tr><td>├ 商卡</td><td class="num">1,736</td><td class="num">1,255</td><td class="dn">-27.7%</td><td>最抗跌，货架入口占 80%</td></tr>
+<tr><td>└ K播（参考）</td><td class="num">329</td><td class="num">177</td><td class="dn">-46.1%</td><td>自播号撑场，不展开</td></tr>
+</tbody></table>
+<div class="box"><h3>对比解读</h3>
+<p><b>为什么店播掉得最狠？</b>因为它 P1 时的基数最高——两条店播专属组合装（【店播专属】威化夹心煎饼 A/B 款）P1 合计卖了约 20.4 万，占当时全店的 76% 直播盘；P2 这两条链接归零，店播失去主心骨。商卡掉得最少，因为搜索心智不依赖任何单条链接。</p>
+<p><b>值得注意的对照组：</b>同期日粒度看，全店的下跌不是渐进的——9.21 前后一周内完成台阶切换，之后四周平台稳定在新低位。<span class="hl">这是「状态切换」形态而不是「持续恶化」形态，修复动作做完，回到 P1 水位是有先例支撑的</span>（8 月底-9 月中旬刚做到过）。</p>
+</div></div>
+
+<div class="sec"><h2>✍️ 商笔 · 量在收缩，效率小幅跟降</h2><div class="cap">P2 vs P1：曝光 -40.6%、点击 -49.6%、购买UV -61.2%——越往漏斗深处掉得越多</div>
+<div id="chart_note" class="chart chart-sm"></div>
+<table><thead><tr><th>过程指标（日均）</th><th>P1</th><th>P2</th><th>变化</th></tr></thead><tbody>
+<tr><td>商笔曝光</td><td class="num">8.0万</td><td class="num">4.7万</td><td><span class="dn">-40.6%</span></td></tr>
+<tr><td>商笔点击</td><td class="num">3,151/天</td><td class="num">1,588/天</td><td><span class="dn">-49.6%</span></td></tr>
+<tr><td>商笔购买UV</td><td class="num">21.1</td><td class="num">8.2</td><td><span class="dn">-61.2%</span></td></tr>
+<tr><td>交易相关笔记数</td><td class="num">26 篇</td><td class="num">26 篇</td><td><span class="up">持平</span></td></tr>
+<tr><td>CTR（点击/曝光）</td><td class="num">3.94%</td><td class="num">3.35%</td><td><span class="dn">-0.59pct</span></td><td></td></tr>
+<tr><td>CVR（UV/点击）</td><td class="num">0.67%</td><td class="num">0.52%</td><td><span class="dn">-0.15pct</span></td><td></td></tr>
+<tr><td>GPM（元/千次曝光）</td><td class="num">15.0</td><td class="num">12.7</td><td><span class="dn">-15.6%</span></td><td></td></tr>
+</tbody></table>
+<div class="box"><h3>诊断：内容供给没停，掉的是曝光分配和单篇天花板</h3>
+<p>两个窗口的交易相关笔记都是 26 篇——<em>内容团队没有偷懒</em>。掉的是曝光（-40.6%，平台对成交走弱的店减少笔记分发）和单篇天花板：P1 有 2,941 元的爆文（牛轧糖证言），P2 单篇天花板掉到 785 元。漏斗三层逐级放大：曝光 -40.6% → 点击 -49.6%（CTR 3.94%→3.35%）→ 购买UV -61.2%（CVR 0.67%→0.52%）——<span class="hl">点击和转化各掉了 0.6 和 0.15 个百分点，但主要缺口还是「量」：如果 CTR/CVR 维持 P1 水平，P2 的 UV 会有 17 个而不是 8 个</span>。</p>
+<p>还有个稳定信号：牛轧糖证言、49.9 五款赠冰箱贴两篇在两个窗口都留在 Top3——<span class="hl">爆款选题的公式还在，恢复曝光的正循环（成交回升→分发回升）比重做内容更优先</span>。</p>
+</div>
+
+<h2 style="margin-top:30px">🏆 笔记榜单 · 谁在跑，谁在掉</h2><div class="cap">分窗口商笔 DGMV Top6 · 点击标题直达笔记</div>
+<table><thead><tr><th>#</th><th>P1（8.21-9.19）</th><th>DGMV</th><th>UV</th><th>件均</th><th>#</th><th>P2（9.20-10.19）</th><th>DGMV</th><th>UV</th><th>件均</th></tr></thead><tbody>
+<tr><td class="num">1</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a7eb4ba0000000008012107" target="_blank">我作证辻利的牛轧糖真的很好吃😋</a></td><td class="num">2,941</td><td class="num">49</td><td class="num">54.5</td><td class="num">1</td><td><a href="https://www.xiaohongshu.com/discovery/item/68f9b84200000000040229b2" target="_blank">报告！这是一块细腻甘香的磅蛋糕😎</a></td><td class="num">785</td><td class="num">14</td><td class="num">46.2</td></tr>
+<tr><td class="num">2</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a59ce6c000000001f0305e9" target="_blank">报！辻利的抹茶迷你凤梨酥降价了！</a></td><td class="num">2,000</td><td class="num">57</td><td class="num">32.8</td><td class="num">2</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a7eb4ba0000000008012107" target="_blank">我作证辻利的牛轧糖真的很好吃😋</a></td><td class="num">774</td><td class="num">9</td><td class="num">64.5</td></tr>
+<tr><td class="num">3</td><td><a href="https://www.xiaohongshu.com/discovery/item/692d5c96000000001e012971" target="_blank">49.9💰一次品尝五款抹茶甜品 赠冰箱贴！</a></td><td class="num">1,272</td><td class="num">31</td><td class="num">41.0</td><td class="num">3</td><td><a href="https://www.xiaohongshu.com/discovery/item/692d5c96000000001e012971" target="_blank">49.9💰一次品尝五款抹茶甜品 赠冰箱贴！</a></td><td class="num">640</td><td class="num">11</td><td class="num">58.2</td></tr>
+<tr><td class="num">4</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a9a76f60000000029013cce" target="_blank">📣99.9🉐最新款周边＋7️⃣份抹茶</a></td><td class="num">1,267</td><td class="num">13</td><td class="num">74.5</td><td class="num">4</td><td><a href="https://www.xiaohongshu.com/discovery/item/6ac76b21000000001b01f2f9" target="_blank">带上这个袋子，秋游去！🍁🍂</a></td><td class="num">594</td><td class="num">4</td><td class="num">84.8</td></tr>
+<tr><td class="num">5</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a8d2cd10000000025005c38" target="_blank">茶香奶甜坚果脆，真的好吃！</a></td><td class="num">1,152</td><td class="num">17</td><td class="num">54.9</td><td class="num">5</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a7c44fa0000000033030a43" target="_blank">在八月夏，迷恋上清凉感的糯叽叽🤍</a></td><td class="num">494</td><td class="num">4</td><td class="num">70.6</td></tr>
+<tr><td class="num">6</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a4c980d000000001702cb23" target="_blank">💰69.9的帆布袋 现在🆓送</a></td><td class="num">986</td><td class="num">23</td><td class="num">39.5</td><td class="num">6</td><td><a href="https://www.xiaohongshu.com/discovery/item/6a5609b8000000000f02b499" target="_blank">就馋这一口，很有嚼劲的一颗牛轧糖🌿</a></td><td class="num">460</td><td class="num">4</td><td class="num">91.9</td></tr>
+</tbody></table>
+<div class="box"><h3>榜单解读</h3>
+<p><b>跑得稳的：</b>牛轧糖证言、49.9 五款赠冰箱贴两篇两个窗口都在榜——「证言体 + 价格锚点 + 赠品钩子」的公式经过两个窗口验证。<b>件均榜</b>（P2）：牛轧糖嚼劲篇 91.9 元、芭菲篇 91 元、秋游袋 84.8 元——笔记带动的成交在往高客单走，与全店客单上行一致。</p>
+<p><b>掉得狠的：</b>P1 Top2「凤梨酥降价」（2,000 元）P2 掉出榜——降价型选题天然只有一波；P1 头部 2,941 元 vs P2 头部 785 元，<span class="hl">单篇天花板掉了 73%，比榜单腰斩更值得警惕</span>。</p>
+<p><b>正向信号：</b>P2 榜上有 3 篇新面孔（秋游袋/八月夏/嚼劲牛轧糖），不是老面孔硬撑——内容端还有出新款的能力。</p>
+</div></div>
+
+<div class="sec"><h2>📺 店播 · 三层拆解：勤奋掉最少，流量层掉最多</h2><div class="cap">场次 -15.4% → 时均产出 -48.5% → 曝光 -56.4%，越往流量层掉得越狠</div>
+<div id="chart_live" class="chart chart-sm"></div>
+<table><thead><tr><th>过程指标（日均）</th><th>P1</th><th>P2</th><th>变化</th></tr></thead><tbody>
+<tr><td>开播场次</td><td class="num">26 场</td><td class="num">22 场<br><span style="font-size:10.5px;color:#4f6359;font-weight:400">含国庆停播 4 天</span></td><td><span class="dn">-15.4%</span></td></tr>
+<tr><td>开播时长</td><td class="num">8.7 小时/天</td><td class="num">5.7 小时/天<br><span style="font-size:10.5px;color:#4f6359;font-weight:400">假期空缺约 40h</span></td><td><span class="dn">-34.6%</span></td></tr>
+<tr><td>时均产出</td><td class="num">598 元/小时</td><td class="num">308 元/小时</td><td><span class="dn">-48.5%</span></td><td></td></tr>
+<tr><td>店播曝光</td><td class="num">37.6万/天</td><td class="num">16.4万/天</td><td><span class="dn">-56.4%</span></td><td></td></tr>
+<tr><td>直播点击</td><td class="num">2,186/天</td><td class="num">859/天</td><td><span class="dn">-60.7%</span></td><td></td></tr>
+<tr><td>CTR（点击/曝光）</td><td class="num">0.58%</td><td class="num">0.52%</td><td><span class="dn">-0.06pct</span></td></tr>
+<tr><td>观播购买UV</td><td class="num">86.9</td><td class="num">26.7</td><td><span class="dn">-69.3%</span></td><td></td></tr>
+<tr><td>CVR（UV/点击）</td><td class="num">3.97%</td><td class="num">3.11%</td><td><span class="dn">-0.86pct</span></td></tr>
+<tr><td>GPM（元/千次曝光）</td><td class="num">13.8</td><td class="num">10.7</td><td><span class="dn">-22.7%</span></td></tr>
+<tr><td>场均产出</td><td class="num">5,975 元</td><td class="num">2,381 元</td><td><span class="dn">-60.2%</span></td><td></td></tr>
+</tbody></table>
+<table><thead><tr><th>周</th><th>店播日均成交</th><th>周合计</th><th>判读</th></tr></thead><tbody>
+<tr><td>W35(8.21-23)</td><td class="num">5,333 元/天</td><td class="num">1.6万</td><td>基线上沿</td></tr>
+<tr><td>W36(8.24-30)</td><td class="num">4,486 元/天</td><td class="num">3.1万</td><td>主推组合装在架</td></tr>
+<tr><td>W37(8.31-9.6)</td><td class="num">5,043 元/天</td><td class="num">3.5万</td><td>稳定</td></tr>
+<tr><td>W38(9.7-13)</td><td class="num">5,557 元/天</td><td class="num">3.9万</td><td><b>P1 峰值周</b></td></tr>
+<tr><td>W39(9.14-20)</td><td class="num">5,429 元/天</td><td class="num">3.8万</td><td>仍高位</td></tr>
+<tr><td>W40(9.21-27)</td><td class="num">1,900 元/天</td><td class="num">1.3万</td><td class="dn">台阶切换周</td></tr>
+<tr><td>W41(9.28-10.4)</td><td class="num">871 元/天</td><td class="num">0.6万</td><td class="dn">最低点</td></tr>
+<tr><td>W42(10.5-11)</td><td class="num">1,857 元/天</td><td class="num">1.3万</td><td>低位企稳</td></tr>
+<tr><td>W43(10.12-18)</td><td class="num">2,271 元/天</td><td class="num">1.6万</td><td>小幅回升</td></tr>
+</tbody></table>
+<div class="box"><h3>P1 靠什么撑的，P2 丢在哪</h3>
+<p><b>三层拆开看，掉得最多的是流量层：</b>①勤奋层：场次 -15.4%、时长 -34.6%——有收缩但不是主因；②效率层：时均产出 -48.5%，和时长降幅之间隔着货品变化；③<em>流量层：曝光 -56.4%、点击 -60.7%、购买UV -69.3%，逐级放大</em>。也就是说：播得少了一点 → 单位时间卖得差了一半 → 平台把推流砍掉一半多 → 进直播间的人只剩三成。CTR 只降 0.06pct（点击意愿还在），CVR 降 0.86pct（进来的人转化变差）——<span class="hl">给直播间搭起专属货盘，CTR/CVR 会跟着回来，推流也才会回来：这是个正循环，P1 刚验证过</span>。</p>
+<p><b>P1 撑盘的两条链接：</b>【店播专属】威化夹心煎饼组合装 A 款（P1 日均 4,992 元）和 B 款（4,408 元）——两条合计占 P1 店播的 86%。9 月中旬两条链接先后退场（查证：P2 两个商品 ID 成交与购买人数全部为 0，逐 ID 核验），<em>店播直接失去主心骨</em>。</p>
+<p><b>注意区分同名商品：</b>掉量榜里的「威化夹心煎饼组合装」是店播专属款（专属价+赠帆布袋，只在直播间卖）；商卡和笔记里卖的是常规装单品——<span class="hl">专属款退场不等于这个货不能卖了，是把「直播间专属钩子」撤了，用户没有非进直播间买的理由</span>。开播强度本身没崩：22 场、约 160 小时，只比 P1 少 4 场。</p>
+<p><b>近两周在回升：</b>W42-W43 场均回到 1,900~2,300 元（低点 871 的两倍以上），说明「新周边组合装（赠擦手巾）」等新链接上架后承接在起效——回升斜率还太缓，把 P1 验证过的专属组合公式完整搭起来，斜率会陡得多。</p>
+</div></div>
+
+<div class="sec"><h2>📦 货品 · 两条店播专属链断档是最大单品因素</h2><div class="cap">分窗口商品日均 DGMV（元/天，按商品聚合）· 左=掉量Top6 · 右=P2 新跑出Top6</div>
+<table><thead><tr><th>掉量商品</th><th>日均变化</th><th>Δ</th><th>上架*</th><th>增量商品</th><th>日均变化</th><th>Δ</th><th>上架*</th></tr></thead><tbody>
+<tr><td>【店播专属】威化夹心煎饼组合装A</td><td class="num">¥4,992 → 0</td><td class="dn">-4,992</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-09-12</td><td>抹茶扁桃仁牛轧糖（新规格）</td><td class="num">0 → ¥332</td><td class="up">+332</td><td class="num" style="color:#4f6359;white-space:nowrap">2026-01-13</td></tr>
+<tr><td>【店播专属】威化夹心煎饼组合装B</td><td class="num">¥4,408 → 0</td><td class="dn">-4,408</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-09-12</td><td>抹茶汤圆（新规格）</td><td class="num">0 → ¥166</td><td class="up">+166</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-01-06</td></tr>
+<tr><td>【店播秒杀】抹茶汤圆买2赠1</td><td class="num">¥750 → 0</td><td class="dn">-750</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-10-29</td><td>牛轧糖 3盒装赠礼袋</td><td class="num">0 → ¥138</td><td class="up">+138</td><td class="num" style="color:#4f6359;white-space:nowrap">2026-01-13</td></tr>
+<tr><td>【贵在运费】蕨饼布丁杯*4盒</td><td class="num">¥723 → ¥89</td><td class="dn">-634</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-03-12</td><td>【新周边组合】煎饼+威化赠擦手巾（新）</td><td class="num">0 → ¥130</td><td class="up">+130</td><td class="num" style="color:#4f6359;white-space:nowrap">2026-09-24</td></tr>
+<tr><td>蕨饼布丁杯*5盒</td><td class="num">¥614 → 0</td><td class="dn">-614</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-03-12</td><td>【性价比之选】夹心煎饼（新）</td><td class="num">0 → ¥124</td><td class="up">+124</td><td class="num" style="color:#4f6359;white-space:nowrap">2026-07-07</td></tr>
+<tr><td>抹茶磅蛋糕（基础款）</td><td class="num">¥389 → 0</td><td class="dn">-389</td><td class="num" style="color:#4f6359;white-space:nowrap">2025-09-15</td><td>【随行装】夹心煎饼（新）</td><td class="num">0 → ¥121</td><td class="up">+121</td><td class="num" style="color:#4f6359;white-space:nowrap">2026-07-07</td></tr>
+</tbody></table>
+<div class="box"><h3>货品结论</h3>
+<p><b>查证：两条店播专属组合装 9.20-10.19 一单未出。</b>两个商品 ID 的成交与购买人数全部为 0——不是卖得差，是链接退场、彻底断档。掉量 Top6 合计蒸发约 <b>9,500 元/天</b>（两条专属链占 9,400），<em>量级超过全店净跌幅（约 4,600 元/天）</em>——因为牛轧糖等老品还在贡献部分对冲。注意区分：组合装是店播专属款（专属价+赠品，只在直播间），常规装单品仍在商卡正常动销，需求没有被证伪。</p>
+<p>增量侧的信号很清晰：Top6 增量全部是 <b>（新）</b>——牛轧糖新规格三连（332/166/138）、新周边组合装（130）、夹心煎饼系列新挂车（124/121）。<span class="hl">「组合装 + 赠周边」和「老品新规格」两个公式在新链接上依然跑得通，只是体量（合计约 1,000 元/天）还远补不上专属链的缺口</span>——把牛轧糖+煎饼组成直播间主推装，是当前最直接的止血动作。</p>
+</div></div>
+
+<div class="sec"><h2>👥 人群分析 · 人比货坚挺</h2><div class="cap">P2 vs P1 新老客对比 · 客单上行是本轮最重要的底气</div>
+<div id="chart_crowd" class="chart chart-sm"></div>
+<table><thead><tr><th>人群指标</th><th>P1（8.21-9.19）</th><th>P2（9.20-10.19）</th><th>变化</th><th>判读</th></tr></thead><tbody>
+<tr><td>新客成交</td><td class="num">5,850 元/天</td><td class="num">2,156 元/天</td><td class="dn">-63.2%</td><td>随流量入口收缩</td></tr>
+<tr><td>老客成交</td><td class="num">3,071 元/天</td><td class="num">1,897 元/天</td><td class="dn">-38.2%</td><td>比新客抗跌</td></tr>
+<tr><td>新客客单</td><td class="num">57.7 元</td><td class="num">70.3 元</td><td class="up">+21.8%</td><td>买得更贵</td></tr>
+<tr><td>老客客单</td><td class="num">81.8 元</td><td class="num">90.5 元</td><td class="up">+10.6%</td><td>忠诚度上行</td></tr>
+<tr><td>新客占比</td><td class="num">66%</td><td class="num">53%</td><td class="dn">-13pct</td><td>入口收缩的镜像</td></tr>
+<tr><td>购买频次（新/老）</td><td class="num">1.05 / 1.06</td><td class="num">1.05 / 1.07</td><td class="up">老客微升</td><td>复购习惯没变</td></tr>
+</tbody></table>
+<div class="box"><h3>人群结论</h3>
+<p><b>这轮下跌里最反直觉的事实：人变得更有价值了。</b>新客客单 +21.8%（57.7→70.3 元）、老客客单 +10.6%（81.8→90.5 元）、老客频次微升到 1.07——成交额少了，但每一单的质量在提高。柱状图里三组数字对比很直白：购买 UV 大幅缩水（新客 101→31 人/天、老客 38→21 人/天），但客单价两根柱子齐齐往上走，频次纹丝不动——<em>收缩发生在「触达」层而不是「人群资产」层</em>。</p>
+<p><b>对动作的含义：</b>新客占比从 66% 掉到 53%，缺口在新客入口（店播+笔记的量）；而老客大盘还在（P2 仍有 629 人复购、客单 90.5 元），<span class="hl">年货节礼盒（客单 89-129 元）正好接在「客单上行」的趋势上——把修好的流量卖给已经证明愿意花钱的人</span>。31-40 岁贡献四成成交的结构两个窗口保持一致，核心人群没有流失。</p>
+</div></div>
+
+<div class="sec"><h2>🚀 结论与动作 · 按优先级</h2><div class="cap">基本盘完好，趁大促把店播专属货盘和内容正循环搭起来，做得越多收得越多</div>
+<div class="box"><h3>一句话诊断</h3>
+<p>全店日均 P2 vs P1 <b>-54.6%</b>，其中店播专属组合装缺位一项解释六成缺口；商卡（-27.7%）和人群资产（客单双升、结构零漂移）证明基本盘完好。<em>不是流量问题、不是货的问题，是「直播间缺一个专属主推货盘 + 笔记曝光正循环中断」两个执行层问题——双11、年货节两个节点正是现成机会窗口，每一项动作都是加法。</em></p>
+</div>
+<div class="box"><h3>P0 ｜ 搭一套店播专属货盘，把场均产出做回 6,000 元</h3>
+<p>目标非常具体：场均产出从 2,381 元做回 6,000 元——<b>9 月中旬刚做到过，不是假设</b>。搭法照着验证过的公式来：核心品（煎饼/威化/磅蛋糕）组合 + 专属价 + 赠周边（帆布袋/擦手巾，成本 3-5 元，用户评价提及最高），每周固定 2 场主推专场；牛轧糖维持主推位（两个窗口都稳住的品类）。口播话术直接用评价原话：「抹茶味很浓、不甜腻，包装拿去送人拿得出手」。照常开播的 22 场基础上，<span class="hl">场均做回 6,000 元即月店播 14.4 万，直接补回缺口的一半以上</span>。顺带说清归因：P2 真正停播只有国庆 4 天、节后排班已恢复甚至时长更长，但节后场均 2,041/2,777 元不足 9 月中旬（6,620 元）一半——<em>缺的不是场次是专属转化场景，直播间有了自己的货盘，单位时间产出和平台推流会一起回来</em>。</p>
+</div>
+<div class="box"><h3>P1 ｜ 笔记加密已验证选题 + 417 位买手名单批量激活</h3>
+<p>笔记供给没停（两窗口都是 26 篇），掉的是单篇天花板（2,941→785 元）。加密已验证选题：磅蛋糕「报告体」、牛轧糖「证言体」、49.9 五款赠冰箱贴，每周 2-3 篇交易相关笔记。同时把 9 月 20 日输出的 <b>417 位美食垂类买手名单</b>真正用起来——两个窗口外部合作都不到 20 位（场均 242 元）、利用率不到 5%，提升空间最大。筛 50 位零食/美食垂类买手按「寄样+佣金」批量铺，物料复用店内模板；买手场（达人场）与店播做价格区隔，避免自己打自己。<em>这是所有动作里唯一不需要额外预算的，铺得越多赚得越多</em>。</p>
+</div>
+<div class="box"><h3>P2 ｜ 三支箭：年货礼盒、新品接力、店播提客单</h3>
+<p>① <b>年货礼盒专属款</b>：京·茶心礼盒中秋款已验证 298 元客单，直接出年货版做店播专属价，主攻 31-40 岁送礼人群（占成交四成）；② <b>新品接力</b>：薄脆煎饼 8 月上架即进增量 Top（2,782 元/天）、套餐组合 8.28 上架 2,111 元/天——新品冷启数据好，给流量位做「双11 新品尝鲜价」；③ <b>店播提客单</b>：新老客客单已双升（70.3/90.5 元），直播间顺势推「组合装+满赠」把客单往 100 元抬，牛轧糖年货组合装（客单 89-129 元）正好接住。26 年 2 月年货峰值（月销 129.8 万）证明这套货在年货场景有爆发力，商卡关键词在年货节前完成覆盖「辻利/抹茶零食/年货礼盒」覆盖，商详首屏放大克重与保质期（差评集中点：克重预期、临期焦虑）。</p>
+</div>
+</div></div>
+
+<div class="foot"><b>数据口径</b><ul>
+<li>商家：辻利茶铺旗舰店 · 数据窗口 2026-08-21 ～ 2026-10-19（T+1 最新）· P1=8.21-9.19 / P2=9.20-10.19，全文日均口径</li>
+<li><b>所有成交金额为 RedBI 口径，与苍穹 CRM 可能存在差异（历史差异较大），对外汇报前务必与苍穹后台核对，差异超过 5% 需要亮灯说明</b></li>
+<li>场域口径：商笔=商品笔记 DGMV；店播=店播 DGMV（窄口径）；K播（日均 P1 329 元 / P2 177 元，89% 来自店铺自播号）仅作背景线，不单独分析；商卡单列。K播成交绝对量与苍穹存在 50-65% 已知差异。分场域日均之和与全店大盘口径存在 2-5% 差异（K播窄口径与载体宽表口径不同），以全店大盘口径为准</li>
+<li>商笔 GPM = 商笔 DGMV ÷ 曝光 × 1000；CTR = 商笔点击 ÷ 商笔曝光；CVR = 商笔购买 UV ÷ 商笔点击；笔记件均 = 购买件数 ÷ 购买 UV。商笔点击为 RedBI 商家分析数据集「商笔点击量」字段（P1 94,523 / P2 47,641）；店播曝光/点击/时长为同一数据集店播字段（「店播曝光量」「直播点击次数」「店播--开播时长（小时）」），CTR/CVR/GPM 均按窗口总量计算</li>
+<li>店播场均 = 店播 DGMV ÷ 开播场次；时均产出 = 店播 DGMV ÷ 开播时长；P1 单场明细未取到，场均 5,975 元由「成交÷26场」推算；近30天单场五档分布来自直播明细（106 场含非动销场，动销 22 场全在 1 万以下档）。K播字段规则（4857 数据集）不适用于店播，店播过程指标全部走商家分析数据集（2479）店播字段</li>
+<li>商品口径 = 商品 ID 聚合；<b>两条【店播专属】组合装 P2 已逐商品 ID 核验</b>：成交与购买人数全部为 0。注意区分：组合装为店播专属款（专属价+赠帆布袋），与商卡在售的常规装单品为不同商品；蕨饼布丁杯、磅蛋糕为链接下架/退场而非品类消失</li>
+<li>上架时间*：取商品供给侧日表「首次可购时间」字段（first_buyable_dt，2026-10-19 分区），即商品首次可被购买的日期，非店铺创建时间；同款多规格链接各算各的。BI 商品ID 与 Hive 商品ID 体系不同，按商品名称精确匹配回填，37 个商品全部匹配成功</li>
+<li>人群口径：新老客按店铺新老客标签（购买用户数跨天累计口径）；频次 = 订单数 ÷ 购买 UV；评价与合规为近90天口径（696 条评价 / 24 条违规），覆盖两个对比期，环比不拆分</li>
+<li>「新」= 该商品在对应窗口内首次产生动销（item 口径，非 SPU 归一）</li>
+</ul></div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<script>
+var WINE='#2f6b4f',WINE2='#4f9a72',GRAY='#b8b0ab',INK='#4f6359';
+function mk(id,fn){try{var c=echarts.init(document.getElementById(id));fn(c);window.addEventListener('resize',function(){c.resize()})}catch(e){console.error(id,e)}}
+var DATES=['08-21', '08-22', '08-23', '08-24', '08-25', '08-26', '08-27', '08-28', '08-29', '08-30', '08-31', '09-01', '09-02', '09-03', '09-04', '09-05', '09-06', '09-07', '09-08', '09-09', '09-10', '09-11', '09-12', '09-13', '09-14', '09-15', '09-16', '09-17', '09-18', '09-19', '09-20', '09-21', '09-22', '09-23', '09-24', '09-25', '09-26', '09-27', '09-28', '09-29', '09-30', '10-01', '10-02', '10-03', '10-04', '10-05', '10-06', '10-07', '10-08', '10-09', '10-10', '10-11', '10-12', '10-13', '10-14', '10-15', '10-16', '10-17', '10-18', '10-19'];
+mk('chart_daily',function(c){c.setOption({
+ color:[WINE,WINE2,GRAY],
+ tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+ legend:{bottom:0,textStyle:{color:INK}},
+ grid:{left:'2%',right:'5%',bottom:'16%',top:'8%',containLabel:true},
+ xAxis:{type:'category',data:DATES},
+ yAxis:[{type:'value',name:'自营(万/日)'},{type:'value',name:'K播(万)',splitLine:{show:false}}],
+ series:[
+  {name:'商笔',type:'bar',stack:'s',data:[0.11, 0.13, 0.18, 0.1, 0.25, 0.12, 0.1, 0.11, 0.1, 0.07, 0.09, 0.17, 0.09, 0.13, 0.08, 0.1, 0.18, 0.13, 0.15, 0.15, 0.1, 0.1, 0.1, 0.03, 0.13, 0.18, 0.08, 0.12, 0.09, 0.1, 0.07, 0.05, 0.1, 0.13, 0.08, 0.1, 0.04, 0.05, 0.06, 0.05, 0.03, 0.05, 0.04, 0.04, 0.08, 0.04, 0.03, 0.04, 0.04, 0.07, 0.08, 0.08, 0.12, 0.03, 0.06, 0.07, 0.07, 0.04, 0.03, 0.01],barCategoryGap:'32%'},
+  {name:'店播',type:'bar',stack:'s',data:[0.48, 0.52, 0.6, 0.64, 0.0, 0.6, 0.69, 0.46, 0.36, 0.39, 0.28, 0.0, 0.44, 0.57, 0.49, 0.89, 0.86, 0.0, 0.88, 0.62, 0.68, 0.55, 0.56, 0.6, 0.83, 0.0, 0.78, 0.7, 0.46, 0.61, 0.42, 0.5, 0.0, 0.31, 0.13, 0.0, 0.21, 0.18, 0.0, 0.3, 0.19, 0.0, 0.0, 0.0, 0.12, 0.12, 0.1, 0.12, 0.2, 0.2, 0.27, 0.29, 0.0, 0.37, 0.24, 0.38, 0.14, 0.28, 0.18, 0.16]},
+  {name:'K播(背景)',type:'line',yAxisIndex:1,data:[0.0, 0.0, 0.08, 0.11, 0.02, 0.03, 0.03, 0.02, 0.15, 0.03, 0.02, 0.03, 0.04, 0.04, 0.0, 0.01, 0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.04, 0.0, 0.01, 0.0, 0.04, 0.06, 0.19, 0.02, 0.0, 0.01, 0.01, 0.0, 0.0, 0.0, 0.02, 0.0, 0.23, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.08, 0.0, 0.02, 0.06, 0.0, 0.0, 0.0, 0.0, 0.0, 0.03, 0.0, 0.05],symbol:'circle',symbolSize:4,
+   lineStyle:{width:1.5,type:'dashed',color:GRAY},itemStyle:{color:GRAY}}]})});
+mk('chart_phase',function(c){c.setOption({
+ color:[WINE,WINE2],
+ tooltip:{trigger:'axis'},
+ legend:{bottom:0,textStyle:{color:INK}},
+ grid:{left:'3%',right:'4%',bottom:'18%',top:'12%',containLabel:true},
+ xAxis:{type:'category',data:['商笔','店播','商卡','全店合计']},
+ yAxis:{type:'value',name:'万元/日'},
+ series:[
+  {name:'P1(8.21-9.19)',type:'bar',data:[0.12,0.52,0.17,0.84],barWidth:26,label:{show:true,position:'top',color:'#1d4a36',fontWeight:700}},
+  {name:'P2(9.20-10.19)',type:'bar',data:[0.06,0.18,0.13,0.38],barWidth:26,label:{show:true,position:'top',color:'#1d4a36',fontWeight:700}}]})});
+mk('chart_note',function(c){c.setOption({
+ color:[WINE,WINE2],
+ tooltip:{trigger:'axis'},
+ legend:{bottom:0,textStyle:{color:INK}},
+ grid:{left:'3%',right:'8%',bottom:'18%',top:'12%',containLabel:true},
+ xAxis:{type:'category',data:['P1(8.21-9.19)','P2(9.20-10.19)']},
+ yAxis:[{type:'value',name:'曝光(万/日)'},{type:'value',name:'GPM',splitLine:{show:false}}],
+ series:[
+  {name:'商笔日均曝光(万)',type:'bar',data:[8.0,4.6],itemStyle:{opacity:0.45},barWidth:50},
+  {name:'商笔GPM',type:'line',yAxisIndex:1,data:[15.0,13.1],symbol:'circle',symbolSize:10,
+   lineStyle:{width:2.5},label:{show:true,position:'top',color:'#1d4a36',fontWeight:600}}]})});
+mk('chart_crowd',function(c){c.setOption({
+ color:[WINE,WINE2],
+ tooltip:{trigger:'axis'},
+ legend:{bottom:0,textStyle:{color:INK}},
+ grid:{left:'3%',right:'6%',bottom:'18%',top:'14%',containLabel:true},
+ xAxis:{type:'category',data:['购买UV(人/天)','客单价(元)','购买频次(单/人)']},
+ yAxis:[{type:'value',name:'UV / 客单'},{type:'value',name:'频次',max:2,splitLine:{show:false}}],
+ series:[
+  {name:'P1(8.21-9.19)',type:'bar',data:[{value:101.4},{value:57.7},{value:1.05}],barWidth:36,label:{show:true,position:'top',color:'#1d4a36',fontWeight:700}},
+  {name:'P2(9.20-10.19)',type:'bar',data:[{value:30.7},{value:70.3},{value:1.05}],barWidth:36,label:{show:true,position:'top',color:'#1d4a36',fontWeight:700}}]})});
+mk('chart_crowd2',function(c){c.setOption({
+ color:[WINE,WINE2],
+ tooltip:{trigger:'axis'},
+ legend:{bottom:0,textStyle:{color:INK}},
+ grid:{left:'3%',right:'4%',bottom:'18%',top:'12%',containLabel:true},
+ xAxis:{type:'category',data:['新客','老客']},
+ yAxis:{type:'value',name:'客单价(元)'},
+ series:[
+  {name:'P1(8.21-9.19)',type:'bar',data:[57.7,81.8],barWidth:40,label:{show:true,position:'top',color:'#1d4a36',fontWeight:700}},
+  {name:'P2(9.20-10.19)',type:'bar',data:[70.3,90.5],barWidth:40,label:{show:true,position:'top',color:'#1d4a36',fontWeight:700}}]})});
+mk('chart_live',function(c){c.setOption({
+ color:[WINE,WINE2],
+ tooltip:{trigger:'axis'},
+ legend:{bottom:0,textStyle:{color:INK}},
+ grid:{left:'3%',right:'4%',bottom:'18%',top:'12%',containLabel:true},
+ xAxis:{type:'category',data:['W35','W36','W37','W38','W39','W40','W41','W42','W43']},
+ yAxis:{type:'value',name:'店播日均(元/天)'},
+ series:[
+  {name:'店播日均成交',type:'line',data:[5333,4486,5043,5557,5429,1900,871,1857,2271],symbol:'circle',symbolSize:8,lineStyle:{width:2.5},
+   label:{show:true,position:'top',color:'#1d4a36',fontWeight:600},
+   markLine:{silent:true,symbol:'none',data:[{yAxis:5975,lineStyle:{color:GRAY,type:'dashed',width:1.5},label:{formatter:'P1 场均水位 5975',fontSize:10,color:GRAY}}]}}]})});
+</script></body></html>
