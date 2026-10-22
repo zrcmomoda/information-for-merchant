@@ -1,0 +1,505 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>南食召 · 红酸汤×黄番茄 人群与搜索对比（商家版）</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--wine:#8E354A;--wine2:#a85a6e;--wine3:#6b2438;--ink:#212b36;--ink2:#37414d;
+--gray:#57626e;--gray2:#77828e;--line:#e2e8ee;--line2:#d2dce5;--paper:#fff;
+--bg:#faf7f7;--tint:#f7eef0;--tint2:#f0e0e4;--gold:#b08d57;--green:#6b9a7a;
+--tomato:#C4622D;--tomato2:#d98a55;--tomato3:#8a3f1a}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+.topbar{background:linear-gradient(135deg,var(--wine3),var(--wine) 55%,var(--wine2));color:#fff;padding:34px 0 30px;margin-bottom:0}
+.topbar .in{max-width:1180px;margin:0 auto;padding:0 20px}
+.topbar h1{font-size:28px;line-height:1.4;font-weight:700;letter-spacing:.5px}
+.topbar h1 u{text-decoration:none;border-bottom:3px solid rgba(255,255,255,.5);padding-bottom:2px}
+.topbar .sub{margin-top:13px;font-size:14.5px;color:rgba(255,255,255,.86);line-height:1.7;max-width:960px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 15px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:.4px}
+.kpi .l{font-size:13px;color:rgba(255,255,255,.9);margin-top:3px}
+.tabs{display:flex;gap:0;background:var(--paper);border-bottom:2px solid var(--line2);position:sticky;top:0;z-index:30;overflow-x:auto}
+.tabs .in{display:flex;max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+.tab{padding:15px 21px;font-size:14.5px;font-weight:600;color:var(--gray);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.18s}
+.tab:hover{color:var(--wine);background:var(--tint)}
+.tab.on{color:var(--wine);border-bottom-color:var(--wine);background:var(--tint)}
+.pane{display:none}.pane.on{display:block}
+.sec{margin-top:30px}
+h2{font-size:20.5px;font-weight:700;color:var(--ink);padding-left:12px;border-left:4px solid var(--wine);margin-bottom:6px}
+h2.tmt{border-left-color:var(--tomato)}
+.cap{font-size:14px;color:var(--gray);margin:0 0 16px 16px}
+.box{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--wine);border-radius:0 10px 10px 0;padding:16px 18px;margin:16px 0;box-shadow:0 1px 3px rgba(33,43,54,.05)}
+.box h3{font-size:16px;color:var(--wine);margin-bottom:9px;font-weight:700}
+.box p{font-size:14.5px;color:var(--ink2);line-height:1.85;margin-bottom:7px}
+.box p:last-child{margin-bottom:0}
+.box.tomato{border-left-color:var(--tomato)}
+.box.tomato h3{color:var(--tomato)}
+b{color:var(--wine);font-weight:700}em{color:var(--wine2);font-style:normal;font-weight:600}
+.tomato-scope b{color:var(--tomato3);font-weight:700}.tomato-scope em{color:var(--tomato);font-style:normal;font-weight:600}.tomato-scope .hl{background:#f5e3d7;color:var(--tomato3)}
+.hl{background:var(--tint2);padding:1px 5px;border-radius:3px;font-weight:600;color:var(--wine3)}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0;font-size:14px}
+th{background:var(--tint);color:var(--wine3);font-weight:700;font-size:13.5px;padding:12px 14px;text-align:left;border-bottom:2px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid #eef2f6;text-align:left;color:var(--ink2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--tint)}
+.num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.tr-alt{background:#fbfcfe}
+.tscroll{overflow-x:auto;border-radius:10px}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+.card h4{font-size:15.5px;color:var(--wine);margin-bottom:10px;font-weight:700}
+.card p{font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.card p:last-child{margin-bottom:0}
+.card.tomato h4{color:var(--tomato)}
+.bars{margin-top:6px}
+.brow{margin-bottom:11px}
+.blab{display:flex;justify-content:space-between;font-size:14px;color:var(--ink2);margin-bottom:4px;gap:10px}
+.blab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.blab b{color:var(--ink);font-weight:700;white-space:nowrap;flex-shrink:0}
+.bwrap{height:9px;background:var(--tint2);border-radius:5px;overflow:hidden}
+.bbar{height:100%;background:linear-gradient(90deg,var(--wine),var(--wine2));border-radius:5px}
+.tomato .bbar{background:linear-gradient(90deg,var(--tomato),var(--tomato2))}
+.tomato .bwrap{background:#f5e3d7}
+.tag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.chartcard{padding:14px 16px 8px;background:var(--paper);border:1px solid var(--line);border-radius:11px}
+.chartcard h4{font-size:15.5px;color:var(--wine);margin-bottom:4px;font-weight:700}
+.chartcard.tomato h4{color:var(--tomato)}
+.ccbox{height:320px;width:100%}
+.cnote{font-size:11.5px;color:#999;margin:-2px 0 6px}
+.snote{font-size:12px;color:#8a6d1a;background:#faf5e6;border-left:3px solid #d4b25a;padding:8px 12px;border-radius:0 6px 6px 0;margin:8px 0 14px}
+.foot{margin-top:40px;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--gray);line-height:1.9}
+.foot b{color:var(--wine)}
+.vs{display:grid;grid-template-columns:1fr 56px 1fr;gap:0;align-items:stretch;margin:16px 0}
+.vs .side{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+.vs .side.l{border-top:3px solid var(--wine)}
+.vs .side.r{border-top:3px solid var(--tomato)}
+.vs .mid{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:var(--gray2)}
+.vs h4{font-size:15.5px;margin-bottom:8px;font-weight:700}
+.vs .side.l h4{color:var(--wine)}
+.vs .side.r h4{color:var(--tomato)}
+.vs ul{list-style:none}
+.vs li{font-size:13.5px;color:var(--ink2);line-height:1.8;padding:5px 0;border-bottom:1px dashed #eef2f6}
+.vs li:last-child{border-bottom:none}
+.vs li b{font-size:13.5px}
+@media(max-width:860px){.krow{grid-template-columns:repeat(2,1fr)}.cg2,.cg3{grid-template-columns:1fr}.topbar h1{font-size:21px}.ccbox{height:260px}.vs{grid-template-columns:1fr}.vs .mid{padding:8px 0}}
+</style>
+<script src="https://fe-static.xhscdn.com/data/cowork-uba-script/dist/uba-script.js?random=1792648217664684"></script></head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <h1>南食召 · <u>红酸汤 × 黄番茄</u> 人群与搜索对比</h1>
+    <div class="sub">数据：两品人群包的画像与热门搜索词（商家外发版 · 搜索量已做模糊处理，仅保留相对档位）· 人群 = 近90天对相关内容有深度互动（含搜索）的站内用户 · TGI&gt;100 表示显著偏好于全体用户</div>
+    <div class="krow">
+      <div class="kpi"><div class="v" id="k1"></div><div class="l">红酸汤兴趣人群规模</div></div>
+      <div class="kpi"><div class="v" id="k2"></div><div class="l">黄番茄兴趣人群规模</div></div>
+      <div class="kpi"><div class="v">一个量级</div><div class="l">红酸汤人群规模显著大于黄番茄</div></div>
+      <div class="kpi"><div class="v">3 个</div><div class="l">页签：两品各一页 + 对比与打法</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="in">
+    <div class="tab on" data-p="p1">红酸汤 · 人群和搜索</div>
+    <div class="tab" data-p="p2">黄番茄 · 人群和搜索</div>
+    <div class="tab" data-p="p3">相似与差异 · 推品怎么区分</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ P1 红酸汤 ============ -->
+<div class="pane on" id="p1">
+  <div class="sec">
+    <h2>她是谁 · 人口属性</h2>
+    <div class="cap">红酸汤兴趣人群 · 画像数据与黄番茄同源同口径</div>
+
+    <div class="box">
+      <h3>先记住三句话</h3>
+      <p><b>① 25-35 岁的都市年轻女性是主力：</b>女性占 88%，26-30 岁占 28.8%（TGI 174），23-25 岁占 18.5%（TGI 173）——比黄番茄人群更「熟龄」。</p>
+      <p><b>② 一线/新一线 + 高消费倾向：</b>一线+新一线合计 41%（一线 TGI 130），高消费人群占比 21.8% 且 TGI 109，愿意为好东西花钱。</p>
+      <p><b>③ 妈妈浓度高：</b>备孕+孕期+婴幼儿妈妈合计超三成，7-9月孩子妈妈 TGI 高达 261——「给娃做饭」是隐藏动机。</p>
+    </div>
+
+    <div class="cg3">
+      <div class="chartcard"><h4>性别（占比 vs TGI）</h4><div class="ccbox" id="r_g"></div></div>
+      <div class="chartcard"><h4>年龄结构（占比 vs TGI）</h4><div class="ccbox" id="r_a"></div></div>
+      <div class="chartcard"><h4>城市等级（占比 vs TGI）</h4><div class="ccbox" id="r_c"></div></div>
+    </div>
+
+    <h2 style="margin-top:34px">她在搜什么 · 搜索端信号</h2>
+    <div class="cap">近90天热门搜索词 Top30 · 热度分档 = 搜索量相对档位（★多≈搜索量大）· TGI = 相对全体用户的偏好强度</div>
+
+    <div class="box">
+      <h3>搜索端的三个信号</h3>
+      <p><b>① 词根高度集中在「酸汤×贵州」：</b>红酸汤、玉梦红酸汤、贵州酸汤底料、酸汤火锅做法……这类词 TGI 全部过万，说明这群人不是泛美食用户，而是<em>带着明确品类认知来搜的</em>。</p>
+      <p><b>② 搜的是「怎么吃」：</b>Top30 里吃法/做法词占近三分之一（面条吃法大全、米线家常做法、酸汤火锅配菜推荐）——人群在找做法教程，内容应答「怎么做」就能接住。</p>
+      <p><b>③ 吃法版图 = 面食米线 + 火锅 + 大菜：</b>面条/米线类词占 15%、火锅香锅类占 10%、大菜做法类占 31%。糖醋排骨、麻辣香锅是搜索量最大的通用大菜，酸汤是他们想给这些菜换的新风味。</p>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>搜索词</th><th>热度分档</th><th>TGI</th><th>信号</th></tr></thead>
+      <tbody id="r_tb"></tbody>
+    </table></div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>内容关键词偏好（她看什么）</h4><div class="ccbox" id="r_ck"></div></div>
+      <div class="chartcard"><h4>二十大人群 Top5（她是哪类人）</h4><div class="ccbox" id="r_cr"></div></div>
+    </div>
+
+    <h2 style="margin-top:34px">她看什么 · 内容兴趣下钻</h2>
+    <div class="cap">内容兴趣类目层级（二/三级）· 柱=渗透率% · 线=TGI · 按 TGI 取 Top10</div>
+
+    <div class="box">
+      <h3>内容兴趣怎么读</h3>
+      <p><b>① 美食是绝对主阵地，且集中在「做菜」：</b>美食渗透 80%（TGI 221），二级类目里美食教程（渗透 31.5%）、美食展示（22.6%）、餐厅探店（21.1%）领跑——<em>教程类内容既是流量入口也是决策助攻</em>。</p>
+      <p><b>② 减脂养生是第二叙事线：</b>健身饮食 TGI 384、减肥餐教程 468、速食测评 674——酸汤「开胃低卡」的卖点有现成的内容承接面。</p>
+      <p><b>③ 妈妈内容开始冒头：</b>孕产经验 TGI 208，和画像里「妈妈浓度超三成」互相印证——<em>宝宝辅食 / 不辣汤底的内容值得试</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>内容二级类目 Top10（按 TGI）</h4><div class="ccbox" id="r_c2"></div></div>
+      <div class="chartcard"><h4>内容三级类目 Top10（按 TGI）</h4><div class="ccbox" id="r_c3"></div></div>
+    </div>
+
+    <h2 style="margin-top:34px">她搜什么 · 搜索词结构打标</h2>
+    <div class="cap">对全部 500 个热门搜索词按平台词条属性打标 · 柱=该类词量占比 · 线=TGI 中位数</div>
+
+    <div class="box">
+      <h3>搜索结构怎么读</h3>
+      <p><b>① 83% 的搜索量是纯品类词（413/500 个词）：</b>他们直接搜「吃什么」，搜索意图非常「买菜清单」——承接页要直接给答案，不要绕。</p>
+      <p><b>② 带产地的词 TGI 中位数最高（5023）：</b>「贵州蘸水」「贵州酸汤底料推荐」这类词量不大但意图极强——<em>产地词是「正宗验证」的入口，标题和话题带上产地有加成</em>。</p>
+      <p><b>③ 吃法词根结构：</b>面条米线 13.6% ＞ 大菜硬菜 9.8% ≈ 火锅香锅 9.7% ＞ 酸汤贵州 6.4%——<em>酸汤是「给既有吃法换风味」的调味逻辑，不是独立品类需求</em>。</p>
+      <p><b>④ 地域心智延伸到旅游：</b>行业品类偏好里贵州（TGI 993）、贵阳游（906）、黄果树游（795）——「贵州」是这群人的向往地标，产地叙事有情绪基础。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>搜索词属性结构（词量占比）</h4><div class="ccbox" id="r_attr"></div></div>
+      <div class="chartcard"><h4>吃法词根结构（词量占比）</h4><div class="ccbox" id="r_root"></div></div>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>词根</th><th>词数</th><th>词量占比</th><th>代表词</th></tr></thead>
+      <tbody>
+        <tr><td><b>面条/米线</b></td><td class="num">46</td><td class="num">9.2%</td><td>面条 · 面条吃法大全 · 面条做法</td></tr>
+        <tr class="tr-alt"><td><b>大菜硬菜</b></td><td class="num">39</td><td class="num">7.8%</td><td>糖醋排骨 · 糖醋排骨做法 · 火鸡面怎么煮好吃</td></tr>
+        <tr><td><b>火锅香锅</b></td><td class="num">26</td><td class="num">5.2%</td><td>火锅 · 麻辣香锅 · 火锅底料推荐</td></tr>
+        <tr class="tr-alt"><td><b>酸汤贵州</b></td><td class="num">20</td><td class="num">4.0%</td><td>贵州蘸水 · 红酸汤 · 玉梦红酸汤</td></tr>
+        <tr><td><b>其他长尾</b></td><td class="num">360</td><td class="num">72.0%</td><td>小盐巴 · 咖喱 · 糟粕醋</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="box">
+      <h3>红酸汤人群小结</h3>
+      <p>这是一群<b>生活在一二线城市、正在认真研究「怎么把饭做好吃」的年轻女性</b>——做饭是日常，不是表演；她们搜酸汤是想给家常菜换风味，搜火锅蘸水是在找「正宗贵州味」。内容对她们说话的方式：<em>给做法、给配菜、给「正宗」的依据</em>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P2 黄番茄 ============ -->
+<div class="pane" id="p2">
+  <div class="sec tomato-scope">
+    <h2 class="tmt">她是谁 · 人口属性</h2>
+    <div class="cap">黄番茄兴趣人群 · 口径与红酸汤一致，规模约为其 1/13</div>
+
+    <div class="box tomato">
+      <h3>先记住三句话</h3>
+      <p><b>① 更年轻、更学生气：</b>19-25 岁合计 36%（红酸汤为 34% 但集中在 25+），19-22 岁 TGI 140；品牌偏好里全是蛋仔派对、我的世界、小猪佩奇——<em>二次元和游戏浓度极高</em>。</p>
+      <p><b>② 兴趣在「吃」之外：</b>内容关键词 Top10 是吃播、解压、ASMR、配音、翻唱、我的世界——美食只是入口，<em>娱乐和解压才是消费场景</em>。</p>
+      <p><b>③ 健康点很明确：</b>决策因子第一是「抗氧抗炎」（占比 79.5%，TGI 485），搜索词里酸奶碗、茶汤出现——对「轻负担」有主动诉求。</p>
+    </div>
+
+    <div class="cg3">
+      <div class="chartcard tomato"><h4>性别（占比 vs TGI）</h4><div class="ccbox" id="t_g"></div></div>
+      <div class="chartcard tomato"><h4>年龄结构（占比 vs TGI）</h4><div class="ccbox" id="t_a"></div></div>
+      <div class="chartcard tomato"><h4>城市等级（占比 vs TGI）</h4><div class="ccbox" id="t_c"></div></div>
+    </div>
+
+    <h2 class="tmt" style="margin-top:34px">她在搜什么 · 搜索端信号</h2>
+    <div class="cap">近90天热门搜索词（该人群包词量小，仅38个进入榜单）· 热度分档 = 搜索量相对档位</div>
+
+    <div class="box tomato">
+      <h3>搜索端的三个信号</h3>
+      <p><b>① 品类词很弱，「黄番茄火锅底料」一枝独秀：</b>产品词 TGI 极高但热度仅在榜尾——知道这个品的人在搜，但人群基数还没起来，<em>是典型的成长早期市场</em>。</p>
+      <p><b>② 娱乐 IP 词占了大半：</b>噜噜酱、火鸡面挑战、酱油白米饭CP、吃泡椒……这些是内容热点词不是购物词——这群人<em>通过看热闹的方式接触美食</em>，搜索是娱乐行为的副产品。</p>
+      <p><b>③ 通用大菜词与红酸汤人群重叠：</b>糖醋排骨、火锅、做饭、贵州蘸水同样出现——基础需求一致，差异在<em>上层兴趣生态</em>。</p>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>搜索词</th><th>热度分档</th><th>TGI</th><th>信号</th></tr></thead>
+      <tbody id="t_tb"></tbody>
+    </table></div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>内容关键词偏好（她看什么）</h4><div class="ccbox" id="t_ck"></div></div>
+      <div class="chartcard tomato"><h4>二十大人群 Top5（她是哪类人）</h4><div class="ccbox" id="t_cr"></div></div>
+    </div>
+
+    <h2 class="tmt" style="margin-top:34px">她看什么 · 内容兴趣下钻</h2>
+    <div class="cap">内容兴趣类目层级（二/三级）· 柱=渗透率% · 线=TGI · 按 TGI 取 Top10</div>
+
+    <div class="box tomato">
+      <h3>内容兴趣怎么读</h3>
+      <p><b>① 吃是入口，不是终点：</b>美食渗透 63.8% 仍排第一，但吃播（TGI 1121）、搞笑小剧场（429）、二次元动漫（270）把注意力时间占满了——<em>美食在这里是娱乐题材</em>。</p>
+      <p><b>② 三级类目是 IP 和萌宠的天下：</b>IP 动漫渗透 39.9%、晒猫 34.8%、单机游戏 TGI 499——<em>联名素材、梗素材从这里找</em>。</p>
+      <p><b>③ 行业品类里游戏排第一：</b>游戏品类占 26.3%（TGI 145），休闲娱乐游戏 TGI 237——<em>只在美食垂类投内容，会漏掉大半个目标人群</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>内容二级类目 Top10（按 TGI）</h4><div class="ccbox" id="t_c2"></div></div>
+      <div class="chartcard tomato"><h4>内容三级类目 Top10（按 TGI）</h4><div class="ccbox" id="t_c3"></div></div>
+    </div>
+
+    <h2 class="tmt" style="margin-top:34px">她搜什么 · 搜索词结构打标</h2>
+    <div class="cap">对全部 38 个热门搜索词按平台词条属性打标 · 柱=该类词量占比（该人群 TGI 分布极端，不放折线）</div>
+
+    <div class="box tomato">
+      <h3>搜索结构怎么读</h3>
+      <p><b>① 纯品类词占 75% 但盘子极小：</b>全量搜索热度仅为红酸汤人群的零头——<em>搜索习惯还没养成，现阶段搜索布局是「占位」不是「吃量」</em>。</p>
+      <p><b>② 活动+IP 词占 17.4%（红酸汤人群仅 2.2%）：</b>做饭、噜噜酱、火鸡面挑战——<em>他们的搜索跟着内容热点走，内容在哪热搜在哪</em>。</p>
+      <p><b>③ 词根结构和红酸汤同构、气质更娱乐：</b>糖醋排骨、火锅同样在榜，但火鸡面新吃法、噜噜酱这类 IP 词只有这个人群在搜。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>搜索词属性结构（词量占比）</h4><div class="ccbox" id="t_attr"></div></div>
+      <div class="chartcard tomato"><h4>吃法词根结构（词量占比）</h4><div class="ccbox" id="t_root"></div></div>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>词根</th><th>词数</th><th>词量占比</th><th>代表词</th></tr></thead>
+      <tbody>
+        <tr><td><b>大菜硬菜</b></td><td class="num">6</td><td class="num">15.8%</td><td>糖醋排骨 · 火鸡面新吃法 · 糖醋排骨做法</td></tr>
+        <tr class="tr-alt"><td><b>火锅香锅</b></td><td class="num">5</td><td class="num">13.2%</td><td>火锅 · 黄番茄火锅底料 · 火锅底料源头工厂</td></tr>
+        <tr><td><b>面条/米线</b></td><td class="num">1</td><td class="num">2.6%</td><td>用白子做面条</td></tr>
+        <tr class="tr-alt"><td><b>酸汤贵州</b></td><td class="num">1</td><td class="num">2.6%</td><td>贵州蘸水</td></tr>
+        <tr><td><b>其他长尾</b></td><td class="num">19</td><td class="num">50.0%</td><td>紫薯 · 小盐巴 · 萝卜酱</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="box tomato">
+      <h3>黄番茄人群小结</h3>
+      <p>这是一群<b>被美食娱乐内容喂养大的年轻用户</b>——看吃播、追热点、玩梗，顺手搜一下「黄番茄火锅底料」。他们不缺对「不辣汤底」的潜在需求（抗氧抗炎诉求极强），但<em>还没形成主动搜索习惯</em>。对他们的打法是「先娱乐、后种草」：用 IP 联名、挑战赛、梗内容把品带出来，而不是硬讲产品功能。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P3 对比 ============ -->
+<div class="pane" id="p3">
+  <div class="sec">
+    <h2>相似处 · 底层需求是一致的</h2>
+    <div class="cap">两个人群共享的底座——这部分可以复用同一套内容资产</div>
+
+    <div class="cg3">
+      <div class="card"><h4>① 同样的女性主导</h4><p>红酸汤女 88.2% / 黄番茄女 85.6%，都显著高于大盘。内容语气回避硬广，用「姐妹分享」的口吻两边通吃。</p></div>
+      <div class="card"><h4>② 同样的未婚为主</h4><p>未婚都约 61.7%——家庭负担轻，为「自己吃得爽」买单的意愿强。</p></div>
+      <div class="card"><h4>③ 同样的基础搜索盘</h4><p>糖醋排骨、火锅、做饭、贵州蘸水两边都在搜——「大菜怎么做」是共同入口，都认「贵州风味」这个地域心智。</p></div>
+    </div>
+
+    <h2 style="margin-top:34px">差异点 · 四个关键分野</h2>
+    <div class="cap">这些差异决定了两个品要分开做内容，不能一锅烩</div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th style="width:130px">维度</th><th>红酸汤人群</th><th>黄番茄人群</th></tr></thead>
+      <tbody>
+        <tr><td><b>人生阶段</b></td><td>26-30 岁为主，妈妈浓度高（备孕/孕期/婴幼儿合计超三成）</td><td>19-25 岁占比更高，学生气重，游戏/二次元浓度极高</td></tr>
+        <tr><td><b>搜东西的方式</b></td><td><b>带着品类认知搜</b>：红酸汤/贵州酸汤底料/酸汤火锅做法，TGI 全部过万</td><td><b>跟着内容热点搜</b>：噜噜酱、火鸡面挑战、酱油白米饭CP，产品词极弱</td></tr>
+        <tr><td><b>内容消费</b></td><td>菜谱教程、一人食、晚餐、减脂餐——<b>做饭是日常任务</b></td><td>吃播、解压、ASMR、游戏——<b>美食是娱乐内容</b></td></tr>
+        <tr><td><b>决策因子</b></td><td>加热方式、健康、小容量——<b>关心「怎么用」</b></td><td>抗氧抗炎、生日节日、IP联名——<b>关心「值不值、潮不潮」</b></td></tr>
+        <tr><td><b>品牌偏好</b></td><td>山姆、盒马、沃尔玛、海底捞——<b>生鲜零售与餐饮品牌</b></td><td>蛋仔派对、我的世界、小猪佩奇——<b>游戏与 IP</b></td></tr>
+        <tr><td><b>消费力</b></td><td>高消费占比 21.8%（TGI 109），愿为品质付费</td><td>中消费 79%，价格敏感，追求性价比与趣味</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 style="margin-top:34px">结构对比 · 打标之后差异更清楚</h2>
+    <div class="cap">左图=内容二级类目 TGI 对比（空白=未进该人群 Top10）· 右图=搜索属性搜索量占比对比</div>
+
+    <div class="box">
+      <h3>打标后的两个结构差异</h3>
+      <p><b>① 内容侧：同一个美食大类，两种内容逻辑。</b>红酸汤人群的 TGI 峰值全在「做菜」（测评 375 / 展示 311 / 探店 271 / 教程 247），黄番茄人群的峰值全在「看热闹」（吃播 1121 / 搞笑 429 / 二次元 270 / 游戏 258）——<em>唯一的交集是「美食测评」，两边都进 Top10</em>。</p>
+      <p><b>② 搜索侧：一个在找答案，一个在追热点。</b>红酸汤纯品类词占 83% 且产地词 TGI 最高；黄番茄活动+IP 词占 17.4% 且品类词里混着娱乐词——<em>红酸汤做搜索承接，黄番茄做内容引爆</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>内容兴趣 TGI 对比（二级类目）</h4><div class="ccbox" id="p_c2"></div></div>
+      <div class="chartcard"><h4>搜索属性结构对比（词量占比）</h4><div class="ccbox" id="p_attr"></div></div>
+    </div>
+
+    <h2 style="margin-top:34px">推品打法 · 一个品一套话术</h2>
+    <div class="cap">基于以上差异，给两个品各自的推品动作</div>
+
+    <div class="vs">
+      <div class="side l">
+        <h4>红酸汤 · 对「会做饭的人」讲正宗和做法</h4>
+        <ul>
+          <li><b>内容主线：</b>做法教程 + 配菜方案。接住「酸汤火锅配菜推荐」「红酸汤怎么做」这类搜索，笔记直接回答怎么做。</li>
+          <li><b>人群钩子：</b>一人食晚餐、宝宝辅食不辣汤底、减脂水煮菜——把妈妈和独居青年的场景做透。</li>
+          <li><b>渠道建议：</b>美食教程类 KOL（人群 KOL 偏好第一是美食 79%）；商超渠道素材突出「山姆/盒马同款品质感」。</li>
+          <li><b>搜索布局：</b>酸汤火锅、贵州酸汤底料、红酸汤米线等高 TGI 词根优先覆盖。</li>
+        </ul>
+      </div>
+      <div class="mid">VS</div>
+      <div class="side r">
+        <h4>黄番茄 · 对「爱看热闹的人」先娱乐后种草</h4>
+        <ul>
+          <li><b>内容主线：</b>IP/梗内容 + 挑战话题。蹭吃播、解压、游戏 IP 的流量，把「不辣的番茄火锅」做成内容梗，而不是产品介绍。</li>
+          <li><b>人群钩子：</b>抗氧抗炎、轻负担、无辣火锅——把健康点包装成「轻松生活方式」而非功效宣称。</li>
+          <li><b>渠道建议：</b>搞笑/游戏/二次元类 KOL（人群偏好 TGI 199~277）；避开严肃菜谱博主。</li>
+          <li><b>搜索布局：</b>当前产品词量小，先做「黄番茄火锅底料」这个词的占位，配合娱乐内容把它搜热。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>一页话术卡 · 推品时直接用</h3>
+      <p><b>红酸汤一句话：</b>「给认真做饭的你——正宗贵州发酵酸汤，今晚的汤饭/米线/火锅就它了。」</p>
+      <p><b>黄番茄一句话：</b>「不辣的火锅也很好吃——看吃播刷到的番茄锅，抗氧轻负担，年轻人先冲为敬。」</p>
+      <p style="margin-top:8px"><span class="hl">共同提醒：</span>两个人群未婚占六成、女性占八成五以上——<em>任何带家庭大锅饭叙事、男性视角内容都低效</em>；红酸汤的妈妈人群是增量，黄番茄的 IP 人群是杠杆，别互相套用。</p>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <b>数据说明</b>：人群画像与热门搜索词来自两品人群包导出（RedBI），本页为商家外发版——<b>人群规模、搜索量等绝对值已模糊为量级/档位</b>，占比与 TGI 为相对指标原样保留 · 搜索端窗口近90天 · TGI&gt;100 表示该人群相对全体用户显著偏好 · 内容兴趣类目层级来自人群画像导出，搜索词条属性为平台原生打标、吃法词根为人工归类 · 生成于 2026-10-22
+</div>
+
+</div>
+
+<script>
+/* ---------- Data ---------- */
+var D = {"rht": {"total": 798536, "gender": [{"性别": "女", "占比": "88.20%", "tgi": 134.28}, {"性别": "男", "占比": "11.81%", "tgi": 34.58}], "age": [{"用户年龄": "19-22", "占比": "15.39%", "tgi": 103.72}, {"用户年龄": "23-25", "占比": "18.52%", "tgi": 173.24}, {"用户年龄": "26-30", "占比": "28.80%", "tgi": 173.73}, {"用户年龄": "31-35", "占比": "16.66%", "tgi": 124.01}, {"用户年龄": "36-40", "占比": "9.82%", "tgi": 83.8}, {"用户年龄": "41以上", "占比": "10.84%", "tgi": 51.07}], "marry": [{"婚恋状态": "未婚", "占比": "61.71%", "tgi": 115.73}, {"婚恋状态": "已婚", "占比": "38.30%", "tgi": 103.97}], "city": [{"城市等级": "一线", "占比": "16.08%", "tgi": 130.05}, {"城市等级": "新一线", "占比": "25.03%", "tgi": 118.17}, {"城市等级": "二线", "占比": "21.02%", "tgi": 109.39}, {"城市等级": "三线", "占比": "14.87%", "tgi": 83.21}, {"城市等级": "四线", "占比": "12.07%", "tgi": 75.78}, {"城市等级": "五线", "占比": "6.88%", "tgi": 69.83}], "region": [{"地域分布": "上海", "占比": "4.34%", "行业tgi": 0.0, "tgi": 123.93}, {"地域分布": "北京", "占比": "3.91%", "行业tgi": 0.0, "tgi": 119.99}, {"地域分布": "广州", "占比": "3.56%", "行业tgi": 0.0, "tgi": 123.22}, {"地域分布": "成都", "占比": "3.31%", "行业tgi": 0.0, "tgi": 131.64}, {"地域分布": "深圳", "占比": "3.08%", "行业tgi": 0.0, "tgi": 114.07}, {"地域分布": "重庆", "占比": "2.78%", "行业tgi": 0.0, "tgi": 122.89}, {"地域分布": "杭州", "占比": "2.45%", "行业tgi": 0.0, "tgi": 120.67}, {"地域分布": "西安", "占比": "1.94%", "行业tgi": 0.0, "tgi": 130.75}, {"地域分布": "武汉", "占比": "1.72%", "行业tgi": 0.0, "tgi": 102.54}, {"地域分布": "贵阳", "占比": "1.61%", "行业tgi": 0.0, "tgi": 280.3}], "consume": [{"消费行为": "中消费", "占比": "73.08%", "tgi": 100.03}, {"消费行为": "高消费", "占比": "21.79%", "tgi": 109.22}, {"消费行为": "低消费", "占比": "5.14%", "tgi": 73.46}], "crowd": [{"二十大人群": "短逃离自愈派", "占比": "10.34%", "行业tgi": 0.0, "tgi": 593.8}, {"二十大人群": "好孕预备役", "占比": "5.87%", "行业tgi": 0.0, "tgi": 493.07}, {"二十大人群": "轻松健体派", "占比": "17.49%", "行业tgi": 0.0, "tgi": 482.18}, {"二十大人群": "高能青年", "占比": "9.02%", "行业tgi": 0.0, "tgi": 463.11}, {"二十大人群": "娇宠彼得潘", "占比": "11.56%", "行业tgi": 0.0, "tgi": 433.81}, {"二十大人群": "精养奢美族", "占比": "13.03%", "行业tgi": 0.0, "tgi": 422.3}, {"二十大人群": "寻乐运动派", "占比": "12.47%", "行业tgi": 0.0, "tgi": 422.22}, {"二十大人群": "美养佳人", "占比": "18.61%", "行业tgi": 0.0, "tgi": 417.06}, {"二十大人群": "松驰爸妈", "占比": "19.50%", "行业tgi": 0.0, "tgi": 410.73}, {"二十大人群": "心灵远行客", "占比": "13.57%", "行业tgi": 0.0, "tgi": 410.04}], "content_kw": [{"关键词": "火锅", "占比": "8.82%", "行业tgi": 0.0, "tgi": 1016.53}, {"关键词": "一人食", "占比": "17.54%", "行业tgi": 0.0, "tgi": 868.44}, {"关键词": "晚餐", "占比": "5.11%", "行业tgi": 0.0, "tgi": 701.13}, {"关键词": "低热量", "占比": "5.73%", "行业tgi": 0.0, "tgi": 641.92}, {"关键词": "减脂餐", "占比": "9.17%", "行业tgi": 0.0, "tgi": 627.85}, {"关键词": "食谱", "占比": "6.79%", "行业tgi": 0.0, "tgi": 482.99}, {"关键词": "超市", "占比": "5.19%", "行业tgi": 0.0, "tgi": 467.4}, {"关键词": "减脂", "占比": "15.25%", "行业tgi": 0.0, "tgi": 456.3}, {"关键词": "小吃", "占比": "5.17%", "行业tgi": 0.0, "tgi": 430.48}, {"关键词": "早餐", "占比": "9.89%", "行业tgi": 0.0, "tgi": 426.78}], "search_pref": [{"搜索词": "贵州酸汤", "占比": "0.82%", "tgi": 14762.72}, {"搜索词": "贵州酸汤火锅", "占比": "1.09%", "tgi": 11365.62}, {"搜索词": "酸汤火锅", "占比": "1.16%", "tgi": 11325.56}, {"搜索词": "青云市集", "占比": "1.38%", "tgi": 4173.39}, {"搜索词": "黔灵山公园", "占比": "1.15%", "tgi": 3980.14}, {"搜索词": "贵阳美食推荐", "占比": "0.80%", "tgi": 3590.11}, {"搜索词": "番茄牛肉", "占比": "0.78%", "tgi": 3353.62}, {"搜索词": "贵阳美食", "占比": "1.04%", "tgi": 3163.36}, {"搜索词": "千户苗寨", "占比": "0.92%", "tgi": 2998.81}, {"搜索词": "豆米火锅", "占比": "0.79%", "tgi": 2588.54}], "kol": [{"kol标签": "美食", "占比": "79.11%", "tgi": 170.13}, {"kol标签": "时尚", "占比": "56.26%", "tgi": 155.59}, {"kol标签": "生活记录", "占比": "48.44%", "tgi": 121.91}, {"kol标签": "娱乐", "占比": "38.28%", "tgi": 117.03}, {"kol标签": "美妆", "占比": "36.53%", "tgi": 138.24}, {"kol标签": "家居家装", "占比": "30.15%", "tgi": 128.71}, {"kol标签": "旅游", "占比": "25.12%", "tgi": 125.59}, {"kol标签": "兴趣爱好", "占比": "24.78%", "tgi": 93.3}, {"kol标签": "教育", "占比": "24.03%", "tgi": 107.31}, {"kol标签": "母婴", "占比": "23.50%", "tgi": 140.28}], "brand": [{"品牌": "沃集鲜", "占比": "5.76%", "tgi": 483.17}, {"品牌": "盒马", "占比": "14.31%", "tgi": 442.05}, {"品牌": "沃尔玛", "占比": "8.46%", "tgi": 432.84}, {"品牌": "Member's Mark", "占比": "9.92%", "tgi": 422.8}, {"品牌": "喜茶", "占比": "8.07%", "tgi": 307.69}, {"品牌": "古茗", "占比": "8.90%", "tgi": 292.7}, {"品牌": "山姆会员商店", "占比": "33.19%", "tgi": 292.27}, {"品牌": "海底捞", "占比": "15.60%", "tgi": 291.01}], "kids": [{"孩子年龄": "备孕", "占比": "12.39%", "tgi": 170.04}, {"孩子年龄": "孕早期", "占比": "5.03%", "tgi": 99.26}, {"孩子年龄": "孕晚期", "占比": "5.35%", "tgi": 118.36}, {"孩子年龄": "0-3月", "占比": "6.93%", "tgi": 136.73}, {"孩子年龄": "4-6月", "占比": "3.16%", "tgi": 76.12}, {"孩子年龄": "7-9月", "占比": "11.46%", "tgi": 261.31}, {"孩子年龄": "10-12月", "占比": "5.20%", "tgi": 144.88}, {"孩子年龄": "13-24月", "占比": "16.27%", "tgi": 138.14}, {"孩子年龄": "25-36月", "占比": "9.44%", "tgi": 97.96}, {"孩子年龄": "4-6岁", "占比": "11.55%", "tgi": 64.86}, {"孩子年龄": "7-12岁", "占比": "13.29%", "tgi": 49.65}], "factors": [{"决策因子": "省油", "占比": "5.97%", "tgi": 567.91}, {"决策因子": "加热方式", "占比": "14.21%", "tgi": 550.95}, {"决策因子": "防溅", "占比": "5.84%", "tgi": 470.02}, {"决策因子": "潮流IP", "占比": "0.86%", "tgi": 458.96}, {"决策因子": "厨艺大神", "占比": "41.92%", "tgi": 452.67}, {"决策因子": "健康", "占比": "16.44%", "tgi": 446.84}, {"决策因子": "深夜食堂", "占比": "0.76%", "tgi": 442.7}, {"决策因子": "保冷", "占比": "10.60%", "tgi": 442.53}]}, "ht": {"total": 62888, "gender": [{"性别": "女", "占比": "85.62%", "tgi": 130.36}, {"性别": "男", "占比": "14.39%", "tgi": 42.13}], "age": [{"用户年龄": "19-22", "占比": "20.79%", "tgi": 140.08}, {"用户年龄": "23-25", "占比": "15.10%", "tgi": 141.23}, {"用户年龄": "26-30", "占比": "19.36%", "tgi": 116.78}, {"用户年龄": "31-35", "占比": "14.04%", "tgi": 104.48}, {"用户年龄": "36-40", "占比": "14.81%", "tgi": 126.32}, {"用户年龄": "41以上", "占比": "15.94%", "tgi": 75.14}], "marry": [{"婚恋状态": "未婚", "占比": "61.60%", "tgi": 115.51}, {"婚恋状态": "已婚", "占比": "38.41%", "tgi": 104.29}], "city": [{"城市等级": "一线", "占比": "16.08%", "tgi": 130.06}, {"城市等级": "新一线", "占比": "21.40%", "tgi": 101.05}, {"城市等级": "二线", "占比": "18.04%", "tgi": 93.86}, {"城市等级": "三线", "占比": "17.29%", "tgi": 96.77}, {"城市等级": "四线", "占比": "14.00%", "tgi": 87.92}, {"城市等级": "五线", "占比": "8.27%", "tgi": 83.94}], "region": [{"地域分布": "上海", "占比": "6.24%", "行业tgi": 0.0, "tgi": 178.38}, {"地域分布": "北京", "占比": "4.16%", "行业tgi": 0.0, "tgi": 127.65}, {"地域分布": "长沙", "占比": "3.44%", "行业tgi": 0.0, "tgi": 263.79}, {"地域分布": "深圳", "占比": "2.27%", "行业tgi": 0.0, "tgi": 84.0}, {"地域分布": "广州", "占比": "2.25%", "行业tgi": 0.0, "tgi": 78.0}, {"地域分布": "成都", "占比": "1.84%", "行业tgi": 0.0, "tgi": 73.26}, {"地域分布": "杭州", "占比": "1.84%", "行业tgi": 0.0, "tgi": 90.61}, {"地域分布": "武汉", "占比": "1.61%", "行业tgi": 0.0, "tgi": 95.44}, {"地域分布": "重庆", "占比": "1.58%", "行业tgi": 0.0, "tgi": 69.51}, {"地域分布": "苏州", "占比": "1.47%", "行业tgi": 0.0, "tgi": 93.32}], "consume": [{"消费行为": "中消费", "占比": "79.00%", "tgi": 108.13}, {"消费行为": "高消费", "占比": "16.61%", "tgi": 83.26}, {"消费行为": "低消费", "占比": "4.40%", "tgi": 62.86}], "crowd": [{"二十大人群": "野趣探索家", "占比": "31.91%", "行业tgi": 0.0, "tgi": 800.04}, {"二十大人群": "积进式父母", "占比": "12.05%", "行业tgi": 0.0, "tgi": 666.11}, {"二十大人群": "好动局内人", "占比": "30.74%", "行业tgi": 0.0, "tgi": 599.47}, {"二十大人群": "品质感官控", "占比": "26.91%", "行业tgi": 0.0, "tgi": 466.73}, {"二十大人群": "自在户外", "占比": "52.47%", "行业tgi": 0.0, "tgi": 386.26}, {"二十大人群": "线条雕塑家", "占比": "15.74%", "行业tgi": 0.0, "tgi": 356.51}, {"二十大人群": "家有萌宠", "占比": "71.71%", "行业tgi": 0.0, "tgi": 353.44}, {"二十大人群": "弄潮先锋", "占比": "11.57%", "行业tgi": 0.0, "tgi": 343.72}, {"二十大人群": "心灵奇旅", "占比": "63.80%", "行业tgi": 0.0, "tgi": 342.41}, {"二十大人群": "挑战极限者", "占比": "2.01%", "行业tgi": 0.0, "tgi": 337.42}], "content_kw": [{"关键词": "吃货", "占比": "5.97%", "行业tgi": 0.0, "tgi": 1806.14}, {"关键词": "吃播", "占比": "27.10%", "行业tgi": 0.0, "tgi": 1322.58}, {"关键词": "asmr", "占比": "7.52%", "行业tgi": 0.0, "tgi": 749.55}, {"关键词": "配音", "占比": "6.18%", "行业tgi": 0.0, "tgi": 658.04}, {"关键词": "翻唱", "占比": "5.38%", "行业tgi": 0.0, "tgi": 633.38}, {"关键词": "助眠", "占比": "4.09%", "行业tgi": 0.0, "tgi": 623.49}, {"关键词": "我的世界", "占比": "11.85%", "行业tgi": 0.0, "tgi": 590.07}, {"关键词": "解压", "占比": "31.02%", "行业tgi": 0.0, "tgi": 586.01}, {"关键词": "派对", "占比": "22.26%", "行业tgi": 0.0, "tgi": 505.48}, {"关键词": "动漫推荐", "占比": "7.78%", "行业tgi": 0.0, "tgi": 496.87}], "search_pref": [{"搜索词": "汉堡节上海", "占比": "1.67%", "tgi": 5216.27}, {"搜索词": "上海汉堡节", "占比": "1.28%", "tgi": 4821.77}, {"搜索词": "汉堡节", "占比": "1.10%", "tgi": 3656.99}, {"搜索词": "吃美食视频", "占比": "3.11%", "tgi": 1808.95}, {"搜索词": "酸奶碗", "占比": "0.57%", "tgi": 1010.07}, {"搜索词": "叶绿体", "占比": "0.50%", "tgi": 915.54}, {"搜索词": "吃播", "占比": "1.95%", "tgi": 817.04}, {"搜索词": "茶汤", "占比": "1.08%", "tgi": 573.77}, {"搜索词": "甲乙丙丁", "占比": "0.62%", "tgi": 555.16}, {"搜索词": "画画", "占比": "0.60%", "tgi": 395.11}], "kol": [{"kol标签": "美食", "占比": "72.87%", "tgi": 156.71}, {"kol标签": "生活记录", "占比": "53.97%", "tgi": 135.83}, {"kol标签": "兴趣爱好", "占比": "43.47%", "tgi": 163.67}, {"kol标签": "二次元", "占比": "42.65%", "tgi": 199.69}, {"kol标签": "娱乐", "占比": "42.39%", "tgi": 129.62}, {"kol标签": "游戏", "占比": "41.02%", "tgi": 229.41}, {"kol标签": "时尚", "占比": "36.13%", "tgi": 99.93}, {"kol标签": "搞笑", "占比": "29.52%", "tgi": 277.31}, {"kol标签": "宠物", "占比": "29.29%", "tgi": 188.76}, {"kol标签": "美妆", "占比": "27.66%", "tgi": 104.66}], "brand": [{"品牌": "小猪佩奇", "占比": "7.32%", "tgi": 589.61}, {"品牌": "小马宝莉", "占比": "3.85%", "tgi": 450.37}, {"品牌": "我的世界", "占比": "20.00%", "tgi": 424.36}, {"品牌": "蛋仔派对", "占比": "23.66%", "tgi": 414.47}, {"品牌": "逆水寒", "占比": "3.80%", "tgi": 383.19}, {"品牌": "初音未来", "占比": "3.86%", "tgi": 361.41}, {"品牌": "画世界", "占比": "3.67%", "tgi": 360.07}, {"品牌": "光·遇", "占比": "4.30%", "tgi": 343.42}], "kids": [{"孩子年龄": "备孕", "占比": "9.31%", "tgi": 127.71}, {"孩子年龄": "孕早期", "占比": "4.73%", "tgi": 93.38}, {"孩子年龄": "孕晚期", "占比": "4.06%", "tgi": 89.67}, {"孩子年龄": "0-3月", "占比": "4.34%", "tgi": 85.68}, {"孩子年龄": "4-6月", "占比": "2.53%", "tgi": 60.94}, {"孩子年龄": "7-9月", "占比": "4.09%", "tgi": 93.32}, {"孩子年龄": "10-12月", "占比": "2.61%", "tgi": 72.58}, {"孩子年龄": "13-24月", "占比": "12.74%", "tgi": 108.16}, {"孩子年龄": "25-36月", "占比": "10.34%", "tgi": 107.33}, {"孩子年龄": "4-6岁", "占比": "11.27%", "tgi": 63.26}, {"孩子年龄": "7-12岁", "占比": "34.04%", "tgi": 127.21}], "factors": [{"决策因子": "生日节日", "占比": "3.03%", "tgi": 572.55}, {"决策因子": "虚拟偶像类", "占比": "2.53%", "tgi": 567.88}, {"决策因子": "极限运动", "占比": "8.81%", "tgi": 491.51}, {"决策因子": "抗氧抗炎", "占比": "79.46%", "tgi": 484.67}, {"决策因子": "同龄社交", "占比": "0.01%", "tgi": 462.5}, {"决策因子": "竞技游戏", "占比": "12.86%", "tgi": 461.63}, {"决策因子": "国际高端小众品牌", "占比": "0.78%", "tgi": 455.03}, {"决策因子": "虚拟偶像", "占比": "3.12%", "tgi": 446.88}]}, "rht_words": [{"搜索词": "糖醋排骨", "词条属性": "品类_产品", "搜索量n": 68827, "周期搜索排名": 1, "TGI": "837.48%", "tgi_v": 837.48}, {"搜索词": "火锅", "词条属性": "品类_产品", "搜索量n": 61577, "周期搜索排名": 2, "TGI": "1174.88%", "tgi_v": 1174.88}, {"搜索词": "麻辣香锅", "词条属性": "品类_产品", "搜索量n": 48544, "周期搜索排名": 3, "TGI": "977.16%", "tgi_v": 977.16}, {"搜索词": "面条", "词条属性": "品类_产品", "搜索量n": 37215, "周期搜索排名": 4, "TGI": "1011.70%", "tgi_v": 1011.7}, {"搜索词": "贵州蘸水", "词条属性": "地区_产地,品类_产品", "搜索量n": 31527, "周期搜索排名": 5, "TGI": "1521.93%", "tgi_v": 1521.93}, {"搜索词": "做饭", "词条属性": "行为_活动", "搜索量n": 30588, "周期搜索排名": 6, "TGI": "937.81%", "tgi_v": 937.81}, {"搜索词": "面条吃法大全", "词条属性": "品类_产品", "搜索量n": 28897, "周期搜索排名": 7, "TGI": "746.41%", "tgi_v": 746.41}, {"搜索词": "面条做法", "词条属性": "品类_产品", "搜索量n": 27471, "周期搜索排名": 8, "TGI": "904.01%", "tgi_v": 904.01}, {"搜索词": "面条的各种吃法大全", "词条属性": "品类_产品", "搜索量n": 27275, "周期搜索排名": 9, "TGI": "811.22%", "tgi_v": 811.22}, {"搜索词": "炸酱面", "词条属性": "品类_产品", "搜索量n": 25971, "周期搜索排名": 10, "TGI": "903.21%", "tgi_v": 903.21}, {"搜索词": "小盐巴", "词条属性": "品类_产品", "搜索量n": 22137, "周期搜索排名": 11, "TGI": "580.03%", "tgi_v": 580.03}, {"搜索词": "咖喱", "词条属性": "品类_产品", "搜索量n": 19203, "周期搜索排名": 12, "TGI": "1225.56%", "tgi_v": 1225.56}, {"搜索词": "糟粕醋", "词条属性": "品类_产品", "搜索量n": 19007, "周期搜索排名": 13, "TGI": "2811.69%", "tgi_v": 2811.69}, {"搜索词": "红酸汤", "词条属性": "品类_产品", "搜索量n": 17200, "周期搜索排名": 14, "TGI": "13935.84%", "tgi_v": 13935.84}, {"搜索词": "玉梦红酸汤", "词条属性": "品类_产品", "搜索量n": 16986, "周期搜索排名": 15, "TGI": "14225.18%", "tgi_v": 14225.18}, {"搜索词": "糖醋排骨做法", "词条属性": "品类_产品", "搜索量n": 16861, "周期搜索排名": 16, "TGI": "389.34%", "tgi_v": 389.34}, {"搜索词": "米粉", "词条属性": "品类_产品", "搜索量n": 15676, "周期搜索排名": 17, "TGI": "1198.04%", "tgi_v": 1198.04}, {"搜索词": "烤红薯", "词条属性": "品类_产品,行为_操作行为", "搜索量n": 15570, "周期搜索排名": 18, "TGI": "1123.23%", "tgi_v": 1123.23}, {"搜索词": "酸汤肥牛", "词条属性": "品类_产品", "搜索量n": 14996, "周期搜索排名": 19, "TGI": "1909.16%", "tgi_v": 1909.16}, {"搜索词": "火锅底料推荐", "词条属性": "品类_产品,行为_交互行为", "搜索量n": 14517, "周期搜索排名": 20, "TGI": "1634.09%", "tgi_v": 1634.09}, {"搜索词": "玉米煮多长时间才能熟", "词条属性": "行为_操作行为,品类_产品", "搜索量n": 13761, "周期搜索排名": 21, "TGI": "639.40%", "tgi_v": 639.4}, {"搜索词": "粉蒸肉", "词条属性": "品类_产品", "搜索量n": 13427, "周期搜索排名": 22, "TGI": "1066.15%", "tgi_v": 1066.15}, {"搜索词": "打抛饭做法", "词条属性": "品类_产品", "搜索量n": 13292, "周期搜索排名": 23, "TGI": "1257.03%", "tgi_v": 1257.03}, {"搜索词": "米线家常做法", "词条属性": "品类_产品", "搜索量n": 13089, "周期搜索排名": 24, "TGI": "1609.88%", "tgi_v": 1609.88}, {"搜索词": "炒面家常做法", "词条属性": "品类_产品", "搜索量n": 12710, "周期搜索排名": 25, "TGI": "726.65%", "tgi_v": 726.65}, {"搜索词": "酸汤火锅配菜推荐", "词条属性": "行为_交互行为,品类_产品", "搜索量n": 12641, "周期搜索排名": 26, "TGI": "12116.00%", "tgi_v": 12116.0}, {"搜索词": "肉肉大米", "词条属性": "品类_产品", "搜索量n": 11940, "周期搜索排名": 27, "TGI": "861.12%", "tgi_v": 861.12}, {"搜索词": "汤面", "词条属性": "品类_产品", "搜索量n": 11631, "周期搜索排名": 28, "TGI": "1395.99%", "tgi_v": 1395.99}, {"搜索词": "蛋白粉", "词条属性": "品类_产品", "搜索量n": 11615, "周期搜索排名": 29, "TGI": "601.74%", "tgi_v": 601.74}, {"搜索词": "火锅底料", "词条属性": "品类_产品", "搜索量n": 11607, "周期搜索排名": 30, "TGI": "1708.77%", "tgi_v": 1708.77}], "ht_words": [{"搜索词": "做饭", "词条属性": "行为_活动", "搜索量n": 542, "周期搜索排名": 1, "TGI": "1170.06%", "tgi_v": 1170.06}, {"搜索词": "糖醋排骨", "词条属性": "品类_产品", "搜索量n": 516, "周期搜索排名": 2, "TGI": "441.71%", "tgi_v": 441.71}, {"搜索词": "火锅", "词条属性": "品类_产品", "搜索量n": 455, "周期搜索排名": 3, "TGI": "610.93%", "tgi_v": 610.93}, {"搜索词": "紫薯", "词条属性": "品类_产品", "搜索量n": 347, "周期搜索排名": 4, "TGI": "2115.49%", "tgi_v": 2115.49}, {"搜索词": "小盐巴", "词条属性": "品类_产品", "搜索量n": 320, "周期搜索排名": 5, "TGI": "590.20%", "tgi_v": 590.2}, {"搜索词": "萝卜酱", "词条属性": "品类_产品", "搜索量n": 275, "周期搜索排名": 6, "TGI": "3101.19%", "tgi_v": 3101.19}, {"搜索词": "黍", "词条属性": "品类_品种", "搜索量n": 259, "周期搜索排名": 7, "TGI": "4353.88%", "tgi_v": 4353.88}, {"搜索词": "茸米", "词条属性": "品类_产品", "搜索量n": 169, "周期搜索排名": 8, "TGI": "16280.08%", "tgi_v": 16280.08}, {"搜索词": "烤红薯", "词条属性": "行为_操作行为,品类_产品", "搜索量n": 151, "周期搜索排名": 9, "TGI": "765.48%", "tgi_v": 765.48}, {"搜索词": "咸菜", "词条属性": "品类_产品", "搜索量n": 130, "周期搜索排名": 10, "TGI": "3823.73%", "tgi_v": 3823.73}, {"搜索词": "黄豆粉", "词条属性": "品类_产品", "搜索量n": 119, "周期搜索排名": 11, "TGI": "660.18%", "tgi_v": 660.18}, {"搜索词": "噜噜酱到底长什么样", "词条属性": "IP_角色", "搜索量n": 101, "周期搜索排名": 12, "TGI": "4685.24%", "tgi_v": 4685.24}, {"搜索词": "火鸡面新吃法", "词条属性": "品类_产品", "搜索量n": 77, "周期搜索排名": 13, "TGI": "11062.93%", "tgi_v": 11062.93}, {"搜索词": "沉浸吃泡椒局", "词条属性": "IP_游戏", "搜索量n": 71, "周期搜索排名": 14, "TGI": "3923.49%", "tgi_v": 3923.49}, {"搜索词": "黄番茄火锅底料", "词条属性": "品类_产品", "搜索量n": 71, "周期搜索排名": 15, "TGI": "91351.03%", "tgi_v": 91351.03}, {"搜索词": "糯糯米粒", "词条属性": "气味/味道_口感,品类_产品", "搜索量n": 71, "周期搜索排名": 16, "TGI": "531.80%", "tgi_v": 531.8}, {"搜索词": "用白子做面条", "词条属性": "品类_产品", "搜索量n": 66, "周期搜索排名": 17, "TGI": "3211853.42%", "tgi_v": 3211853.42}, {"搜索词": "糖醋排骨做法", "词条属性": "品类_产品", "搜索量n": 66, "周期搜索排名": 18, "TGI": "107.46%", "tgi_v": 107.46}, {"搜索词": "底料工厂最新", "词条属性": "场所", "搜索量n": 48, "周期搜索排名": 19, "TGI": "2378606.88%", "tgi_v": 2378606.88}, {"搜索词": "春卷皮火鸡面", "词条属性": "品类_产品", "搜索量n": 45, "周期搜索排名": 20, "TGI": "17788.73%", "tgi_v": 17788.73}, {"搜索词": "七岁那年我去买酱油", "词条属性": "品类_产品,行为_操作行为", "搜索量n": 45, "周期搜索排名": 21, "TGI": "4854.67%", "tgi_v": 4854.67}, {"搜索词": "火锅底料源头工厂", "词条属性": "场所,品类_产品", "搜索量n": 40, "周期搜索排名": 22, "TGI": "23187.18%", "tgi_v": 23187.18}, {"搜索词": "烟薯", "词条属性": "品类_产品", "搜索量n": 37, "周期搜索排名": 23, "TGI": "1988.18%", "tgi_v": 1988.18}, {"搜索词": "打抛饭做法", "词条属性": "品类_产品", "搜索量n": 34, "周期搜索排名": 24, "TGI": "228.86%", "tgi_v": 228.86}, {"搜索词": "吃湿酸软糖", "词条属性": "品类_产品,行为_操作行为", "搜索量n": 34, "周期搜索排名": 25, "TGI": "15342.15%", "tgi_v": 15342.15}, {"搜索词": "火鸡面酱挑战吸汁", "词条属性": "品类_产品,功能/功效_产品功能", "搜索量n": 34, "周期搜索排名": 26, "TGI": "1241.45%", "tgi_v": 1241.45}, {"搜索词": "真真酱", "词条属性": "IP_角色", "搜索量n": 34, "周期搜索排名": 27, "TGI": "867.79%", "tgi_v": 867.79}, {"搜索词": "麻辣香锅", "词条属性": "品类_产品", "搜索量n": 32, "周期搜索排名": 28, "TGI": "44.97%", "tgi_v": 44.97}, {"搜索词": "红油捞汁小海鲜", "词条属性": "品类_产品", "搜索量n": 32, "周期搜索排名": 29, "TGI": "18311.06%", "tgi_v": 18311.06}, {"搜索词": "吃饭", "词条属性": "行为_活动", "搜索量n": 32, "周期搜索排名": 30, "TGI": "135.34%", "tgi_v": 135.34}], "rht_content_L1": [{"name": "美食", "pct": 80.15, "tgi": 221, "level": "L1"}, {"name": "娱乐", "pct": 47.94, "tgi": 158, "level": "L1"}, {"name": "生活记录", "pct": 43.05, "tgi": 115, "level": "L1"}, {"name": "时尚", "pct": 31.76, "tgi": 142, "level": "L1"}, {"name": "影视", "pct": 31.68, "tgi": 154, "level": "L1"}, {"name": "美妆", "pct": 23.52, "tgi": 137, "level": "L1"}, {"name": "旅游", "pct": 22.41, "tgi": 163, "level": "L1"}, {"name": "家居家装", "pct": 19.99, "tgi": 137, "level": "L1"}, {"name": "教育", "pct": 13.84, "tgi": 84, "level": "L1"}, {"name": "职场", "pct": 13.57, "tgi": 109, "level": "L1"}, {"name": "医疗健康", "pct": 13.21, "tgi": 154, "level": "L1"}, {"name": "宠物", "pct": 12.5, "tgi": 128, "level": "L1"}, {"name": "母婴", "pct": 11.65, "tgi": 140, "level": "L1"}, {"name": "兴趣爱好", "pct": 11.41, "tgi": 57, "level": "L1"}, {"name": "科技数码", "pct": 10.87, "tgi": 100, "level": "L1"}, {"name": "游戏", "pct": 10.15, "tgi": 69, "level": "L1"}, {"name": "情感", "pct": 9.83, "tgi": 102, "level": "L1"}, {"name": "健身减肥", "pct": 8.1, "tgi": 165, "level": "L1"}, {"name": "二次元", "pct": 7.91, "tgi": 53, "level": "L1"}, {"name": "城市出行", "pct": 7.82, "tgi": 114, "level": "L1"}, {"name": "素材", "pct": 7.38, "tgi": 58, "level": "L1"}, {"name": "汽车", "pct": 7.22, "tgi": 89, "level": "L1"}, {"name": "商业财经", "pct": 6.3, "tgi": 113, "level": "L1"}, {"name": "音乐", "pct": 5.17, "tgi": 106, "level": "L1"}, {"name": "体育运动", "pct": 5.14, "tgi": 98, "level": "L1"}, {"name": "潮流", "pct": 4.8, "tgi": 97, "level": "L1"}, {"name": "社科", "pct": 4.29, "tgi": 54, "level": "L1"}, {"name": "萌娃", "pct": 4.14, "tgi": 70, "level": "L1"}, {"name": "人文", "pct": 3.86, "tgi": 58, "level": "L1"}, {"name": "婚嫁", "pct": 3.48, "tgi": 132, "level": "L1"}, {"name": "摄影", "pct": 2.35, "tgi": 81, "level": "L1"}, {"name": "搞笑", "pct": 2.26, "tgi": 36, "level": "L1"}, {"name": "户外", "pct": 2.26, "tgi": 78, "level": "L1"}, {"name": "星座命理", "pct": 1.8, "tgi": 112, "level": "L1"}, {"name": "资讯", "pct": 1.7, "tgi": 80, "level": "L1"}, {"name": "艺术", "pct": 0.63, "tgi": 52, "level": "L1"}], "rht_content_L2": [{"name": "健身减肥-健身饮食", "pct": 1.7, "tgi": 384, "level": "L2"}, {"name": "美食-美食测评", "pct": 3.45, "tgi": 375, "level": "L2"}, {"name": "美食-美食展示", "pct": 22.62, "tgi": 311, "level": "L2"}, {"name": "美食-美食探店", "pct": 21.05, "tgi": 271, "level": "L2"}, {"name": "美食-美食其他", "pct": 4.28, "tgi": 266, "level": "L2"}, {"name": "美食-吃播", "pct": 3.25, "tgi": 262, "level": "L2"}, {"name": "美食-美食教程", "pct": 31.46, "tgi": 247, "level": "L2"}, {"name": "影视-电视（图文）", "pct": 4.04, "tgi": 208, "level": "L2"}, {"name": "母婴-孕产经验", "pct": 3.26, "tgi": 208, "level": "L2"}, {"name": "医疗健康-养生食疗", "pct": 2.65, "tgi": 180, "level": "L2"}], "rht_content_L3": [{"name": "美食-美食测评-速食测评", "pct": 0.97, "tgi": 674, "level": "L3"}, {"name": "美食-美食教程-减肥餐教程", "pct": 4.26, "tgi": 468, "level": "L3"}, {"name": "健身减肥-健身饮食-减脂饮食", "pct": 3.66, "tgi": 381, "level": "L3"}, {"name": "美食-美食测评-零食测评", "pct": 3.0, "tgi": 322, "level": "L3"}, {"name": "美食-美食展示-普通美食展示", "pct": 43.03, "tgi": 267, "level": "L3"}, {"name": "美食-美食探店-餐厅探店", "pct": 38.28, "tgi": 266, "level": "L3"}, {"name": "美食-美食教程-菜品教程", "pct": 38.99, "tgi": 257, "level": "L3"}, {"name": "美食-美食测评-饮品测评", "pct": 2.02, "tgi": 254, "level": "L3"}, {"name": "美食-美食教程-面食教程", "pct": 3.03, "tgi": 234, "level": "L3"}, {"name": "影视-电视（图文）-华语剧", "pct": 11.66, "tgi": 212, "level": "L3"}], "rht_cat_L1": [{"name": "互联网", "pct": 24.46, "tgi": 56, "level": "L1"}, {"name": "本地生活", "pct": 14.49, "tgi": 138, "level": "L1"}, {"name": "食品饮料", "pct": 12.14, "tgi": 144, "level": "L1"}, {"name": "出行旅游", "pct": 11.45, "tgi": 80, "level": "L1"}, {"name": "教育培训", "pct": 6.08, "tgi": 35, "level": "L1"}, {"name": "母婴", "pct": 3.8, "tgi": 60, "level": "L1"}, {"name": "家居家装", "pct": 3.54, "tgi": 51, "level": "L1"}, {"name": "宠物（新）", "pct": 3.35, "tgi": 53, "level": "L1"}, {"name": "文玩娱乐", "pct": 3.34, "tgi": 34, "level": "L1"}, {"name": "医疗健康", "pct": 3.04, "tgi": 56, "level": "L1"}, {"name": "美妆个护", "pct": 2.93, "tgi": 56, "level": "L1"}, {"name": "3C数码", "pct": 1.89, "tgi": 37, "level": "L1"}, {"name": "汽车出行", "pct": 1.66, "tgi": 38, "level": "L1"}, {"name": "影像婚美", "pct": 1.62, "tgi": 39, "level": "L1"}, {"name": "服饰鞋包", "pct": 1.32, "tgi": 36, "level": "L1"}, {"name": "房地产", "pct": 0.98, "tgi": 40, "level": "L1"}], "rht_cat_L2": [{"name": "贵州", "pct": 3.44, "tgi": 993, "level": "L3"}, {"name": "贵阳游", "pct": 2.09, "tgi": 906, "level": "L4"}, {"name": "黄果树游", "pct": 1.26, "tgi": 795, "level": "L4"}, {"name": "线下零售", "pct": 2.4, "tgi": 305, "level": "L2"}, {"name": "超市", "pct": 3.73, "tgi": 302, "level": "L3"}, {"name": "方便速食", "pct": 1.23, "tgi": 196, "level": "L2"}, {"name": "蔬菜", "pct": 8.52, "tgi": 175, "level": "L4"}, {"name": "水果蔬菜", "pct": 3.7, "tgi": 174, "level": "L3"}, {"name": "即食/速冻食品", "pct": 1.38, "tgi": 169, "level": "L3"}, {"name": "粮油调味", "pct": 1.57, "tgi": 168, "level": "L2"}], "rht_search_attr": [{"c": "IP/角色", "n": 3, "v": 6395, "share": 0.3}, {"c": "其他", "n": 1, "v": 8488, "share": 0.3}, {"c": "品类+产地", "n": 20, "v": 99552, "share": 3.9}, {"c": "品类+行为", "n": 58, "v": 258562, "share": 10.2}, {"c": "活动", "n": 3, "v": 47921, "share": 1.9}, {"c": "纯品类", "n": 413, "v": 2099560, "share": 83.0}, {"c": "行为", "n": 2, "v": 9798, "share": 0.4}], "rht_search_attr_top": {"纯品类": [{"w": "糖醋排骨", "v": 68827, "tgi": 837}, {"w": "火锅", "v": 61577, "tgi": 1175}, {"w": "麻辣香锅", "v": 48544, "tgi": 977}, {"w": "面条", "v": 37215, "tgi": 1012}, {"w": "面条吃法大全", "v": 28897, "tgi": 746}], "品类+行为": [{"w": "烤红薯", "v": 15570, "tgi": 1123}, {"w": "火锅底料推荐", "v": 14517, "tgi": 1634}, {"w": "玉米煮多长时间才能熟", "v": 13761, "tgi": 639}, {"w": "酸汤火锅配菜推荐", "v": 12641, "tgi": 12116}, {"w": "火鸡面怎么煮好吃", "v": 11263, "tgi": 667}], "品类+产地": [{"w": "贵州蘸水", "v": 31527, "tgi": 1522}, {"w": "贵州酸汤底料推荐", "v": 9641, "tgi": 11601}, {"w": "贵州酸汤米粉", "v": 7749, "tgi": 9935}, {"w": "贵州红酸汤米粉", "v": 7326, "tgi": 11105}, {"w": "最美疆新疆炒米粉", "v": 4434, "tgi": 1186}], "IP/角色": [{"w": "莎莎酱", "v": 2744, "tgi": 1424}, {"w": "柱侯酱", "v": 1971, "tgi": 1146}, {"w": "真真酱", "v": 1680, "tgi": 602}], "活动": [{"w": "做饭", "v": 30588, "tgi": 938}, {"w": "吃饭", "v": 11414, "tgi": 692}, {"w": "拉条子", "v": 5919, "tgi": 1476}]}, "rht_word_roots": [{"root": "其他", "n": 359, "v": 1483889, "share": 60.4}, {"root": "面条", "n": 46, "v": 333628, "share": 13.6}, {"root": "大菜硬菜", "n": 39, "v": 241526, "share": 9.8}, {"root": "火锅香锅", "n": 26, "v": 239382, "share": 9.7}, {"root": "酸汤贵州", "n": 20, "v": 156114, "share": 6.4}, {"root": "烘焙甜品", "n": 1, "v": 3135, "share": 0.1}], "rht_root_top": {"其他": [{"w": "小盐巴", "v": 22137}, {"w": "咖喱", "v": 19203}, {"w": "糟粕醋", "v": 19007}, {"w": "米粉", "v": 15676}, {"w": "烤红薯", "v": 15570}], "面条": [{"w": "面条", "v": 37215}, {"w": "面条吃法大全", "v": 28897}, {"w": "面条做法", "v": 27471}, {"w": "面条的各种吃法大全", "v": 27275}, {"w": "炸酱面", "v": 25971}], "大菜硬菜": [{"w": "糖醋排骨", "v": 68827}, {"w": "糖醋排骨做法", "v": 16861}, {"w": "糖醋排骨家常菜做法", "v": 11348}, {"w": "火鸡面怎么煮好吃", "v": 11263}, {"w": "糖醋排骨怎么做", "v": 9443}], "火锅香锅": [{"w": "火锅", "v": 61577}, {"w": "麻辣香锅", "v": 48544}, {"w": "火锅底料推荐", "v": 14517}, {"w": "酸汤火锅配菜推荐", "v": 12641}, {"w": "火锅底料", "v": 11607}], "酸汤贵州": [{"w": "贵州蘸水", "v": 31527}, {"w": "红酸汤", "v": 17200}, {"w": "玉梦红酸汤", "v": 16986}, {"w": "酸汤肥牛", "v": 14996}, {"w": "贵州酸汤底料推荐", "v": 9641}], "烘焙甜品": [{"w": "蒜头酥", "v": 3135}]}, "ht_content_L1": [{"name": "美食", "pct": 63.78, "tgi": 176, "level": "L1"}, {"name": "生活记录", "pct": 50.24, "tgi": 134, "level": "L1"}, {"name": "娱乐", "pct": 41.15, "tgi": 136, "level": "L1"}, {"name": "兴趣爱好", "pct": 38.98, "tgi": 196, "level": "L1"}, {"name": "二次元", "pct": 36.43, "tgi": 244, "level": "L1"}, {"name": "游戏", "pct": 36.07, "tgi": 245, "level": "L1"}, {"name": "影视", "pct": 29.0, "tgi": 141, "level": "L1"}, {"name": "搞笑", "pct": 24.82, "tgi": 393, "level": "L1"}, {"name": "宠物", "pct": 21.99, "tgi": 225, "level": "L1"}, {"name": "时尚", "pct": 17.38, "tgi": 78, "level": "L1"}, {"name": "美妆", "pct": 15.42, "tgi": 90, "level": "L1"}, {"name": "教育", "pct": 10.94, "tgi": 67, "level": "L1"}, {"name": "旅游", "pct": 10.68, "tgi": 77, "level": "L1"}, {"name": "家居家装", "pct": 9.47, "tgi": 65, "level": "L1"}, {"name": "萌娃", "pct": 8.27, "tgi": 139, "level": "L1"}, {"name": "情感", "pct": 8.09, "tgi": 84, "level": "L1"}, {"name": "素材", "pct": 7.23, "tgi": 57, "level": "L1"}, {"name": "科技数码", "pct": 6.58, "tgi": 60, "level": "L1"}, {"name": "职场", "pct": 6.14, "tgi": 49, "level": "L1"}, {"name": "社科", "pct": 5.75, "tgi": 72, "level": "L1"}, {"name": "城市出行", "pct": 5.73, "tgi": 84, "level": "L1"}, {"name": "医疗健康", "pct": 5.59, "tgi": 65, "level": "L1"}, {"name": "母婴", "pct": 5.02, "tgi": 60, "level": "L1"}, {"name": "音乐", "pct": 5.01, "tgi": 103, "level": "L1"}, {"name": "健身减肥", "pct": 3.96, "tgi": 81, "level": "L1"}, {"name": "汽车", "pct": 3.56, "tgi": 44, "level": "L1"}, {"name": "体育运动", "pct": 3.4, "tgi": 65, "level": "L1"}, {"name": "人文", "pct": 3.33, "tgi": 50, "level": "L1"}, {"name": "潮流", "pct": 3.19, "tgi": 65, "level": "L1"}, {"name": "商业财经", "pct": 2.71, "tgi": 49, "level": "L1"}, {"name": "户外", "pct": 1.72, "tgi": 59, "level": "L1"}, {"name": "摄影", "pct": 1.6, "tgi": 55, "level": "L1"}, {"name": "婚嫁", "pct": 1.5, "tgi": 57, "level": "L1"}, {"name": "星座命理", "pct": 1.15, "tgi": 71, "level": "L1"}, {"name": "艺术", "pct": 0.97, "tgi": 80, "level": "L1"}, {"name": "资讯", "pct": 0.71, "tgi": 34, "level": "L1"}, {"name": "其他", "pct": 0.01, "tgi": 66, "level": "L1"}], "ht_content_L2": [{"name": "美食-吃播", "pct": 13.86, "tgi": 1121, "level": "L2"}, {"name": "兴趣爱好-兴趣爱好其他", "pct": 13.72, "tgi": 554, "level": "L2"}, {"name": "搞笑-小剧场", "pct": 20.67, "tgi": 429, "level": "L2"}, {"name": "游戏-主机游戏", "pct": 4.39, "tgi": 327, "level": "L2"}, {"name": "二次元-动漫", "pct": 37.13, "tgi": 270, "level": "L2"}, {"name": "美食-美食测评", "pct": 2.48, "tgi": 269, "level": "L2"}, {"name": "游戏-手机游戏", "pct": 37.02, "tgi": 258, "level": "L2"}, {"name": "宠物-鸟类", "pct": 0.89, "tgi": 251, "level": "L2"}, {"name": "宠物-猫", "pct": 10.99, "tgi": 243, "level": "L2"}, {"name": "二次元-同人衍生", "pct": 5.19, "tgi": 208, "level": "L2"}], "ht_content_L3": [{"name": "游戏-主机游戏-单机游戏", "pct": 7.4, "tgi": 499, "level": "L3"}, {"name": "音乐-演唱翻唱-歌曲翻唱", "pct": 3.94, "tgi": 431, "level": "L3"}, {"name": "美食-美食测评-零食测评", "pct": 3.28, "tgi": 353, "level": "L3"}, {"name": "二次元-动漫-动漫速览", "pct": 1.36, "tgi": 333, "level": "L3"}, {"name": "宠物-猫-晒猫", "pct": 34.76, "tgi": 332, "level": "L3"}, {"name": "二次元-动漫-IP动漫", "pct": 39.94, "tgi": 306, "level": "L3"}, {"name": "宠物-鸟类-鹦鹉", "pct": 1.63, "tgi": 297, "level": "L3"}, {"name": "宠物-啮齿类-仓鼠", "pct": 0.73, "tgi": 266, "level": "L3"}, {"name": "娱乐-舞蹈-舞蹈表演/翻跳", "pct": 13.89, "tgi": 256, "level": "L3"}, {"name": "游戏-主机游戏-主机游戏画面", "pct": 3.24, "tgi": 255, "level": "L3"}], "ht_cat_L1": [{"name": "互联网", "pct": 43.98, "tgi": 100, "level": "L1"}, {"name": "本地生活", "pct": 8.79, "tgi": 84, "level": "L1"}, {"name": "食品饮料", "pct": 8.54, "tgi": 101, "level": "L1"}, {"name": "宠物（新）", "pct": 7.02, "tgi": 112, "level": "L1"}, {"name": "出行旅游", "pct": 6.92, "tgi": 49, "level": "L1"}, {"name": "教育培训", "pct": 5.61, "tgi": 32, "level": "L1"}, {"name": "文玩娱乐", "pct": 4.65, "tgi": 48, "level": "L1"}, {"name": "家居家装", "pct": 2.14, "tgi": 31, "level": "L1"}, {"name": "母婴", "pct": 1.89, "tgi": 30, "level": "L1"}, {"name": "美妆个护", "pct": 1.85, "tgi": 36, "level": "L1"}, {"name": "医疗健康", "pct": 1.65, "tgi": 30, "level": "L1"}, {"name": "3C数码", "pct": 1.41, "tgi": 28, "level": "L1"}, {"name": "汽车出行", "pct": 0.94, "tgi": 22, "level": "L1"}, {"name": "影像婚美", "pct": 0.92, "tgi": 22, "level": "L1"}, {"name": "服饰鞋包", "pct": 0.79, "tgi": 22, "level": "L1"}], "ht_cat_L2": [{"name": "休闲娱乐游戏", "pct": 9.56, "tgi": 237, "level": "L3"}, {"name": "西式快餐(新)", "pct": 0.81, "tgi": 215, "level": "L2"}, {"name": "策略游戏", "pct": 3.98, "tgi": 195, "level": "L3"}, {"name": "生存沙盒游戏", "pct": 4.71, "tgi": 177, "level": "L4"}, {"name": "创意解压", "pct": 1.94, "tgi": 165, "level": "L4"}, {"name": "聚会游戏", "pct": 9.66, "tgi": 161, "level": "L4"}, {"name": "射击游戏", "pct": 3.78, "tgi": 161, "level": "L3"}, {"name": "养宠经验", "pct": 10.19, "tgi": 151, "level": "L2"}, {"name": "养猫经验", "pct": 5.91, "tgi": 146, "level": "L3"}, {"name": "游戏", "pct": 26.29, "tgi": 145, "level": "L2"}], "ht_search_attr": [{"c": "IP/角色", "n": 3, "v": 206, "share": 4.6}, {"c": "其他", "n": 1, "v": 48, "share": 1.1}, {"c": "品类+产地", "n": 1, "v": 32, "share": 0.7}, {"c": "品类+行为", "n": 4, "v": 259, "share": 5.8}, {"c": "活动", "n": 2, "v": 574, "share": 12.8}, {"c": "纯品类", "n": 27, "v": 3369, "share": 75.1}], "ht_search_attr_top": {"纯品类": [{"w": "糖醋排骨", "v": 516, "tgi": 442}, {"w": "火锅", "v": 455, "tgi": 611}, {"w": "紫薯", "v": 347, "tgi": 2115}, {"w": "小盐巴", "v": 320, "tgi": 590}, {"w": "萝卜酱", "v": 275, "tgi": 3101}], "品类+行为": [{"w": "烤红薯", "v": 151, "tgi": 765}, {"w": "七岁那年我去买酱油", "v": 45, "tgi": 4855}, {"w": "吃湿酸软糖", "v": 34, "tgi": 15342}, {"w": "吃泡椒", "v": 29, "tgi": 18885}], "品类+产地": [{"w": "贵州蘸水", "v": 32, "tgi": 108}], "IP/角色": [{"w": "噜噜酱到底长什么样", "v": 101, "tgi": 4685}, {"w": "沉浸吃泡椒局", "v": 71, "tgi": 3923}, {"w": "真真酱", "v": 34, "tgi": 868}], "活动": [{"w": "做饭", "v": 542, "tgi": 1170}, {"w": "吃饭", "v": 32, "tgi": 135}]}, "ht_word_roots": [{"root": "其他", "n": 19, "v": 2168, "share": 59.2}, {"root": "大菜硬菜", "n": 6, "v": 767, "share": 21.0}, {"root": "火锅香锅", "n": 5, "v": 627, "share": 17.1}, {"root": "面条", "n": 1, "v": 66, "share": 1.8}, {"root": "酸汤贵州", "n": 1, "v": 32, "share": 0.9}], "ht_root_top": {"其他": [{"w": "紫薯", "v": 347}, {"w": "小盐巴", "v": 320}, {"w": "萝卜酱", "v": 275}, {"w": "黍", "v": 259}, {"w": "茸米", "v": 169}], "大菜硬菜": [{"w": "糖醋排骨", "v": 516}, {"w": "火鸡面新吃法", "v": 77}, {"w": "糖醋排骨做法", "v": 66}, {"w": "春卷皮火鸡面", "v": 45}, {"w": "火鸡面酱挑战吸汁", "v": 34}], "火锅香锅": [{"w": "火锅", "v": 455}, {"w": "黄番茄火锅底料", "v": 71}, {"w": "火锅底料源头工厂", "v": 40}, {"w": "麻辣香锅", "v": 32}, {"w": "盒马火锅底料", "v": 29}], "面条": [{"w": "用白子做面条", "v": 66}], "酸汤贵州": [{"w": "贵州蘸水", "v": 32}]}, "rht_attr_stat": {"纯品类": {"share": 83.0, "med_tgi": 890, "n": 413}, "品类+行为": {"share": 10.2, "med_tgi": 754, "n": 58}, "品类+产地": {"share": 3.9, "med_tgi": 5023, "n": 20}, "活动": {"share": 1.9, "med_tgi": 938, "n": 3}, "IP/角色": {"share": 0.3, "med_tgi": 1146, "n": 3}, "行为": {"share": 0.4, "med_tgi": 890, "n": 2}, "其他": {"share": 0.3, "med_tgi": 1104, "n": 1}}, "ht_attr_stat": {"纯品类": {"share": 75.1, "med_tgi": 1988, "n": 27}, "品类+行为": {"share": 5.8, "med_tgi": 10098, "n": 4}, "品类+产地": {"share": 0.7, "med_tgi": 108, "n": 1}, "活动": {"share": 12.8, "med_tgi": 653, "n": 2}, "IP/角色": {"share": 4.6, "med_tgi": 3923, "n": 3}, "其他": {"share": 1.1, "med_tgi": 2378607, "n": 1}}};
+function p(s){return parseFloat(String(s).replace('%',''));}
+function tg(v){return (v>=1000? (v/1000).toFixed(1)+'k' : Math.round(v*10)/10);}
+
+/* ---------- KPI ---------- */
+document.getElementById('k1').textContent = '数十万级';
+document.getElementById('k2').textContent = '数万级';
+
+/* ---------- Bars ---------- */
+function bars(id, rows, labKey, valKey, tgiKey, maxN){
+  var el = document.getElementById(id);
+  var mx = maxN || Math.max.apply(null, rows.map(function(r){return p(r[valKey]);}));
+  el.innerHTML = rows.map(function(r){
+    var v = p(r[valKey]);
+    return '<div class="brow"><div class="blab"><span>'+r[labKey]+'</span><b>'+r[valKey]+' · TGI '+tg(r[tgiKey])+'</b></div>'+
+      '<div class="bwrap"><div class="bbar" style="width:'+(v/mx*100).toFixed(1)+'%"></div></div></div>';
+  }).join('');
+}
+/* ---------- 组合图（对齐参考页样式：柱=占比，线=TGI） ---------- */
+var comboRegistry={};
+function regCombo(id,buildFn){comboRegistry[id]={build:buildFn,chart:null};renderCombo(id);}
+function renderCombo(id){
+  var cfg=comboRegistry[id];if(!cfg)return;
+  var el=document.getElementById(id);if(!el||el.offsetWidth===0)return;
+  if(!cfg.chart)cfg.chart=cfg.build(el);else cfg.chart.resize();
+}
+function renderCombos(root){if(!root)return;root.querySelectorAll('.ccbox').forEach(function(x){renderCombo(x.id);});}
+window.addEventListener('resize',function(){Object.keys(comboRegistry).forEach(function(k){if(comboRegistry[k].chart)comboRegistry[k].chart.resize();});});
+
+function comboOpt(el,lbl,pct,tgi,o){
+  o=o||{};
+  var color=o.color||'#8E354A',gold=o.gold||'#CCA352',unit=o.unit==null?'%':o.unit;
+  var hasTgi=tgi&&tgi.some(function(v){return v!==null&&v!==undefined;});
+  var series=[{name:'占比'+(unit==='%'?'%':''),type:'bar',data:pct,barMaxWidth:34,
+    itemStyle:{color:color,borderRadius:[3,3,0,0]},
+    label:{show:true,fontSize:10.5,color:o.outside?'#7a5c1e':'#fff',position:o.outside?'top':'insideTop',fontWeight:600,formatter:function(pp){return pp.value+unit;}}}];
+  var y2={};
+  if(hasTgi){
+    series.push({name:o.tgiName||'TGI',type:'line',yAxisIndex:1,data:tgi,smooth:true,
+      symbol:'circle',symbolSize:7,itemStyle:{color:gold},lineStyle:{color:gold,width:2},
+      label:{show:true,fontSize:10.5,color:'#7a5c1e',fontWeight:600,position:'top',formatter:function(pp){return pp.value==null?'':pp.value;}}});
+    y2={type:'value',splitLine:{show:false},axisLabel:{fontSize:10.5,color:'#8a8a8a'}};
+  }
+  var c=echarts.init(el);
+  c.setOption({animationDuration:400,
+    grid:{left:44,right:44,top:36,bottom:10,containLabel:true},
+    legend:{show:hasTgi,top:0,right:0,itemWidth:12,itemHeight:8,textStyle:{fontSize:11,color:'#666'}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    xAxis:{type:'category',data:lbl,axisLabel:{rotate:o.rot||0,fontSize:10,color:'#666',interval:0,margin:10},axisLine:{lineStyle:{color:'#ddd'}},axisTick:{show:false}},
+    yAxis:[{type:'value',splitLine:{lineStyle:{type:'dashed',color:'#e8e8e8'}},axisLabel:{fontSize:10.5,color:'#8a8a8a',formatter:function(v){return v+unit;}}},y2],
+    series:series});
+  return c;
+}
+function combo2Opt(el,lbl,s1,s2,o){
+  o=o||{};
+  var c=echarts.init(el);
+  c.setOption({animationDuration:400,
+    grid:{left:44,right:20,top:40,bottom:10,containLabel:true},
+    legend:{top:0,right:0,itemWidth:12,itemHeight:8,textStyle:{fontSize:11,color:'#666'}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    xAxis:{type:'category',data:lbl,axisLabel:{rotate:o.rot||20,fontSize:10,color:'#666',interval:0},axisLine:{lineStyle:{color:'#ddd'}},axisTick:{show:false}},
+    yAxis:{type:'value',splitLine:{lineStyle:{type:'dashed',color:'#e8e8e8'}},axisLabel:{fontSize:10.5,color:'#8a8a8a',formatter:function(v){return v+(o.unit||'');}}},
+    series:[
+      {name:s1.name,type:'bar',data:s1.data,barMaxWidth:20,itemStyle:{color:s1.color,borderRadius:[3,3,0,0]}},
+      {name:s2.name,type:'bar',data:s2.data,barMaxWidth:20,itemStyle:{color:s2.color,borderRadius:[3,3,0,0]}}
+    ]});
+  return c;
+}
+
+function cv(rows,labKey,valKey){return rows.map(function(r){return {name:r[labKey],pct:p(r[valKey]),tgi:(r.tgi!==undefined&&r.tgi!==null)?Math.round(r.tgi):null};});}
+function lvl(rows){return rows.map(function(r){return {name:r.name,pct:r.pct,tgi:r.tgi};});}
+function mk(id,rows,o){regCombo(id,function(el){return comboOpt(el,rows.map(function(r){return r.name;}),rows.map(function(r){return r.pct;}),rows.map(function(r){return r.tgi;}),o);});}
+var TOM={color:'#C4622D',gold:'#D9A05B'};
+
+mk('r_g', cv(D.rht.gender,'性别','占比'));
+mk('t_g', cv(D.ht.gender,'性别','占比'), TOM);
+mk('r_c', cv(D.rht.city,'城市等级','占比'));
+mk('t_c', cv(D.ht.city,'城市等级','占比'), TOM);
+
+mk('r_a',cv(D.rht.age,'用户年龄','占比'));
+mk('t_a',cv(D.ht.age,'用户年龄','占比'),TOM);
+mk('r_ck',cv(D.rht.content_kw,'关键词','占比'),{rot:30});
+mk('t_ck',cv(D.ht.content_kw,'关键词','占比'),Object.assign({rot:30},TOM));
+mk('r_cr',cv(D.rht.crowd.slice(0,5),'二十大人群','占比'),{rot:12});
+mk('t_cr',cv(D.ht.crowd.slice(0,5),'二十大人群','占比'),Object.assign({rot:12},TOM));
+mk('r_c2',lvl(D.rht_content_L2),{rot:30});
+mk('r_c3',lvl(D.rht_content_L3),{rot:40});
+mk('t_c2',lvl(D.ht_content_L2),Object.assign({rot:30},TOM));
+mk('t_c3',lvl(D.ht_content_L3),Object.assign({rot:40},TOM));
+
+var AO=['纯品类','品类+行为','品类+产地','活动','IP/角色'];
+mk('r_attr',AO.map(function(k){var s=D.rht_attr_stat[k];return {name:k,pct:Math.round(s.n/500*1000)/10,tgi:s.med_tgi};}),{rot:14,tgiName:'TGI中位数',outside:true});
+mk('t_attr',AO.map(function(k){var s=D.ht_attr_stat[k];return {name:k,pct:Math.round(s.n/38*1000)/10,tgi:null};}),Object.assign({rot:14,outside:true},TOM));
+mk('r_root',D.rht_word_roots.map(function(r){return {name:r.root==='其他'?'其他长尾':r.root,pct:Math.round(r.n/500*1000)/10,tgi:null};}),{outside:true});
+mk('t_root',D.ht_word_roots.map(function(r){return {name:r.root==='其他'?'其他长尾':r.root,pct:Math.round(r.n/38*1000)/10,tgi:null};}),Object.assign({outside:true},TOM));
+
+var P2L=['美食-美食教程','美食-美食展示','美食-美食探店','美食-美食测评','美食-吃播','搞笑-小剧场','二次元-动漫','游戏-手机游戏'];
+var P2R=[247,311,271,375,262,null,null,null];
+var P2H=[null,null,null,269,1121,429,270,258];
+regCombo('p_c2',function(el){return combo2Opt(el,P2L,{name:'红酸汤人群',data:P2R,color:'#8E354A'},{name:'黄番茄人群',data:P2H,color:'#C4622D'},{rot:28});});
+regCombo('p_attr',function(el){return combo2Opt(el,AO,{name:'红酸汤',data:AO.map(function(k){return Math.round(D.rht_attr_stat[k].n/500*1000)/10;}),color:'#8E354A'},{name:'黄番茄',data:AO.map(function(k){return Math.round(D.ht_attr_stat[k].n/38*1000)/10;}),color:'#C4622D'},{rot:0,unit:'%'});});
+
+/* ---------- Search word tables ---------- */
+var SIGNAL = {
+  '红酸汤':'酸汤品类词','玉梦红酸汤':'竞品词','贵州蘸水':'地域风味词','火锅':'通用大菜','糖醋排骨':'通用大菜','麻辣香锅':'通用大菜','面条':'吃法入口','贵州酸汤底料':'酸汤品类词','酸汤火锅做法':'做法词','酸汤火锅配菜推荐':'做法词','红酸汤怎么做':'做法词','黄番茄火锅底料':'本品词','噜噜酱到底长什么样':'IP热点','火鸡面新吃法':'IP热点','底料工厂最新':'本品相关','火锅底料源头工厂':'本品相关','盒马火锅底料':'渠道词'
+};
+function sig(w){return SIGNAL[w]||'';}
+function heat(v){var rank=0;D.rht_words.forEach(function(x){if(x['搜索量n']>v)rank++;});return rank<15?'★★★':(rank<60?'★★':'★');}
+function wordRows(id, words){
+  document.getElementById(id).innerHTML = words.map(function(w,i){
+    return '<tr'+(i%2?' class="tr-alt"':'')+'><td class="num">'+(i+1)+'</td>'+
+    '<td style="font-weight:600;color:var(--ink)">'+w['搜索词']+'</td>'+
+    '<td style="letter-spacing:1px;color:var(--gold)">'+heat(w['搜索量n'])+'</td>'+
+    '<td class="num">'+(w.tgi_v>=10000? Math.round(w.tgi_v/1000)+'k%': Math.round(w.tgi_v).toLocaleString()+'%')+'</td>'+
+    '<td>'+(sig(w['搜索词'])?'<span class="tag" style="background:var(--tint);color:var(--wine)">'+sig(w['搜索词'])+'</span>':'')+'</td></tr>';
+  }).join('');
+}
+wordRows('r_tb', D.rht_words);
+wordRows('t_tb', D.ht_words);
+
+/* ---------- Tabs ---------- */
+function showPane(pid){
+  document.querySelectorAll('.pane').forEach(function(x){x.classList.toggle('on', x.id===pid);});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on', t.dataset.p===pid);});
+  renderCombos(document.getElementById(pid));
+}
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){ showPane(t.dataset.p); });
+});
+</script>
+
+
+</body></html>
