@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南食召 · 红酸汤高成交笔记拆解（商家版）</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--wine:#8E354A;--wine2:#a85a6e;--wine3:#6b2438;--ink:#212b36;--ink2:#37414d;
+--gray:#57626e;--gray2:#77828e;--line:#e2e8ee;--line2:#d2dce5;--paper:#fff;
+--bg:#faf7f7;--tint:#f7eef0;--tint2:#f0e0e4;--gold:#b08d57;--green:#6b9a7a}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+.topbar{background:linear-gradient(135deg,var(--wine3),var(--wine) 55%,var(--wine2));color:#fff;padding:34px 0 30px;margin-bottom:0}
+.topbar .in{max-width:1180px;margin:0 auto;padding:0 20px}
+.topbar h1{font-size:28px;line-height:1.4;font-weight:700;letter-spacing:.5px}
+.topbar h1 u{text-decoration:none;border-bottom:3px solid rgba(255,255,255,.5);padding-bottom:2px}
+.topbar .sub{margin-top:13px;font-size:14.5px;color:rgba(255,255,255,.86);line-height:1.7;max-width:920px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 15px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:.4px}
+.kpi .l{font-size:13px;color:rgba(255,255,255,.9);margin-top:3px}
+.tabs{display:flex;gap:0;background:var(--paper);border-bottom:2px solid var(--line2);position:sticky;top:0;z-index:30;overflow-x:auto}
+.tabs .in{display:flex;max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+.tab{padding:15px 21px;font-size:14.5px;font-weight:600;color:var(--gray);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.18s}
+.tab:hover{color:var(--wine);background:var(--tint)}
+.tab.on{color:var(--wine);border-bottom-color:var(--wine);background:var(--tint)}
+.pane{display:none}.pane.on{display:block}
+.sec{margin-top:30px}
+h2{font-size:20.5px;font-weight:700;color:var(--ink);padding-left:12px;border-left:4px solid var(--wine);margin-bottom:6px}
+.cap{font-size:14px;color:var(--gray);margin:0 0 16px 16px}
+.box{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--wine);border-radius:0 10px 10px 0;padding:16px 18px;margin:16px 0;box-shadow:0 1px 3px rgba(33,43,54,.05)}
+.box h3{font-size:16px;color:var(--wine);margin-bottom:9px;font-weight:700}
+.box p{font-size:14.5px;color:var(--ink2);line-height:1.85;margin-bottom:7px}
+.box p:last-child{margin-bottom:0}
+b{color:var(--wine);font-weight:700}em{color:var(--wine2);font-style:normal;font-weight:600}
+.hl{background:var(--tint2);padding:1px 5px;border-radius:3px;font-weight:600;color:var(--wine3)}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0;font-size:14px}
+th{background:var(--tint);color:var(--wine3);font-weight:700;font-size:13.5px;padding:13px 14px;text-align:left;border-bottom:2px solid var(--line2);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid #eef2f6;text-align:left;color:var(--ink2);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--tint)}
+.num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.tr-alt{background:#fbfcfe}
+.tscroll{overflow-x:auto;border-radius:10px}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+.card h4{font-size:15.5px;color:var(--wine);margin-bottom:10px;font-weight:700}
+.card p{font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.card p:last-child{margin-bottom:0}
+.tag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.chartcard{padding:14px 16px 8px;background:var(--paper);border:1px solid var(--line);border-radius:11px}
+.chartcard h4{font-size:15.5px;color:var(--wine);margin-bottom:4px;font-weight:700}
+.ccbox{height:340px;width:100%}
+.cnote{font-size:11.5px;color:#999;margin:-2px 0 6px}
+.snote{font-size:12px;color:#8a6d1a;background:#faf5e6;border-left:3px solid #d4b25a;padding:8px 12px;border-radius:0 6px 6px 0;margin:8px 0 14px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
+.step{background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--wine);border-radius:10px;padding:13px 14px}
+.step .n{font-size:12px;color:var(--gray2);margin-bottom:2px}
+.step .t{font-size:14.5px;font-weight:700;color:var(--wine3);margin-bottom:6px}
+.step .d{font-size:12.5px;color:var(--ink2);line-height:1.7}
+.step .q{font-size:12px;color:var(--wine2);margin-top:6px;background:var(--tint);border-radius:6px;padding:4px 8px}
+@media(max-width:860px){.krow{grid-template-columns:repeat(2,1fr)}.cg2,.cg3{grid-template-columns:1fr}.topbar h1{font-size:21px}.ccbox{height:280px}.flow{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <h1>南食召 · <u>红酸汤</u>高成交笔记拆解</h1>
+    <div class="sub">商品：本真红酸汤（50g×6袋/盒）· 时间窗口 2026-09-22 ~ 10-21 · 口径：商品笔记成交（指数化处理，Top1=100）</div>
+    <div class="krow">
+      <div class="kpi"><div class="v">50 篇</div><div class="l">近30天出单笔记（49图文+1视频）</div></div>
+      <div class="kpi"><div class="v">9.7k 级</div><div class="l">30天笔记成交规模（指数化，Top1=100）</div></div>
+      <div class="kpi"><div class="v">44%</div><div class="l">Top5 笔记的成交占比</div></div>
+      <div class="kpi"><div class="v">62%</div><div class="l">成交来自发布超60天的老笔记</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="in">
+    <div class="tab on" data-p="p1">大盘</div>
+    <div class="tab" data-p="p2">人货场建议</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ P1 大盘 ============ -->
+<div class="pane on" id="p1">
+  <div class="sec">
+    <h2>钱从哪些笔记来 · Top10 榜单</h2>
+    <div class="cap">按笔记成交指数排序 · 50 篇出单笔记全部来自官方号「南食召食品」</div>
+
+    <div class="chartcard">
+      <h4>Top10 笔记成交指数</h4>
+      <div class="cnote">单位：指数（Top1=100）· 近30天 · 点击表格标题可打开笔记</div>
+      <div class="ccbox" id="c_top"></div>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>笔记标题</th><th>发布日</th><th>写法类型</th><th>成交指数</th><th>成交热度</th></tr></thead>
+      <tbody id="tb"></tbody>
+    </table></div>
+
+    <div class="box">
+      <h3>大盘解读 · 先记住三句话</h3>
+      <p><b>① 头部很集中：</b>5 篇笔记拿走 44% 的成交，10 篇拿走 62%。资源应该优先喂给验证过的高转化写法，而不是平均撒。</p>
+      <p><b>② 老笔记是资产：</b>62% 的成交来自发布超 60 天的笔记，第一名是 <em>2 月发布的「黄豆芽红酸汤饭」</em>。好内容长期出单，值得持续维护和翻新。</p>
+      <p><b>③ 官方号矩阵化：</b>50 篇全部出自官方号，近三月每月稳定发 9~13 篇。这是「自播式内容」打法——不靠达人，靠自己的内容池滚动承接搜索流量。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P2 人货场建议 ============ -->
+<div class="pane" id="p2">
+  <div class="sec">
+    <h2>爆款笔记的人货场模型</h2>
+    <div class="cap">基于 Top10（占成交62%）与后40篇的写法对比 · 结论可直接迁移到南食召其他品</div>
+
+    <div class="box">
+      <h3>一句话总结</h3>
+      <p>红酸汤的高成交笔记，本质是围绕 <b>「一人食的晚间一餐」</b> 反复讲同一件事：货讲<em>小袋 + 发酵 + 干净配料</em>，人讲<em>下班没胃口的独食打工人</em>，场讲<em>10 分钟煮一碗汤饭的松弛感</em>。</p>
+    </div>
+
+    <div class="cg3">
+      <div class="card">
+        <h4>🛒 货 · 产品讲什么</h4>
+        <p>三个卖点按固定顺序出：</p>
+        <p><b>① 小袋装形态</b>（一次一袋不手抖）<br><b>② 365天慢发酵</b>（酸来自果蔬不是醋）<br><b>③ 干净配料表</b>（无科技与狠活）</p>
+        <p style="margin-top:8px">一篇只主打 1~2 个，不堆砌。</p>
+      </div>
+      <div class="card">
+        <h4>👤 人 · 写给谁看</h4>
+        <p>核心人群：<b>下班没胃口的一人食打工人</b>。</p>
+        <p>次要人群：控卡管理期、厨房新手、家庭火锅锅。</p>
+        <p style="margin-top:8px">写法：用第二人称点人——「下班懒得做饭」「苦夏没胃口」。</p>
+      </div>
+      <div class="card">
+        <h4>🍽 场 · 在哪吃、怎么吃</h4>
+        <p>主场景：<b>晚间独食一餐</b>（汤饭/米线/水煮菜）。</p>
+        <p>副场景：换季暖胃、一人暖锅、控卡晚餐。</p>
+        <p style="margin-top:8px">吃法要具体到菜名：「黄豆芽红酸汤饭」好过「煮个汤」。</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:34px">标题怎么写 · 四种句式</h2>
+    <div class="cap">A/B 两种是主力，D 适合日常铺量 · 标题长度 17~22 字，几乎不用促销词和感叹号</div>
+
+    <div class="cg2">
+      <div class="card">
+        <h4>A · 痛点开场式 <span class="tag" style="background:var(--tint2);color:var(--wine)">8篇 · 38%成交 · 效率最高</span></h4>
+        <p><b>公式：</b>痛点场景 ＋ 具体吃法 ＋ 吃完的感受</p>
+        <p>「没胃口/下班累/大鱼大肉后」开场，让读者先代入「说的就是我」。</p>
+        <p class="hl">例：没胃口简单吃碗汤饭，黄豆芽红酸汤饭吃美了（成交指数 80）</p>
+      </div>
+      <div class="card">
+        <h4>B · 卖点直给式 <span class="tag" style="background:var(--tint2);color:var(--wine)">10篇 · 31%成交</span></h4>
+        <p><b>公式：</b>产品卖点 ＋ 适合的吃法</p>
+        <p>先说「小袋装/发酵/免炒制」，再接它能干什么。适合上新和讲差异。</p>
+        <p class="hl">例：特地做了小袋装的红酸汤，适合懒人一人食（成交指数 89）</p>
+      </div>
+      <div class="card">
+        <h4>C · 傻瓜操作式 <span class="tag" style="background:#f2f4f6;color:var(--gray)">6篇 · 10%成交</span></h4>
+        <p><b>公式：</b>低门槛动作 ＋ 吃法</p>
+        <p>「加水就行/一锅出/10min」，突出零失败，适合新手向内容。</p>
+        <p class="hl">例：在家怎么做正宗红酸汤海鲜锅？加水就行！（成交指数 20）</p>
+      </div>
+      <div class="card">
+        <h4>D · 吃法种草式 <span class="tag" style="background:#f2f4f6;color:var(--gray)">26篇 · 21%成交 · 铺量型</span></h4>
+        <p><b>公式：</b>直接晒吃法 ＋ 口感词</p>
+        <p>没有痛点钩子，单篇效率低，但胜在好写好量产，维持内容池活跃。</p>
+        <p class="hl">例：这碗红酸汤米线，酸辣鲜香，想把汤都喝光！（成交指数 21）</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:34px">正文怎么写 · 五段式结构</h2>
+    <div class="cap">高成交正文平均 307 字，按这五段走 · 100% 的笔记都提配料成分</div>
+
+    <div class="flow">
+      <div class="step"><div class="n">1</div><div class="t">场景引入</div><div class="d">用一句生活场景开场，让读者代入</div><div class="q">「临近年末吃席不断，想吃口清淡的」</div></div>
+      <div class="step"><div class="n">2</div><div class="t">产品机制</div><div class="d">解释酸从哪来，讲工艺讲产地</div><div class="q">「贵州辣椒番茄入坛，365天慢发酵」</div></div>
+      <div class="step"><div class="n">3</div><div class="t">做法演示</div><div class="d">给「今晚就能做」的确定性</div><div class="q">「加250ml水煮开，抓把黄豆芽豆腐」</div></div>
+      <div class="step"><div class="n">4</div><div class="t">风味定量</div><div class="d">把味道说准，降低想象偏差</div><div class="q">「7分酸3分辣，酸辣都来自食材本身」</div></div>
+      <div class="step"><div class="n">5</div><div class="t">情绪收尾</div><div class="d">落在一个放松的感受上，完成种草</div><div class="q">「吃完清清爽爽，熨帖过载的肠胃」</div></div>
+    </div>
+
+    <div class="box">
+      <h3>Top10 爆款多做的三个「信任动作」</h3>
+      <p>同样是五段式，Top10 和普通笔记的差距在这三处（使用率对比）：</p>
+      <p><b>① 对比锚点</b>（70% vs 20%）：拿「大瓶装难控量」「醋+辣油勾兑」「科技狠活」当反面参照，衬出自己的干净和省心。</p>
+      <p><b>② 风味定量</b>（20% vs 2%）：把「酸辣适中」写成「7分酸3分辣」，味道变得可预期。</p>
+      <p><b>③ 体感收尾</b>（50% vs 20%）：结尾落在「松弛/舒坦/把汤喝光」，而不是促销引导。50 篇里只有 3 篇出现转化引导语，成交照样好。</p>
+    </div>
+
+    <div class="snote"><b>迁移提示：</b>换品时保留「痛点开场式」标题骨架和正文五段式，替换货的卖点词和吃法词即可。汤底/酱料类（黄番茄火锅底料、酸汤粉丝）可直接套；干货类（银耳、面饼）需重写第 3 段「做法演示」。</div>
+  </div>
+</div>
+
+<div class="foot">
+  <b>数据说明</b>：RedBI 人货场成交分析（笔记id粒度）· 分区 2026-09-22 ~ 10-21 · 商品笔记 本页为商家外发版：笔记成交额已指数化（Top1=100），成交热度为相对档位星级 · 笔记标题/正文为站点抓取原文 · 数据集无笔记级曝光字段，无法计算点击率/转化率 · 生成于 2026-10-22
+</div>
+
+</div>
+
+<script>
+/* ---------- Data ---------- */
+var NOTES = [{"note_id": "6982f354000000002202f52d", "title": "一把黄豆芽煮红酸汤饭，大鱼大肉后吃碗清鲜", "pub": "2026-02-04", "idx": 100, "tp": 56}, {"note_id": "6a630808000000001f01cf68", "title": "特地做了小袋装的红酸汤，适合懒人一人食", "pub": "2026-07-24", "idx": 89, "tp": 50}, {"note_id": "6acdda4c000000001c01ee83", "title": "没胃口简单吃碗汤饭，黄豆芽红酸汤饭吃美了", "pub": "2026-10-13", "idx": 80, "tp": 44}, {"note_id": "6a85410c00000000050219ac", "title": "一人食速煮的小袋红酸汤，下班快速对付一餐", "pub": "2026-08-19", "idx": 72, "tp": 43}, {"note_id": "6a520c35000000001101b5ca", "title": "发酵得来的红酸汤，鲜酸微辣，煮米粉吃得舒爽", "pub": "2026-07-11", "idx": 56, "tp": 30}, {"note_id": "6a97b789000000001103be30", "title": "晚餐不知道吃什么，爽吃大碗红酸汤肉末米线", "pub": "2026-09-02", "idx": 43, "tp": 22}, {"note_id": "6abb6946000000001403a1f5", "title": "一锅出的虾滑酸汤粉丝，热乎的酸辣令人满足", "pub": "2026-09-29", "idx": 31, "tp": 17}, {"note_id": "6a8410c90000000022015457", "title": "10min get馄饨✅红酸汤的权威无需多言", "pub": "2026-08-18", "idx": 30, "tp": 17}, {"note_id": "691057c500000000070004c7", "title": "不用额外炒制和调味，加水就是地道的红酸汤", "pub": "2025-11-09", "idx": 29, "tp": 16}, {"note_id": "6abcc45d000000001a021f9a", "title": "忙完一日，红酸汤单人暖锅给晚餐片刻松弛", "pub": "2026-09-30", "idx": 28, "tp": 14}, {"note_id": "6aa104f8000000001200018d", "title": "发酵红酸汤做水煮菜汤底，小袋装控卡更省心", "pub": "2026-09-09", "idx": 23, "tp": 14}, {"note_id": "6aa90c470000000026023152", "title": "这碗红酸汤米线，酸辣鲜香，想把汤都喝光！", "pub": "2026-09-15", "idx": 21, "tp": 11}, {"note_id": "6a6332680000000022018bb2", "title": "在家怎么做正宗红酸汤海鲜锅？加水就行！", "pub": "2026-07-25", "idx": 20, "tp": 11}, {"note_id": "6ac88fa500000000150158e6", "title": "红酸汤煮泡面，同时满足想吃火锅和泡面的心", "pub": "2026-10-09", "idx": 17, "tp": 9}, {"note_id": "6a79770b0000000028033574", "title": "极简懒人版红酸汤海鲜锅，一锅出的漂亮菜", "pub": "2026-08-10", "idx": 16, "tp": 8}, {"note_id": "685b9004000000000b01e679", "title": "发酵来的红酸汤，酸辣柔和不齁咸，味蕾无负担", "pub": "2025-06-25", "idx": 16, "tp": 8}, {"note_id": "6a476183000000000f02bedb", "title": "加水煮开就是地道红酸汤，酸香轻轻勾起食欲", "pub": "2026-07-03", "idx": 13, "tp": 7}, {"note_id": "6ac9d49b0000000018015c06", "title": "晚上吃个酸汤牛肉刀削面，宽面带花褶更过瘾", "pub": "2026-10-10", "idx": 13, "tp": 10}, {"note_id": "6a54946c000000000702e682", "title": "去吃红酸汤肉末米线，吃完你会回来感谢我", "pub": "2026-07-13", "idx": 12, "tp": 6}, {"note_id": "6a6c380d000000002903273f", "title": "一人食红酸汤水煮菜，在厨房忍不住边涮边吃", "pub": "2026-07-31", "idx": 12, "tp": 6}, {"note_id": "6a7ec93b0000000032022de1", "title": "慢发酵的红酸汤，鲜酸带辣，煮米粉吃得酣畅！", "pub": "2026-08-14", "idx": 12, "tp": 8}, {"note_id": "6a87c85e000000003a02e041", "title": "念念不忘中餐厅那锅红酸汤，在家复刻同款", "pub": "2026-08-21", "idx": 11, "tp": 6}, {"note_id": "676d16cf00000000130038fe", "title": "红酸汤得到了贵州本地人认可！风味正没怪味", "pub": "2024-12-26", "idx": 11, "tp": 6}, {"note_id": "6ad70a310000000029010085", "title": "换季吃不下饭，红酸汤米线一吃就停不下来", "pub": "2026-10-20", "idx": 10, "tp": 6}, {"note_id": "6a968194000000002900ea56", "title": "红酸汤是发酵得来的，经过熟制，做汤底不油腻", "pub": "2026-09-01", "idx": 10, "tp": 6}, {"note_id": "6aacd6ec000000001203fc01", "title": "厨房新手友好，一袋红酸汤，煮出地道酸汤鱼片", "pub": "2026-09-18", "idx": 8, "tp": 4}, {"note_id": "6aab779f0000000028036cc8", "title": "下班十分钟闭眼吃，热乎鲜爽的牛肉丸粉丝汤", "pub": "2026-09-17", "idx": 7, "tp": 4}, {"note_id": "6acf54240000000012036532", "title": "年度之作|10月20日，米香年糕即将回归！", "pub": "2026-10-14", "idx": 7, "tp": 4}, {"note_id": "6aacfe9a000000002902ed43", "title": "吃健康的方便面饼，只用小麦粉和鸡蛋液揉出", "pub": "2026-09-20", "idx": 6, "tp": 4}, {"note_id": "672b3b75000000001a01e610", "title": "红酸汤的酸味明亮，还有不止于酸的鲜香", "pub": "2024-11-06", "idx": 6, "tp": 4}, {"note_id": "6a4f4727000000001101ad15", "title": "水煮菜救星红酸汤，夏天爱用的管理期调味料", "pub": "2026-07-09", "idx": 6, "tp": 3}, {"note_id": "6aab8d6c0000000012003105", "title": "小罐装的重庆火锅底料，做一人食麻辣烫很绝", "pub": "2026-09-17", "idx": 6, "tp": 3}, {"note_id": "6a7c21900000000029031bd8", "title": "红酸汤分小袋装，快手一人食嗦粉分量刚刚好", "pub": "2026-08-12", "idx": 6, "tp": 3}, {"note_id": "6ad1e6db000000001c01da61", "title": "早餐就能吃的鸡蛋方便面，营养扎实又饱腹", "pub": "2026-10-18", "idx": 5, "tp": 3}, {"note_id": "6a71c067000000002603440b", "title": "一碗吃完不渴的红酸汤粉丝，酸度足、辣味柔和", "pub": "2026-08-04", "idx": 5, "tp": 3}, {"note_id": "6a7af8b500000000240245bb", "title": "立秋后喝碗藕粉羹，加上甜酒酿，甜润不腻人", "pub": "2026-08-11", "idx": 5, "tp": 3}, {"note_id": "6a6c685e00000000250038c5", "title": "不掺面粉，拆袋直接空口吃的“懒人主食”", "pub": "2026-08-02", "idx": 5, "tp": 3}, {"note_id": "6ad739b0000000001e027bb3", "title": "黄番茄火锅底料，不辣的汤底，涮肉前先喝汤", "pub": "2026-10-20", "idx": 4, "tp": 1}, {"note_id": "6acf54240000000012036532", "title": "年度之作|10月20日，米香年糕即将回归！", "pub": "2026-10-14", "idx": 4, "tp": 1}, {"note_id": "6a9c0a520000000029011676", "title": "只有面饼没有料包，煮早餐、涮火锅很省事儿！", "pub": "2026-09-05", "idx": 4, "tp": 3}, {"note_id": "6ab4dd55000000000a022548", "title": "秋天的热美式、热茶汤，加点干桂花安逸得很", "pub": "2026-09-26", "idx": 4, "tp": 2}, {"note_id": "69999549000000000903989f", "title": "咸甜皆可卷的杂粮煎饼，做早餐方便搭配", "pub": "2026-02-23", "idx": 4, "tp": 2}, {"note_id": "6aab62f00000000028002879", "title": "银耳泡一泡，简单炖就能出胶，免撕剪解放双手", "pub": "2026-09-17", "idx": 4, "tp": 2}, {"note_id": "6a61ba04000000000f010246", "title": "为什么说咖喱粉比咖喱块要健康？配料决定的", "pub": "2026-07-23", "idx": 4, "tp": 2}, {"note_id": "6a68490f000000001102f634", "title": "夏天吃红酸汤米线，只有0次和无数次", "pub": "2026-07-28", "idx": 4, "tp": 2}, {"note_id": "6acdff7e00000000120348b7", "title": "腊肠香芋焖饭一锅出，粉糯油润，慢慢享受秋味", "pub": "2026-10-13", "idx": 4, "tp": 2}, {"note_id": "6a55f9d0000000000f0303d4", "title": "红酸汤煮米线，酸香爽口，后悔没早点这样吃", "pub": "2026-07-14", "idx": 4, "tp": 2}, {"note_id": "69e1dca8000000001a026f34", "title": "袋装红酸汤更适合一人食，水煮菜汤都能喝光", "pub": "2026-04-17", "idx": 4, "tp": 2}, {"note_id": "69368f12000000001e008a71", "title": "红酸汤加水就能煮菜吃，一锅有菜有肉有热汤", "pub": "2025-12-08", "idx": 4, "tp": 2}, {"note_id": "6ad072650000000013018fc8", "title": "忙完琐事，煮上酸汤豆腐锅，简单晚餐带来松弛", "pub": "2026-10-15", "idx": 4, "tp": 2}];
+var TPN = {'A':'痛点开场','B':'卖点直给','C':'傻瓜操作','D':'吃法种草'};
+function cls(t){
+  if(/没胃口|不知道吃|对付一餐|大鱼大肉|换季|忙完|年末|下班|晚餐/.test(t)) return 'A';
+  if(/发酵|小袋|袋装|熟酸汤|炒制|权威/.test(t)) return 'B';
+  if(/加水|一锅出|10min|不用|无需|速煮/.test(t)) return 'C';
+  return 'D';
+}
+function short(s,n){return s.length>n? s.slice(0,n)+'…':s;}
+
+/* ---------- Tabs ---------- */
+function showPane(pid){
+  document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on', p.id===pid);});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on', t.dataset.p===pid);});
+  requestAnimationFrame(function(){ window.dispatchEvent(new Event('resize')); });
+}
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){ showPane(t.dataset.p); });
+});
+
+/* ---------- Table ---------- */
+document.getElementById('tb').innerHTML = NOTES.slice(0,10).map(function(n,i){
+  return '<tr'+(i%2?' class="tr-alt"':'')+'><td class="num">'+(i+1)+'</td>'+
+    '<td style="white-space:normal;min-width:260px"><a href="https://www.xiaohongshu.com/discovery/item/'+n.note_id+'" target="_blank" style="color:var(--wine);text-decoration:none">'+n.title+'</a></td>'+
+    '<td>'+n.pub.slice(5)+'</td>'+
+    '<td><span class="tag" style="background:var(--tint);color:var(--wine)">'+TPN[cls(n.title)]+'</span></td>'+
+    '<td class="num">'+n.idx+'</td><td class="num">'+'★'.repeat(Math.min(3,Math.max(1,Math.round(n.tp/19))))+'</td></tr>';
+}).join('');
+
+/* ---------- Chart ---------- */
+var top10 = NOTES.slice(0,10).reverse();
+var c = echarts.init(document.getElementById('c_top'));
+c.setOption({
+  tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){var d=p[0];return NOTES.slice(0,10)[d.dataIndex].title+'<br>成交指数 '+d.value+'（Top1=100）';}},
+  grid:{left:6,right:56,top:8,bottom:8,containLabel:true},
+  xAxis:{type:'value',axisLabel:{color:'#77828e',fontSize:11},splitLine:{lineStyle:{color:'#eef2f6'}}},
+  yAxis:{type:'category',data:top10.map(function(n){return short(n.title,15);}),axisLabel:{color:'#37414d',fontSize:12},axisTick:{show:false},axisLine:{show:false}},
+  series:[{type:'bar',data:top10.map(function(n){return n.dgmv;}),barWidth:16,
+    itemStyle:{borderRadius:[0,8,8,0],color:new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#6b2438'},{offset:1,color:'#a85a6e'}])},
+    label:{show:true,position:'right',color:'#8E354A',fontWeight:600,fontSize:11,formatter:function(p){return p.value;}}}]
+});
+window.addEventListener('resize',function(){c.resize();});
+</script>
+</body>
+</html>
