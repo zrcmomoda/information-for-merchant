@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>薛记炒货 · 小红书经营方案</title>
+<style>
+  :root{
+    --paper:#f7f3ec; --paper2:#efe8da; --ink:#28211a; --ink2:#5c5346;
+    --accent:#a03d1c; --accent2:#7c5a36; --line:#d9cfbd; --line2:#c9bda6;
+    --serif:'Noto Serif SC','Songti SC','STSong',serif;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+    --sans:-apple-system,'PingFang SC','Helvetica Neue',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased;}
+  .page{max-width:1020px;margin:0 auto;padding:0 20px 80px;}
+  p{margin:14px 0;}
+  .hl{background:linear-gradient(transparent 62%, #ecd9b8 62%);font-weight:600;}
+  .em{color:var(--accent);font-weight:600;}
+  a{color:inherit;}
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 40px;border-bottom:2px solid var(--ink);}
+  .hero .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:34px;}
+  .hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6.4vw,58px);line-height:1.32;letter-spacing:.01em;max-width:19em;}
+  .hero .sub{margin-top:26px;font-family:var(--mono);font-size:13px;color:var(--ink2);letter-spacing:.06em;padding-bottom:20px;border-bottom:1px solid var(--line);}
+  .hero .lede{margin-top:30px;color:var(--ink2);font-size:15.5px;}
+  .hero .brand{display:inline-block;margin-top:22px;padding:9px 16px;border:1px solid var(--line2);font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink2);}
+  /* ---------- nav ---------- */
+  nav{display:grid;grid-template-columns:repeat(3,1fr);column-gap:32px;border-bottom:1px solid var(--line);}
+  nav a{display:block;padding:18px 14px 16px 0;text-decoration:none;color:var(--ink);border-bottom:3px solid transparent;}
+  nav a:hover{border-bottom-color:var(--accent);}
+  nav .no{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.18em;display:block;}
+  nav .t{font-family:var(--serif);font-weight:700;font-size:16px;display:block;margin-top:3px;}
+  nav .d{font-size:12px;color:var(--ink2);display:block;margin-top:2px;}
+  /* ---------- section ---------- */
+  section{padding:64px 0 10px;}
+  .sec-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,4fr);gap:36px;align-items:end;border-bottom:1px solid var(--ink);padding-bottom:22px;margin-bottom:8px;}
+  .sec-head .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.24em;color:var(--accent);margin-bottom:14px;}
+  .sec-head h2{font-family:var(--serif);font-size:clamp(26px,4.4vw,38px);line-height:1.3;font-weight:700;}
+  .sec-head .summary{color:var(--ink2);font-size:14.5px;line-height:1.9;padding-bottom:4px;}
+  .block{margin-top:44px;}
+  .block-tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;color:var(--accent2);margin-bottom:12px;}
+  .block h3{font-family:var(--serif);font-size:22px;font-weight:700;line-height:1.5;margin-bottom:6px;}
+  .block .lead{color:var(--ink2);}
+  /* ---------- kpi strip ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line2);margin:26px 0 8px;background:#fbf8f2;}
+  .kpi{padding:20px 18px 16px;border-right:1px solid var(--line);}
+  .kpi:last-child{border-right:none;}
+  .kpi .v{font-family:var(--mono);font-size:30px;font-weight:700;color:var(--accent);letter-spacing:-.01em;}
+  .kpi .v small{font-size:15px;font-weight:600;}
+  .kpi .k{font-size:13px;font-weight:600;margin-top:4px;}
+  .kpi .n{font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.6;}
+  /* ---------- charts ---------- */
+  .chart-card{border:1px solid var(--line2);background:#fbf8f2;padding:26px 26px 20px;margin:22px 0 8px;}
+  .chart-card .ct{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--ink2);margin-bottom:18px;}
+  .duo{display:grid;grid-template-columns:150px 1fr 1fr 92px;gap:10px;align-items:center;margin:8px 0;}
+  .duo .lb{font-size:13px;text-align:right;}
+  .duo .tr{display:block;height:13px;background:var(--paper2);}
+  .duo .fl{display:block;height:100%;}
+  .duo.me .fl{background:var(--accent);}
+  .duo .mkt .fl{background:var(--line2);}
+  .duo .pc{font-family:var(--mono);font-size:11.5px;color:var(--ink2);white-space:nowrap;text-align:right;}
+  .legend{display:flex;gap:22px;font-size:12px;color:var(--ink2);margin-top:14px;font-family:var(--mono);}
+  .legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px;}
+  /* donut */
+  .pie-wrap{display:grid;grid-template-columns:230px 1fr;gap:30px;align-items:center;}
+  .pie-box{position:relative;width:210px;margin:0 auto;}
+  .pie-box svg{display:block;width:100%;height:auto;}
+  .pie-center{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;pointer-events:none;}
+  .pie-center .pv{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--accent);line-height:1.2;}
+  .pie-center .pk{font-size:11.5px;color:var(--ink2);max-width:9em;line-height:1.5;}
+  .pie-legend{display:flex;flex-direction:column;gap:2px;}
+  .pie-legend .li{display:grid;grid-template-columns:12px 1fr auto;gap:10px;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13px;}
+  .pie-legend .li:last-child{border-bottom:none;}
+  .pie-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;align-self:center;}
+  .pie-legend .ln{color:var(--ink);}
+  .pie-legend .ln small{color:var(--ink2);font-size:11px;margin-left:4px;}
+  .pie-legend .lv{font-family:var(--mono);font-size:12.5px;color:var(--ink2);}
+  .pie-legend .li.hot .ln,.pie-legend .li.hot .lv{color:var(--accent);font-weight:700;}
+  /* month bars */
+  .months{display:flex;align-items:flex-end;gap:7px;height:150px;margin-top:10px;border-bottom:1px solid var(--line2);padding:0 4px;}
+  .months .m{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;}
+  .months .b{display:block;width:100%;background:var(--accent2);}
+  .months .m.hot .b{background:var(--accent);}
+  .months .v{font-family:var(--mono);font-size:10.5px;color:var(--ink2);margin-bottom:3px;}
+  .mlabels{display:flex;gap:7px;padding:6px 4px 0;}
+  .mlabels span{flex:1;text-align:center;font-family:var(--mono);font-size:10px;color:var(--ink2);}
+  /* ---------- case cards ---------- */
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0 8px;}
+  .case{border:1px solid var(--line2);background:#fbf8f2;padding:22px 20px 18px;display:flex;flex-direction:column;}
+  .case .path{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--accent);margin-bottom:14px;}
+  .case-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#f7f3ec;font-family:var(--serif);font-weight:700;font-size:20px;flex-shrink:0;}
+  .case-head h4{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.3;}
+  .case-head .rank{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:2px;}
+  .case-head .rank b{color:var(--accent);font-size:14px;}
+  .shop-link{display:inline-flex;align-items:center;gap:6px;margin:0 0 12px;padding:7px 14px;border:1px solid var(--line2);background:var(--paper);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;color:var(--ink);text-decoration:none;align-self:flex-start;}
+  .shop-link:hover{border-color:var(--accent);color:var(--accent);}
+  .case p{font-size:13px;color:var(--ink2);line-height:1.8;margin:0 0 12px;flex:1;}
+  .mini{margin-top:4px;}
+  .mini .mr{display:grid;grid-template-columns:44px 1fr 40px;gap:8px;align-items:center;margin:5px 0;}
+  .mini .mr .l{font-size:11px;color:var(--ink2);text-align:right;}
+  .mini .mr .tr{display:block;height:9px;background:var(--paper2);}
+  .mini .mr .fl{display:block;height:100%;background:var(--accent2);}
+  .mini .mr .pc{font-family:var(--mono);font-size:10.5px;color:var(--ink2);}
+  /* ---------- note citations ---------- */
+  .note-cites{margin:16px 0 6px;border-left:3px solid var(--line2);padding-left:18px;}
+  .note-cites .nc{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:13.5px;text-decoration:none;color:var(--ink);line-height:1.7;}
+  .note-cites .nc:last-child{border-bottom:none;}
+  .note-cites .nc:hover .nt{color:var(--accent);}
+  .note-cites .nt{font-weight:600;}
+  .note-cites .na{color:var(--ink2);font-size:12px;}
+  .note-cites .go{font-family:var(--mono);font-size:11px;color:var(--accent);margin-left:auto;letter-spacing:.06em;white-space:nowrap;}
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;margin:20px 0 8px;font-size:13.5px;}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--ink2);text-align:left;font-weight:600;border-bottom:1.5px solid var(--ink);padding:10px 14px 8px 0;}
+  td{border-bottom:1px solid var(--line);padding:11px 14px 11px 0;vertical-align:top;line-height:1.7;}
+  td.num,th.num{font-family:var(--mono);white-space:nowrap;}
+  tr.hlrow td{background:#f3ead8;}
+  /* ---------- audience charts ---------- */
+  .aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0 8px;}
+  .aud-grid .chart-card{margin:0;}
+  .agebar .ar{display:grid;grid-template-columns:52px 1fr 1fr 40px;gap:8px;align-items:center;margin:6px 0;}
+  .agebar .al{font-family:var(--mono);font-size:11px;color:var(--ink2);text-align:right;}
+  .agebar .tr{display:block;height:12px;background:var(--paper2);}
+  .agebar .fl{display:block;height:100%;}
+  .agebar .ar.me .fl{background:var(--accent);}
+  .agebar .ar .fl.mkt{background:var(--line2);}
+  .agebar .av{font-family:var(--mono);font-size:10.5px;color:var(--ink2);white-space:nowrap;text-align:right;}
+  .pricebar .pr{display:grid;grid-template-columns:76px 1fr 1fr 44px;gap:8px;align-items:center;margin:6px 0;}
+  .pricebar .pl{font-family:var(--mono);font-size:11px;color:var(--ink2);text-align:right;}
+  .pricebar .tr{display:block;height:12px;background:var(--paper2);}
+  .pricebar .fl{display:block;height:100%;}
+  .pricebar .pr.me .fl{background:var(--accent);}
+  .pricebar .pr .fl.mkt{background:var(--line2);}
+  .pricebar .pv{font-family:var(--mono);font-size:10.5px;color:var(--ink2);white-space:nowrap;text-align:right;}
+  .pricebar{margin-top:14px;}
+  @media (max-width:720px){
+    .aud-grid{grid-template-columns:1fr;}
+    .agebar .ar,.pricebar .pr{grid-template-columns:44px 1fr 1fr auto;gap:6px;}
+  }
+  /* ---------- note & footer ---------- */
+  .note{border-left:3px solid var(--line2);padding:10px 0 10px 18px;font-size:12.5px;color:var(--ink2);margin:26px 0 0;line-height:1.8;}
+  footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:22px;font-family:var(--mono);font-size:11.5px;color:var(--ink2);line-height:2;letter-spacing:.04em;}
+  @media (max-width:720px){
+    .page{padding:0 18px 60px;}
+    .hero{padding:56px 0 34px;}
+    nav{grid-template-columns:1fr 1fr;}
+    nav a{padding:12px 8px 10px 0;}
+    .sec-head{grid-template-columns:1fr;gap:14px;}
+    .kpis{grid-template-columns:1fr 1fr;}
+    .kpi:nth-child(2){border-right:none;}
+    .kpi:nth-child(-n+2){border-bottom:1px solid var(--line);}
+    .cases{grid-template-columns:1fr;}
+    .duo{grid-template-columns:96px 1fr 1fr auto;gap:8px;}
+    .duo .pc{font-size:10px;}
+    .pie-wrap{grid-template-columns:1fr;gap:14px;}
+    .pie-box{width:180px;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="eyebrow">XUEJI × XIAOHONGSHU · SNACKS &amp; NUTS · 2026.10</div>
+    <h1>薛记不缺品牌、不缺货，<br/>缺的是每天都在发的内容。</h1>
+    <div class="sub">薛记炒货 · 小红书经营方案 —— 赛道 / 同行 / 现状 / 三步动作</div>
+    <p class="lede">这份方案回答一个问题：炒货这门在小区门口赢了二十年的生意，怎么在小红书长出线上增量。数据给出的答案是——零食坚果是平台食品第一大类目，商笔是最大的转化场域，同行已经跑通三条不同的路径；而薛记与同行的差距，不在货和品牌，只在日常经营的投入强度。</p>
+    <span class="brand">薛记炒货 · 现烤炒货 / 1400+ 门店</span>
+  </header>
+
+  <!-- ================= NAV ================= -->
+  <nav>
+    <a href="#s1"><span class="no">01</span><span class="t">行业现状</span><span class="d">零食是大类目，商笔是主场域</span></a>
+    <a href="#s2"><span class="no">02</span><span class="t">同行案例</span><span class="d">三条已经跑通的路径</span></a>
+    <a href="#s3"><span class="no">03</span><span class="t">薛记现状</span><span class="d">有节令生意，无日常生意</span></a>
+    <a href="#s4"><span class="no">04</span><span class="t">动作一 · 商笔</span><span class="d">把勤奋度拉到同行水位</span></a>
+    <a href="#s5"><span class="no">05</span><span class="t">动作二 · K播</span><span class="d">组高客单货盘，撮合达人</span></a>
+    <a href="#s6"><span class="no">06</span><span class="t">动作三 · 店播</span><span class="d">保持双开，承接节点</span></a>
+  </nav>
+
+  <!-- ================= 01 行业现状 ================= -->
+  <section id="s1">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">01 / 行业现状</div>
+        <h2>零食是小红书食品的<br/>第一大类目，商笔是第一大场域。</h2>
+      </div>
+      <div class="summary">近一年小红书食品行业中，零食/坚果/特产占全行业成交的三分之一，稳居第一；四个经营场域全部成熟，其中商品笔记以约三成占比成为最大转化场域，内容场（商笔+K播）合计约 45%——「靠内容做转化」在这个行业是被验证的主流路径。</div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">CATEGORY · 类目结构</div>
+      <h3>零食/坚果/特产：占食品大盘三分之一的第一大品类</h3>
+      <p class="lead">近一年（2025.10–2026.10）小红书食品行业成交中，零食/坚果/特产以 31.2% 居所有一级类目之首，规模约为第二名的近两倍。薛记主营的炒货，正处在这个最大的类目里。</p>
+      <div class="chart-card">
+        <div class="ct">食品行业一级类目成交占比 · 近一年</div>
+        <div class="pie-wrap" id="pieL1"></div>
+      </div>
+      <p>再看零食/坚果/特产内部：糕点点心（32.6%）和肉脯卤味（20.0%）领先，蜜饯果干冻干（12.3%）、饼干膨化（9.9%）次之，<span class="hl">坚果/炒货以 8.7% 排在第五位，是一个体量可观、且仍在稳定成交的子类目</span>。值得注意的是，排在前面的糕点、肉脯、果干，恰恰都是薛记门店里已有的品类延展方向——货盘与大盘结构天然对齐，不需要为小红书重新开发货。</p>
+      <div class="chart-card">
+        <div class="ct">零食/坚果/特产 内部二级类目占比 · 近一年</div>
+        <div class="pie-wrap" id="pieL2"></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">FIELD · 场域结构</div>
+      <h3>商笔是最大转化场域，四个场域全部成熟</h3>
+      <p class="lead">把行业成交按经营场域拆开：商品笔记（商笔）以 31.4% 排第一，商卡（货架/搜索）26.9%、店播 24.2% 紧随其后，K播（达人带货）14.3%。近 7 天的即时结构与全年基本一致——这说明场域格局稳定，不是短期波动，而是行业常态。</p>
+      <div class="chart-card">
+        <div class="ct">食品行业成交场域占比 · 近一年</div>
+        <div class="pie-wrap" id="pieField"></div>
+      </div>
+      <p><span class="hl">内容场（商笔 + K播）合计约 45%，接近半壁江山</span>。对商家意味着：在小红书，笔记不是「顺便发发的宣传物料」，而是和货架、直播间并列的第一大成交来源。谁持续产出内容，谁就握住了最大的那个场域。</p>
+    </div>
+  </section>
+
+  <!-- ================= 02 同行案例 ================= -->
+  <section id="s2">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">02 / 同行案例</div>
+        <h2>三条不同的路径，<br/>都已经有人跑到了头部。</h2>
+      </div>
+      <div class="summary">近一年食品行业有三千余家商家产生成交。三家与薛记同样做区域特色零食的同行，分别靠店播、年货节节奏、K播达人走到了行业前 100——路径不止一条，但每一条都以高频内容为底座。点击卡片可直达商家小红书主页。</div>
+    </div>
+
+    <div class="cases">
+      <div class="case">
+        <div class="path">PATH A · 店播驱动型</div>
+        <div class="case-head">
+          <div class="avatar" style="background:#a03d1c;overflow:hidden"><img src="data:image/jpeg;base64,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" alt="札" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display=&#39;none&#39;"/></div>
+          <div>
+            <h4>札萨旗舰店</h4>
+            <div class="rank">行业排名 <b>第 2 名</b></div>
+          </div>
+        </div>
+        <a class="shop-link" href="https://www.xiaohongshu.com/user/profile/5eb843f20000000001002ab0" target="_blank" rel="noopener">去小红书主页 ↗</a>
+        <p>日播时长拉满，用高复购爆品（猪肉脯类）反复承接，商笔做日常种草蓄水。9 月中旬创下单日破峰，约为全年日均的 13 倍。</p>
+        <div class="mini">
+          <div class="mr"><span class="l">店播</span><span class="tr"><span class="fl" style="width:100%"></span></span><span class="pc">72%</span></div>
+          <div class="mr"><span class="l">商卡</span><span class="tr"><span class="fl" style="width:29.5%"></span></span><span class="pc">21%</span></div>
+          <div class="mr"><span class="l">商笔</span><span class="tr"><span class="fl" style="width:8.6%"></span></span><span class="pc">6%</span></div>
+          <div class="mr"><span class="l">K播</span><span class="tr"><span class="fl" style="width:1%"></span></span><span class="pc">&lt;1%</span></div>
+        </div>
+      </div>
+      <div class="case">
+        <div class="path">PATH B · 年货节节奏型</div>
+        <div class="case-head">
+          <div class="avatar" style="background:#7c5a36;overflow:hidden"><img src="data:image/jpeg;base64,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" alt="水" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display=&#39;none&#39;"/></div>
+          <div>
+            <h4>水一方零食旗舰店</h4>
+            <div class="rank">行业排名 <b>前 50</b></div>
+          </div>
+        </div>
+        <a class="shop-link" href="https://www.xiaohongshu.com/user/profile/5dc01e180000000001009a4d" target="_blank" rel="noopener">去小红书主页 ↗</a>
+        <p>平时体量平稳，爆发集中在年货节：1 月下旬创下单日破峰，约为全年日均的 14 倍——节点的货盘组套（年货礼盒）是关键放大器。</p>
+        <div class="mini">
+          <div class="mr"><span class="l">店播</span><span class="tr"><span class="fl" style="width:100%"></span></span><span class="pc">61%</span></div>
+          <div class="mr"><span class="l">商卡</span><span class="tr"><span class="fl" style="width:34.4%"></span></span><span class="pc">21%</span></div>
+          <div class="mr"><span class="l">K播</span><span class="tr"><span class="fl" style="width:21.3%"></span></span><span class="pc">13%</span></div>
+          <div class="mr"><span class="l">商笔</span><span class="tr"><span class="fl" style="width:8.7%"></span></span><span class="pc">5%</span></div>
+        </div>
+      </div>
+      <div class="case">
+        <div class="path">PATH C · K播达人型</div>
+        <div class="case-head">
+          <div class="avatar" style="background:#8a6a45;overflow:hidden"><img src="data:image/jpeg;base64,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" alt="三" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display=&#39;none&#39;"/></div>
+          <div>
+            <h4>三关六码头旗舰店</h4>
+            <div class="rank">行业排名 <b>前 100</b></div>
+          </div>
+        </div>
+        <a class="shop-link" href="https://www.xiaohongshu.com/user/profile/61160961000000002002cd22" target="_blank" rel="noopener">去小红书主页 ↗</a>
+        <p>靠撮合达人矩阵把区域特色零食卖向全国，K播占其成交近六成，店播很弱——证明了不靠自播、纯靠达人也能跑到头部。</p>
+        <div class="mini">
+          <div class="mr"><span class="l">K播</span><span class="tr"><span class="fl" style="width:100%"></span></span><span class="pc">57%</span></div>
+          <div class="mr"><span class="l">商卡</span><span class="tr"><span class="fl" style="width:60.3%"></span></span><span class="pc">34%</span></div>
+          <div class="mr"><span class="l">店播</span><span class="tr"><span class="fl" style="width:9.8%"></span></span><span class="pc">6%</span></div>
+          <div class="mr"><span class="l">商笔</span><span class="tr"><span class="fl" style="width:4.9%"></span></span><span class="pc">3%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p>三个 case 对照出一个关键事实：<span class="hl">在小红书零食赛道，店播、节点组货、K播达人三条路都能走到行业头部，不存在「只有一个正确打法」</span>。它们的共同点是——无论主打哪个场域，商笔种草都在场（占比 3%–6%，作为日常蓄水），且都在大促节点完成了破峰。对薛记而言，品牌认知和线下 1400+ 门店的基础不弱于这三家，量级差距主要在线上运营投入，而不在赛道本身。</p>
+  </section>
+
+  <!-- ================= 03 薛记现状 ================= -->
+  <section id="s3">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">03 / 薛记现状</div>
+        <h2>有节令生意，<br/>没有日常生意。</h2>
+      </div>
+      <div class="summary">薛记在小红书不是从零起步：年货节期间单月贡献了全年近四成成交，自营笔记单篇最高带来 2000+ 购买用户。但节点之后迅速回落、近 7 天商笔发文为 0——成交近半靠货架搜索，内容场几乎空白，与行业结构正好倒挂。</div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="v">96.5<small>万</small></div><div class="k">近一年成交额</div><div class="n">2025.10–2026.10 累计成交（DGMV，约数）</div></div>
+      <div class="kpi"><div class="v">56<small>%</small></div><div class="k">年货节贡献占比</div><div class="n">12 月–2 月成交占全年 56%，1 月单月占 39%</div></div>
+      <div class="kpi"><div class="v">47.6<small>%</small></div><div class="k">成交靠商卡（货架）</div><div class="n">行业该占比为 26.9%，薛记显著偏高</div></div>
+      <div class="kpi"><div class="v">0 <small>篇</small></div><div class="k">近 7 天商笔发文</div><div class="n">全年新发商笔仅 36 篇，内容供给已经停滞</div></div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">STRUCTURE · 场域倒挂</div>
+      <h3>薛记的成交结构和行业，几乎是镜像</h3>
+      <p class="lead">行业最大场域是商笔（31.4%），薛记只有 16.3%；行业店播占 24.2%，薛记几乎为零；而行业占四分之一的商卡，在薛记这里占近一半。<span class="hl">货架成交依赖用户主动搜索——没有内容承接的搜索，天花板极低，这正是日常量起不来的直接原因。</span></p>
+      <div class="chart-card">
+        <div class="ct">成交场域占比：薛记 vs 行业均值 · 近一年</div>
+        <div class="duo me"><span class="lb">商卡</span><span class="tr"><span class="fl" style="width:100%"></span></span><span class="tr mkt"><span class="fl" style="width:56.5%"></span></span><span class="pc">47.6 / 26.9</span></div>
+        <div class="duo me"><span class="lb">商笔</span><span class="tr"><span class="fl" style="width:34.2%"></span></span><span class="tr mkt"><span class="fl" style="width:66.0%"></span></span><span class="pc">16.3 / 31.4</span></div>
+        <div class="duo me"><span class="lb">K播</span><span class="tr"><span class="fl" style="width:9.9%"></span></span><span class="tr mkt"><span class="fl" style="width:30.0%"></span></span><span class="pc">4.7 / 14.3</span></div>
+        <div class="duo me"><span class="lb">店播</span><span class="tr"><span class="fl" style="width:0.2%"></span></span><span class="tr mkt"><span class="fl" style="width:50.8%"></span></span><span class="pc">0.1 / 24.2</span></div>
+        <div class="legend"><span><i style="background:var(--accent)"></i>薛记</span><span><i style="background:var(--line2)"></i>行业均值</span><span style="font-family:var(--mono)">单位：%</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">RHYTHM · 月度节奏</div>
+      <h3>一条「只靠年货节」的曲线</h3>
+      <p class="lead">以峰值月（2026 年 1 月）= 100 做指数化处理：12 月开始爬坡、1 月冲顶、2 月延续，3 月起断崖回落，此后 8 个月停在个位数水位、无增长。<span class="hl">破峰说明货盘和供给在节点完全能承接；节点后没有内容蓄水，量就归零</span>——这是「节令型商家」的典型曲线，也是下一步要改的第一件事。</p>
+      <div class="chart-card">
+        <div class="ct">薛记月度成交指数 · 峰值月=100 · 近一年</div>
+        <div class="months">
+          <div class="m"><span class="v">4</span><div class="b" style="height:4%"></div></div>
+          <div class="m"><span class="v">14</span><div class="b" style="height:14%"></div></div>
+          <div class="m"><span class="v">25</span><div class="b" style="height:25%"></div></div>
+          <div class="m hot"><span class="v">100</span><div class="b" style="height:100%"></div></div>
+          <div class="m"><span class="v">43</span><div class="b" style="height:43%"></div></div>
+          <div class="m"><span class="v">21</span><div class="b" style="height:21%"></div></div>
+          <div class="m"><span class="v">10</span><div class="b" style="height:10%"></div></div>
+          <div class="m"><span class="v">7</span><div class="b" style="height:7%"></div></div>
+          <div class="m"><span class="v">6</span><div class="b" style="height:6%"></div></div>
+          <div class="m"><span class="v">7</span><div class="b" style="height:7%"></div></div>
+          <div class="m"><span class="v">7</span><div class="b" style="height:7%"></div></div>
+          <div class="m"><span class="v">6</span><div class="b" style="height:6%"></div></div>
+        </div>
+        <div class="mlabels"><span>10月</span><span>11月</span><span>12月</span><span>1月</span><span>2月</span><span>3月</span><span>4月</span><span>5月</span><span>6月</span><span>7月</span><span>8月</span><span>9月</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">EVIDENCE · 内容能力验证</div>
+      <h3>内容是能卖货的——只是发得太少</h3>
+      <p class="lead">全年 36 篇商笔（月均约 3 篇）撑起了内容场成交，其中自营号「薛记炒货零食」的单篇峰值笔记带来 2000+ 购买用户，是全年效率最高的一篇；达人侧（美食垂类博主的囤货/测评笔记）也在持续出单，但这些并非系统性撮合的产出。<span class="hl">账号有转化能力，缺的只是发布频率和内容供给。</span></p>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">AUDIENCE · 人群与客单</div>
+      <h3>买薛记的人，就是小红书零食的主力人群</h3>
+      <p class="lead">购买用户中女性占 94%，19–35 岁占 59.6%——比休食行业同口径（45.6%）更年轻；成交高度集中在 0–20 元价格带（91.5%），靠「30 元任选组合」这类小件组合拉件数。画像与小红书零食主流人群完全重合，价格带则是双刃剑——走量友好，但拉高客单要靠组套（见 05 章）。</p>
+      <div class="aud-grid">
+        <div class="chart-card">
+          <div class="ct">购买人群性别占比 · 薛记 vs 行业</div>
+          <div class="pie-wrap" id="pieSex"></div>
+          <p style="font-size:12.5px;color:var(--ink2);margin:12px 0 0">行业同口径女性占比约 88%（上半年段）——薛记 94% 更聚焦女性客群</p>
+        </div>
+        <div class="chart-card">
+          <div class="ct">购买人群年龄段 DGMV 占比 · 薛记 vs 行业</div>
+          <div class="agebar" id="agebar"></div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="ct">成交价格带 DGMV 占比 · 薛记 vs 行业 · 近一年</div>
+        <div id="pricebar" class="pricebar"></div>
+        <div class="legend"><span><i style="background:var(--accent)"></i>薛记</span><span><i style="background:var(--line2)"></i>行业</span><span style="font-family:var(--mono)">单位：%</span></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">SEARCH · 用户在搜什么 · 搜索词证据与货盘承接</div>
+      <h3>用户是带着购买意图搜「薛记」的——货接得住，内容没接住</h3>
+      <p class="lead">下面这组词来自灵犀搜索洞察（薛记炒货人群包 · 近90天 2026.07.21–10.19），含义是「用户通过搜索这些词进入相关笔记」。高亮的 10 个词全部是「薛记品牌 + 具体单品」结构——不是泛品类词，每一词都是一次带明确购买意图的精准搜索流量。叠加全站搜索口径（BI 社区搜索底表，近90天含「薛记」的搜索合计月均超 40 万次），每个词的月均量级与货盘承接状态如下：</p>
+      <table>
+        <tbody><tr><th>搜索词（近90天）</th><th class="num">全站搜索量级（月均）</th><th>薛记承接状态</th></tr>
+        <tr><td><b>薛记炒货 / 薛记炒货推荐 / 薛记炒货必买推荐</b></td><td class="num">月均 20 万+<br/><span style="color:var(--ink2);font-size:12px">主词月均 13 万+ · 推荐/必买变体月均 8 万+</span></td><td><b style="color:var(--accent)">可承接</b> · 「29.9 任选 5 件」组合装在售，近90天约 9,700 件成交，是店内在小红书的绝对主力；缺「必买清单」类商笔承接</td></tr>
+        <tr><td><b>薛记红薯条</b></td><td class="num">月均 8 万+<br/><span style="color:var(--ink2);font-size:12px">14 个变体词，含「复刻」变体；人群包内单品词环比 +169 倍</span></td><td><b style="color:var(--accent)">在售</b> · 红薯片/甘薯棒等 10 个 SKU；「现烤红薯条复刻版」是最该先做商笔的单品</td></tr>
+        <tr><td><b>薛记炒货猪肉脯</b></td><td class="num">月均 1.5 万+</td><td><b style="color:var(--accent)">在售</b> · 猪肉脯 80g×5 袋、薄脆猪肉脯 100g</td></tr>
+        <tr><td><b>薛记炒货热量</b></td><td class="num">月均 1.5 万+</td><td><b style="color:var(--accent2)">内容缺口</b> · 货盘可挂（炒货基础品 57 个 SKU 在售），但无热量/配料向笔记，纯内容缺口</td></tr>
+        <tr><td><b>薛记炒货苹果干</b></td><td class="num">月均 8000+</td><td><b style="color:var(--accent)">在售</b> · 苹果脆 40g×2 袋、苹果干 88g×2 袋</td></tr>
+        <tr><td><b>薛记炒货冰栗子</b></td><td class="num">月均 6000+</td><td><b style="color:var(--accent)">在售</b> · 冰栗子 430g×2 袋（含达人专属变体），冷链发货卖点现成</td></tr>
+        <tr><td><b>薛记烤鲜奶脆</b></td><td class="num">月均 6000+</td><td><b style="color:var(--accent2)">部分承接</b> · 无同名 SKU 上架（疑门店款未上线）——上新即有搜索承接</td></tr>
+        <tr><td><b>薛记炒货奶芙</b></td><td class="num">月均 5000+</td><td><b style="color:var(--accent)">在售</b> · 草莓/芒果/羽衣甘蓝奶芙 138g 独立包装在售</td></tr>
+      </tbody></table>
+      <p>结论：<span class="hl">近 90 天站内搜「薛记」相关词月均超 40 万次，其中高亮的单品词全部有真实搜索量（最小的奶芙月均也有 5000+ 次）；10 个词里 7 个能在货盘里找到对应在售商品——需求侧不是「要不要组货」，而是「内容没接住」</span>：这些词搜得到商品、搜不到笔记，精准流量落不到商详页。动作三步：①每个高亮词至少配一篇商笔，标题原词命中（小红书搜索分发吃标题匹配）；②「现烤红薯条复刻版」当第一个样板——月均 8 万+ 次搜索里「复刻」心智变体占比近三成，笔记与商品都是现成的；③推动「烤鲜奶脆」上架小红书小店，上架即有搜索承接。另一个佐证：薛记近90天在小红书的成交里，蜜饯/果干/冻干类占约四分之三——搜索词结构（红薯条/苹果干/奶芙）与成交结构一致，<span class="hl">搜进来的人要的就是这些「非瓜子花生」的单品，货盘和需求是对得上的</span>。</p>
+    </div>
+  </section>
+
+  <!-- ================= 04 动作一 商笔 ================= -->
+  <section id="s4">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">04 / 动作一 · 商笔</div>
+        <h2>把勤奋度拉到同行水位，<br/>这是成本最低、见效最快的一步。</h2>
+      </div>
+      <div class="summary">零食行业活跃商家的周发文基准是 13 篇（约 2 篇/天），大促期间平台对重点商家的基准是日均 6 篇起。薛记全年 36 篇、近 7 天 0 篇——先解决「在场」，再谈「出彩」。</div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="v">13 <small>篇/周</small></div><div class="k">活跃商家发文基准</div><div class="n">零食行业活跃商家周发文中位数，约 2 篇/天</div></div>
+      <div class="kpi"><div class="v">≥6 <small>篇/天</small></div><div class="k">大促发文基准</div><div class="n">双11 等大促期间重点商家的勤奋度要求</div></div>
+      <div class="kpi"><div class="v">36 <small>篇/年</small></div><div class="k">薛记当前发文</div><div class="n">月均约 3 篇，近 7 天为 0，与基准差约 10 倍</div></div>
+      <div class="kpi"><div class="v">0.89<small>%</small></div><div class="k">行业商笔转化中位</div><div class="n">商卡点击→购买转化率行业中位数，薛记约 0.65%</div></div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">TOPICS · 选题池</div>
+      <h3>五个选题方向，对齐大盘、对齐自家货盘</h3>
+      <p class="lead">按第 01 章的类目结构反推，薛记门店现有 SKU 可以直接覆盖以下五个高频成交方向：</p>
+      <table>
+        <tbody><tr><th>选题方向</th><th>对齐的大盘子类目</th><th>内容抓手</th></tr>
+        <tr><td><b>现烤坚果系列</b></td><td class="num">坚果/炒货 · 8.7%</td><td>现烤栗子、瓜子仁、巴旦木的「出锅瞬间」，门店现烤锅是同行没有的差异化素材</td></tr>
+        <tr><td><b>果干冻干系列</b></td><td class="num">蜜饯/果干/冻干 · 12.3%</td><td>冻干水果的捏碎、复水、酸甜度实测</td></tr>
+        <tr><td><b>糕点点心系列</b></td><td class="num">糕点/点心 · 32.6%</td><td>门店现制糕点的限量、时令、上新预告</td></tr>
+        <tr><td><b>组合性价比系列</b></td><td class="num">对齐 0–20 元价格带优势</td><td>「30 块钱在薛记能买多少」式开箱与凑单攻略</td></tr>
+        <tr><td><b>节令礼盒系列</b></td><td class="num">年货节 · 全年最大节点</td><td>年货礼盒、中秋礼盒提前 1 个月蓄水种草</td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">PLAYBOOK · 内容方法论</div>
+      <h3>小红书零食内容的三个关键差异（附高转化案例，点击可跳原笔记）</h3>
+      <p class="lead">以下案例均为近期平台上实际出单的休食笔记，标题与结构可直接借鉴。</p>
+
+      <p><span class="em">差异一：要场景化、要具体，不要品牌宣传腔。</span>小红书用户吃「具体的人、具体的场景、具体的吃法」，泛品牌广告基本无效。好笔记都精确到「今年这批」「桂花比例最高」这种颗粒度，而不是「我们的年糕很好吃」；把产品绑进「周末追剧」「半夜嘴馋」这些具体场景里，用户才会代入。给薛记的动作：每篇选题套「人群 + 场景 + 具体产品」公式，如「办公室下午饿了别啃面包，抓一把现烤瓜子仁」。</p>
+      <div class="note-cites">
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6a9b955c000000000d02666c" target="_blank" rel="noopener"><span class="nt">📸《今年做的桂花比例最高的一批年糕了！》</span><span class="na">乡下头-金二狗</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6a5093d30000000016025da5" target="_blank" rel="noopener"><span class="nt">📸《谁能拒绝周末宅家追剧来一口猪肝啊😍》</span><span class="na">NOFUNSHOP无趣的店</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6a61d3e7000000001302447d" target="_blank" rel="noopener"><span class="nt">📸《半夜嘴馋，不长胖零食！没有味还不脏手》</span><span class="na">札萨</span><span class="go">点击跳转原笔记 ↗</span></a>
+      </div>
+
+      <p><span class="em">差异二：拍有特色的画面——手持食材展示、捏碎/掰开/开袋等强动作。</span>零食爆款的画面语言是「真实感 + 食欲冲击」，刻意摆拍反而被识别为广告。开袋瞬间的颗粒特写、「掰开给你们看」的展示动作、一口接一口的连续试吃，都是被验证过的画面结构。给薛记的动作：每篇至少一个手部动作镜头——捏碎冻干、掰开酥糖、抓起一把瓜子仁的流淌感；现烤锅冒气的镜头是薛记独有素材。</p>
+      <div class="note-cites">
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6a8fb939000000002501ae40" target="_blank" rel="noopener"><span class="nt">📸《开袋炭烤腰果！》</span><span class="na">韩要强现烤坚果（行业前 10 商家）</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6aa8e0d6000000002802d888" target="_blank" rel="noopener"><span class="nt">📸《终于把这块开心果黑巧掰开给你们看了👀》</span><span class="na">BENNS</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6a1bffff0000000037035dee" target="_blank" rel="noopener"><span class="nt">📸《这个冻干一吃就要吃到天荒地老！》</span><span class="na">冻干三姐妹</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6ab0f3980000000034000fa6" target="_blank" rel="noopener"><span class="nt">📸《这个青苹果冻干一吃就要吃到天荒地老！！》</span><span class="na">苹果很OK</span><span class="go">点击跳转原笔记 ↗</span></a>
+      </div>
+
+      <p><span class="em">差异三：结合时事与热词，蹭节点流量。</span>小红书的搜索与推荐对热点词自带分发放大。「超长蛋挞」2026 年 9–10 月从烘焙圈爆火出圈（超大造型的社交货币属性），「luke 桂花蜜」这类博主带火的时令词也在快速起量，「沉浸式试吃」则是持续热门的内容形式词——三者共同点是：热点在前、产品在后，笔记顺势被搜索和推荐接住。给薛记的动作：建立周度热词跟进机制，每周从站内热榜挑 2–3 个零食相关热词，反推到自家 SKU 产笔记。</p>
+      <div class="note-cites">
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6ab232f700000000340141db" target="_blank" rel="noopener"><span class="nt">📸《美食分享｜ 一万大卡超长系列》</span><span class="na">陈土豆儿 · 超长系列借势</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6aa170eb00000000120370a4" target="_blank" rel="noopener"><span class="nt">📸《luke谢谢你！帮我的桂花蜜直接卖断货了！》</span><span class="na">食屿暖 · 热点词带货</span><span class="go">点击跳转原笔记 ↗</span></a>
+        <a class="nc" href="https://www.xiaohongshu.com/explore/6a75a6560000000005032334" target="_blank" rel="noopener"><span class="nt">📸《沉浸式试吃冻干水果🍌🍎🍓🥭》</span><span class="na">冻干三姐妹</span><span class="go">点击跳转原笔记 ↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 动作二 K播 ================= -->
+  <section id="s5">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">05 / 动作二 · K播</div>
+        <h2>组高客单货盘，<br/>再用达人把货盘讲出去。</h2>
+      </div>
+      <div class="summary">K播占零食行业成交 14.3%，三关六码头靠它做到近六成占比、行业前 100——路径成熟。薛记 K播占比不足 5%，基本未启动。启动顺序：先组货盘，再撮合达人。</div>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">GOODS · 货盘两件事</div>
+      <h3>年货套组 + 同款货盘，把客单拉起来</h3>
+      <p class="lead">薛记年货节贡献了全年 56% 的成交，说明节令货盘是强项——同行的破峰也都发生在 1 月下旬年货节。参考水一方与三关六码头的节奏，提前 1 个月（12 月中旬）完成组盘：</p>
+      <table>
+        <tbody><tr><th>货盘</th><th>组法</th><th>价格带逻辑</th></tr>
+        <tr><td><b>年货大礼盒</b></td><td>坚果 + 瓜子 + 栗子 + 果干混装，节庆包装</td><td class="num">锚定 50–100 元，拉高客单与 GPM</td></tr>
+        <tr><td><b>入门尝鲜组</b></td><td>小规格混装、30 元任选组合升级版</td><td class="num">20–30 元，承接走量与新客</td></tr>
+        <tr><td><b>综艺/明星同款盘</b></td><td>把影视综艺里出现过的同款零食做成专题组合</td><td class="num">自带话题，配合达人「同款」话术</td></tr>
+      </tbody></table>
+      <p>为什么强调高客单：小红书用户价格敏感度低，愿意为品质、组合和情绪价值付溢价。薛记当前约 88% 成交在 0–20 元价格带，是典型的「低客单、靠件数」模式——在 K播场域这样跑，GPM（千次曝光成交额）很难覆盖达人的坑位成本。<span class="hl">K播货盘必须专门组高客单套组，把单笔成交金额拉起来，达人才有动力讲、平台才愿意推。</span></p>
+    </div>
+
+    <div class="block">
+      <div class="block-tag">TALENT · 达人撮合</div>
+      <h3>先用中腰部铺量试水，再对破峰追加</h3>
+      <p class="lead">建议第一批合作 10–50 万粉的零食/美食垂类中腰部达人（试错成本低、性价比高），跑通「寄样 → 内容审核 → 排期开播」的流水线；对数据破峰的达人追加专场合作。内容结构可以直接复用同行验证过的打法——札萨的爆品在达人直播间反复做「全口味讲解」，薛记的「全口味炒货套组」可套用同款内容结构。</p>
+    </div>
+  </section>
+
+  <!-- ================= 06 动作三 店播 ================= -->
+  <section id="s6">
+    <div class="sec-head">
+      <div>
+        <div class="kicker">06 / 动作三 · 店播</div>
+        <h2>保持双开，<br/>把节点承接的座位先占住。</h2>
+      </div>
+      <div class="summary">店播占行业成交 24.2%，札萨靠它做到七成占比。薛记店播目前基本未启动，建议维持日播双开节奏不变，运营精力优先投给商笔；店播货盘同步换成高客单组套，等商笔蓄水起量后再评估加投。</div>
+    </div>
+    <div class="block">
+      <div class="block-tag">PRIORITY · 优先级</div>
+      <h3>三步动作的投入顺序</h3>
+      <table>
+        <tbody><tr><th>优先级</th><th>场域</th><th>动作</th><th>理由</th></tr>
+        <tr class="hlrow"><td class="num">P0</td><td><b>商笔</b></td><td>日均 2–3 篇，大促日均 6 篇起，按 04 章选题池执行</td><td>最大转化场域，成本最低，账号已被验证有转化能力</td></tr>
+        <tr><td class="num">P1</td><td><b>K播</b></td><td>12 月中旬前完成年货货盘组套，中腰部达人铺量</td><td>路径已被同行验证，节点破峰的关键放大器</td></tr>
+        <tr><td class="num">P2</td><td><b>店播</b></td><td>维持双开不变，货盘换高客单组套</td><td>保持在场与团队熟练度，承接商笔蓄水后的搜索与进播</td></tr>
+      </tbody></table>
+      <p>三者不是并列关系，而是接力关系：<span class="hl">商笔负责日常蓄水和搜索心智，K播负责节点爆发，店播负责承接转化</span>。按此节奏推进，薛记在小红书有机会从「年货节一次性商家」变成「有日常水位、节点能破峰」的稳定经营商家——同行的头部位置，已经证明了这条路的天花板足够高。</p>
+    </div>
+  </section>
+
+  <footer>
+    数据口径：小红书电商交易数据（DGMV）· 近一年 = 2025.10.20–2026.10.20 · 近 7 天 = 2026.10.14–10.20<br/>
+    场域口径：商笔 = 商品笔记 + 购物笔记 + 品合笔记；商卡 = 货架/搜索成交；K播 = 达人带货；店播 = 商家自播<br/>
+    本页为对外沟通版：薛记数据为约数，行业规模仅呈现占比与相对指数
+  </footer>
+</div>
+
+<script>
+(function(){
+  var PAL=['#a03d1c','#c2703f','#d9a05b','#8a6a45','#b08d57','#6f5b3e','#c9a227','#946b4a','#7c8a5a','#b5695a'];
+  function build(id,data,center){
+    var wrap=document.getElementById(id); if(!wrap) return;
+    var total=data.reduce(function(s,d){return s+d.v;},0);
+    var R=78,C=2*Math.PI*R,off=0;
+    var NS='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 200 200');
+    data.forEach(function(d,i){
+      var len=Math.max(d.v/total*C-1.6,0.6);
+      var c=document.createElementNS(NS,'circle');
+      c.setAttribute('r',R);c.setAttribute('cx','100');c.setAttribute('cy','100');
+      c.setAttribute('fill','none');c.setAttribute('stroke',d.c);
+      c.setAttribute('stroke-width','36');
+      c.setAttribute('stroke-dasharray',len+' '+(C-len));
+      c.setAttribute('stroke-dashoffset',String(-off));
+      c.setAttribute('transform','rotate(-90 100 100)');
+      svg.appendChild(c);
+      off+=d.v/total*C;
+    });
+    var box=document.createElement('div');box.className='pie-box';
+    box.appendChild(svg);
+    var ce=document.createElement('div');ce.className='pie-center';
+    ce.innerHTML='<div class="pv">'+center.v+'</div><div class="pk">'+center.k+'</div>';
+    box.appendChild(ce);
+    wrap.appendChild(box);
+    var lg=document.createElement('div');lg.className='pie-legend';
+    data.forEach(function(d){
+      var li=document.createElement('div');
+      li.className='li'+(d.hot?' hot':'');
+      li.innerHTML='<i style="background:'+d.c+'"></i><span class="ln">'+d.n+'</span><span class="lv">'+d.v+'%</span>';
+      lg.appendChild(li);
+    });
+    wrap.appendChild(lg);
+  }
+  build('pieL1',[
+    {n:'零食/坚果/特产',v:31.2,c:PAL[0],hot:1},
+    {n:'传统滋补营养品',v:16.8,c:PAL[1]},
+    {n:'咖啡/麦片/冲饮',v:16.5,c:PAL[2]},
+    {n:'粮油调味/速食/烘焙',v:15.3,c:PAL[3]},
+    {n:'茶',v:7.8,c:PAL[4]},
+    {n:'酒类',v:5.3,c:PAL[5]},
+    {n:'生鲜/熟食/蔬果',v:4.1,c:PAL[6]},
+    {n:'其他类目',v:3.0,c:PAL[9]}
+  ],{v:'31.2%',k:'零食/坚果/特产 · 第一大类目'});
+  build('pieL2',[
+    {n:'糕点/点心',v:32.6,c:PAL[1]},
+    {n:'牛肉干/猪肉脯/卤味',v:20.0,c:PAL[2]},
+    {n:'蜜饯/枣类/果干/冻干',v:12.3,c:PAL[3]},
+    {n:'饼干/膨化',v:9.9,c:PAL[4]},
+    {n:'山核桃/坚果/炒货',v:8.7,c:PAL[0],hot:1},
+    {n:'巧克力',v:7.7,c:PAL[5]},
+    {n:'糖果零食',v:3.3,c:PAL[6]},
+    {n:'月饼',v:2.3,c:PAL[7]},
+    {n:'海味即食',v:2.0,c:PAL[8]},
+    {n:'豆干/蔬菜干等',v:1.0,c:PAL[9]}
+  ],{v:'8.7%',k:'坚果/炒货 · 薛记所处子类目'});
+  build('pieField',[
+    {n:'商笔（商品笔记）',v:31.4,c:PAL[0],hot:1},
+    {n:'商卡（货架/搜索）',v:26.9,c:PAL[1]},
+    {n:'店播',v:24.2,c:PAL[2]},
+    {n:'K播（达人带货）',v:14.3,c:PAL[3]},
+    {n:'其他（种草笔记等）',v:3.2,c:PAL[9]}
+  ],{v:'31.4%',k:'商笔 · 最大转化场域'});
+  build('pieSex',[
+    {n:'女性',v:94.1,c:PAL[0],hot:1},
+    {n:'男性',v:4.9,c:PAL[2]},
+    {n:'未知',v:1.0,c:PAL[4]}
+  ],{v:'94.1%',k:'女性 · 薛记购买人群'});
+  // 年龄段对比条：薛记 vs 行业
+  (function(){
+    var ages=[['19-22',12.6,4.9],['23-25',13.8,7.7],['26-30',18.3,15.7],['31-35',15.0,17.3],['36-40',11.4,17.6],['40+',10.9,23.3]];
+    var maxv=25, w=document.getElementById('agebar'); if(!w) return;
+    ages.forEach(function(a){
+      var row=document.createElement('div');row.className='ar';
+      row.innerHTML='<span class="al">'+a[0]+'</span>'+
+        '<span class="tr"><span class="fl me" style="width:'+(a[1]/maxv*100)+'%"></span></span>'+
+        '<span class="tr"><span class="fl mkt" style="width:'+(a[2]/maxv*100)+'%"></span></span>'+
+        '<span class="av">'+a[1]+' / '+a[2]+'</span>';
+      row.className='ar me';
+      w.appendChild(row);
+    });
+    var lg=document.createElement('div');lg.className='legend';
+    lg.innerHTML='<span><i style="background:var(--accent)"></i>薛记</span><span><i style="background:var(--line2)"></i>行业</span><span style="font-family:var(--mono)">单位：%</span>';
+    w.appendChild(lg);
+  })();
+  // 价格带对比条：薛记 vs 行业
+  (function(){
+    var bands=[['0–20元',91.5,8.7],['20–50元',7.9,23.6],['50–100元',0.2,26.5],['100–200元',0.1,18.9],['200元以上',0.3,16.8]];
+    var maxv=95, w=document.getElementById('pricebar'); if(!w) return;
+    bands.forEach(function(b){
+      var row=document.createElement('div');row.className='pr';
+      row.innerHTML='<span class="pl">'+b[0]+'</span>'+
+        '<span class="tr"><span class="fl me" style="width:'+Math.max(b[1]/maxv*100,0.5)+'%"></span></span>'+
+        '<span class="tr"><span class="fl mkt" style="width:'+Math.max(b[2]/maxv*100,0.5)+'%"></span></span>'+
+        '<span class="pv">'+(b[1]<1?b[1].toFixed(1):b[1])+' / '+b[2]+'</span>';
+      row.className='pr me';
+      w.appendChild(row);
+    });
+  })();
+})();
+</script>
+
+
+</body></html>
