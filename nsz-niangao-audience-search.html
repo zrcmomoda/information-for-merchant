@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南食召 · 年糕 人群与搜索对比（品牌人群 vs 平台兴趣人群）</title>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--wine:#8E354A;--wine2:#a85a6e;--wine3:#6b2438;--ink:#212b36;--ink2:#37414d;
+--gray:#57626e;--gray2:#77828e;--line:#e2e8ee;--line2:#d2dce5;--paper:#fff;
+--bg:#faf7f7;--tint:#f7eef0;--tint2:#f0e0e4;--gold:#b08d57;--green:#6b9a7a;
+--tomato:#C4622D;--tomato2:#d98a55;--tomato3:#8a3f1a}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+.topbar{background:linear-gradient(135deg,var(--wine3),var(--wine) 55%,var(--wine2));color:#fff;padding:34px 0 30px;margin-bottom:0}
+.topbar .in{max-width:1180px;margin:0 auto;padding:0 20px}
+.topbar h1{font-size:28px;line-height:1.4;font-weight:700;letter-spacing:.5px}
+.topbar h1 u{text-decoration:none;border-bottom:3px solid rgba(255,255,255,.5);padding-bottom:2px}
+.topbar .sub{margin-top:13px;font-size:14.5px;color:rgba(255,255,255,.86);line-height:1.7;max-width:960px}
+.krow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.kpi{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:13px 15px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:.4px}
+.kpi .l{font-size:13px;color:rgba(255,255,255,.9);margin-top:3px}
+.tabs{display:flex;gap:0;background:var(--paper);border-bottom:2px solid var(--line2);position:sticky;top:0;z-index:30;overflow-x:auto}
+.tabs .in{display:flex;max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+.tab{padding:15px 21px;font-size:14.5px;font-weight:600;color:var(--gray);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.18s}
+.tab:hover{color:var(--wine);background:var(--tint)}
+.tab.on{color:var(--wine);border-bottom-color:var(--wine);background:var(--tint)}
+.pane{display:none}.pane.on{display:block}
+.sec{margin-top:30px}
+h2{font-size:20.5px;font-weight:700;color:var(--ink);padding-left:12px;border-left:4px solid var(--wine);margin-bottom:6px}
+h2.tmt{border-left-color:var(--tomato)}
+.cap{font-size:14px;color:var(--gray);margin:0 0 16px 16px}
+.box{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--wine);border-radius:0 10px 10px 0;padding:16px 18px;margin:16px 0;box-shadow:0 1px 3px rgba(33,43,54,.05)}
+.box h3{font-size:16px;color:var(--wine);margin-bottom:9px;font-weight:700}
+.box p{font-size:14.5px;color:var(--ink2);line-height:1.85;margin-bottom:7px}
+.box p:last-child{margin-bottom:0}
+.box.tomato{border-left-color:var(--tomato)}
+.box.tomato h3{color:var(--tomato)}
+b{color:var(--wine);font-weight:700}em{color:var(--wine2);font-style:normal;font-weight:600}
+.tomato-scope b{color:var(--tomato3);font-weight:700}.tomato-scope em{color:var(--tomato);font-style:normal;font-weight:600}.tomato-scope .hl{background:#f5e3d7;color:var(--tomato3)}
+.hl{background:var(--tint2);padding:1px 5px;border-radius:3px;font-weight:600;color:var(--wine3)}
+table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:16px 0;font-size:14px}
+th{background:var(--tint);color:var(--wine3);font-weight:700;font-size:13.5px;padding:12px 14px;text-align:left;border-bottom:2px solid var(--line2);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid #eef2f6;text-align:left;color:var(--ink2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--tint)}
+.num{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+.tr-alt{background:#fbfcfe}
+.tscroll{overflow-x:auto;border-radius:10px}
+.cg2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.cg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+.card h4{font-size:15.5px;color:var(--wine);margin-bottom:10px;font-weight:700}
+.card p{font-size:14px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.card p:last-child{margin-bottom:0}
+.card.tomato h4{color:var(--tomato)}.card.tomato b{color:var(--tomato3)}
+.tag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.chartcard{padding:14px 16px 8px;background:var(--paper);border:1px solid var(--line);border-radius:11px}
+.chartcard h4{font-size:15.5px;color:var(--wine);margin-bottom:4px;font-weight:700}
+.chartcard.tomato h4{color:var(--tomato)}
+.ccbox{height:360px;width:100%}
+.cnote{font-size:11.5px;color:#999;margin:-2px 0 6px}
+.foot{margin-top:40px;padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:10px;font-size:13.5px;color:var(--gray);line-height:1.9}
+.foot b{color:var(--wine)}
+.vs{display:grid;grid-template-columns:1fr 56px 1fr;gap:0;align-items:stretch;margin:16px 0}
+.vs .side{background:var(--paper);border:1px solid var(--line);border-radius:11px;padding:16px 18px}
+.vs .side.l{border-top:3px solid var(--wine)}
+.vs .side.r{border-top:3px solid var(--tomato)}
+.vs .mid{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:var(--gray2)}
+.vs h4{font-size:15.5px;margin-bottom:8px;font-weight:700}
+.vs .side.l h4{color:var(--wine)}
+.vs .side.r h4{color:var(--tomato)}
+.vs .side.r li b{color:var(--tomato3)}
+.vs ul{list-style:none}
+.vs li{font-size:13.5px;color:var(--ink2);line-height:1.8;padding:5px 0;border-bottom:1px dashed #eef2f6}
+.vs li:last-child{border-bottom:none}
+.vs li b{font-size:13.5px}
+@media(max-width:860px){.krow{grid-template-columns:repeat(2,1fr)}.cg2,.cg3{grid-template-columns:1fr}.topbar h1{font-size:21px}.ccbox{height:300px}.vs{grid-template-columns:1fr}.vs .mid{padding:8px 0}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="in">
+    <h1>南食召 · <u>年糕</u> 人群与搜索对比</h1>
+    <div class="sub">品牌年糕人群（P+TI+I）vs 平台年糕兴趣人群 · 谁在喜欢年糕、他们在乎什么、内容兴趣是什么、在搜什么 · 数据窗口 2026-07-22 ~ 10-20 · TGI&gt;100 表示显著偏好于全体用户</div>
+    <div class="krow">
+      <div class="kpi"><div class="v" id="k1"></div><div class="l">品牌年糕人群规模（P+TI+I）</div></div>
+      <div class="kpi"><div class="v" id="k2"></div><div class="l">平台年糕兴趣人群规模</div></div>
+      <div class="kpi"><div class="v">≈ 1/54</div><div class="l">品牌人群约为平台的 1/54——小而精的高净值分层</div></div>
+      <div class="kpi"><div class="v">近 7 倍</div><div class="l">平台端「年糕词族」7月→10月搜索涨幅</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="in">
+    <div class="tab on" data-p="p1">南食召年糕 · 人群和搜索</div>
+    <div class="tab" data-p="p2">平台年糕 · 人群和搜索</div>
+    <div class="tab" data-p="p3">相似与差异 · 年糕打法建议</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ P1 南食召年糕 ============ -->
+<div class="pane on" id="p1">
+  <div class="sec">
+    <h2>她是谁 · 人口属性</h2>
+    <div class="cap">南食召 年糕 P+TI+I 人群（种草+深度种草+成交）· 与平台人群同源同口径</div>
+
+    <div class="box">
+      <h3>先记住三句话</h3>
+      <p><b>① 36 岁以上、一线城市的已婚妈妈是绝对主力：</b>女性 94.5%；36-40 岁占 23.7%（TGI 202）、41 岁以上 32.7%（TGI 155）；已婚 73.8%（TGI 201）；一线 27.6%（TGI 222），上海一城占 12.4%（TGI 353）——和平台年糕人群（19-30 岁未婚）正好是两代人。</p>
+      <p><b>② 消费力约为平台人群的 2 倍：</b>高消费占 42.4%（TGI 220，平台仅 21.2%），5000 元以上消费金额段占 36.8%（TGI 1298）；品牌偏好 MUJI、宜家、盒马、山姆、LAMER、卡地亚、始祖鸟——典型中产品质生活画像。</p>
+      <p><b>③ 她们搜的是「南食召」和「整桌菜」：</b>搜索词偏好里南食召 TGI 6.3 万、雪菜 2.5 万、芝麻盐 1.6 万——品牌认知极强；家常菜是第一大搜索词（2.6 万次），牛肋条、清炖牛肋条、糖醋排骨、梭子蟹跟着上榜——<em>年糕是家庭餐桌的一部分，不是孤立零食</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>性别（占比 vs TGI）</h4><div class="ccbox" id="n_g"></div></div>
+      <div class="chartcard"><h4>年龄结构（占比 vs TGI）</h4><div class="ccbox" id="n_a"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>城市等级（占比 vs TGI）</h4><div class="ccbox" id="n_c"></div></div>
+      <div class="chartcard"><h4>婚恋状态（占比 vs TGI）</h4><div class="ccbox" id="n_m"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>孩子年龄（占比 vs TGI）</h4><div class="ccbox" id="n_k"></div></div>
+      <div class="chartcard"><h4>消费金额分布（占比 vs TGI）</h4><div class="ccbox" id="n_s"></div></div>
+    </div>
+
+    <h2 style="margin-top:34px">她在搜什么 · 搜索端信号</h2>
+    <div class="cap">近90天热门搜索词 Top30 · ★=搜索量相对档位 · TGI = 相对全体用户的偏好强度</div>
+
+    <div class="box">
+      <h3>搜索端的三个信号</h3>
+      <p><b>① 本品词与年糕词根超强：</b>年糕 TGI 1.1 万、年糕汤 1.2 万、梭子蟹炒年糕 4595、炒年糕 5433；且「年糕」搜索正在升温——10 月月搜索量 2039 次，较 7 月的 230 次涨近 9 倍，<em>季节入冬 + 内容起量双驱动</em>。</p>
+      <p><b>② 大菜与攻略是流量主干：</b>家常菜（2.6 万次）领跑全榜，牛肋条做法 TGI 4821、恰巴塔做法 3761、梭子蟹的做法 2493；攻略类词占全部搜索词的 20%——<em>教程内容是承接利器</em>。</p>
+      <p><b>③ 早餐与西式场景冒头：</b>内容关键词里早餐 TGI 842（全场第一）、一人食 711、晚餐 638；搜索端恰巴塔、三明治、面包在榜——<em>年糕的「早餐化」内容有真实需求基础</em>。</p>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>搜索词</th><th>热度</th><th>TGI</th><th>信号</th></tr></thead>
+      <tbody id="n_tb"></tbody>
+    </table></div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>搜索词偏好 Top10（剔除品牌词）</h4><div class="ccbox" id="n_sp"></div></div>
+      <div class="chartcard"><h4>搜索词属性结构（词量占比）</h4><div class="ccbox" id="n_attr"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>年糕词族 · 搜索量（本人群包内）</h4><div class="ccbox" id="n_ng"></div></div>
+      <div class="chartcard"><h4>KOL 类型偏好（占比 vs TGI）</h4><div class="ccbox" id="n_kol"></div></div>
+    </div>
+
+    <h2 style="margin-top:34px">她在看什么 · 内容兴趣下钻</h2>
+    <div class="cap">内容兴趣类目层级（二/三级）· 柱=渗透率% · 线=TGI · 按 TGI 取 Top10</div>
+
+    <div class="box">
+      <h3>内容兴趣怎么读</h3>
+      <p><b>① 美食是主阵地，但「追剧+明星」才是第一注意力：</b>美食渗透 71%（TGI 198），娱乐 70%（TGI 228）、明星娱乐资讯 68.9%（TGI 256）——内容关键词里谭松韵 TGI 616 排进 Top5；华语剧 TGI 322、影视片段 341。<em>「边追剧边吃饭」是她刷小红书的真实姿态</em>。</p>
+      <p><b>② 三级类目里「餐厨具」TGI 609 全场最高：</b>家居家装渗透 27.2%（TGI 185），餐厨具 8.5%（609）、厨房家电 260、锅具行业品类 TGI 400——<em>「好锅配好年糕」的厨房内容有天然人群基础</em>。</p>
+      <p><b>③ 网球是意外信号：</b>网球 TGI 264、网球赛事 194、乒乓球 184、瑜伽教程 258——运动生活方式内容可以成为品牌破圈的借势点。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>内容二级类目 Top10（按 TGI）</h4><div class="ccbox" id="n_c2"></div></div>
+      <div class="chartcard"><h4>内容三级类目 Top10（按 TGI）</h4><div class="ccbox" id="n_c3"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>内容关键词偏好（她看什么）</h4><div class="ccbox" id="n_ck"></div></div>
+      <div class="chartcard"><h4>二十大人群 Top5（她是哪类人）</h4><div class="ccbox" id="n_cr"></div></div>
+    </div>
+
+    <div class="box">
+      <h3>南食召年糕人群小结</h3>
+      <p>这是一群 <b>35+ 一线已婚中产妈妈</b>——她们不是被年糕吸引来的年轻人，而是「认得南食召、每天要安排一桌饭」的家庭主厨。二十大人群 Top5 全是<em>身心觉察师（45%）、友伴式父母、心灵远行客、熟龄悦己中年</em>这类自我照顾与家庭照护并存的角色。年糕在她们这里是主食和点心：配梭子蟹、炖年糕汤、做早餐。对她们说话的方式：<em>给菜谱、给搭配、给「孩子和家人爱吃」的确定性</em>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P2 平台年糕 ============ -->
+<div class="pane" id="p2">
+  <div class="sec tomato-scope">
+    <h2 class="tmt">她是谁 · 人口属性</h2>
+    <div class="cap">平台「年糕」兴趣人群 · 口径与品牌人群一致，规模约为其 54 倍</div>
+
+    <div class="box tomato">
+      <h3>先记住三句话</h3>
+      <p><b>① 19-30 岁的未婚年轻女性，学生气重：</b>女 91.1%；19-25 岁合计 43.3%（19-22 TGI 161 / 23-25 TGI 181）；未婚 69.5%（TGI 130）；大学生 TGI 213——和品牌人群是两代人。</p>
+      <p><b>② 韩流、奶茶与网红零食的一代：</b>决策因子 Top 是韩语 Topik 考试（TGI 671）、潮流 IP（622）、季节限定（493）、网红品牌（480）；内容关键词韩国 592、吃播 547、ASMR 461；品牌偏好奥利奥、欧利芙洋、喜茶、古茗、肯德基——<em>新茶饮+快餐+韩流喂养的一代</em>。</p>
+      <p><b>③ 年糕对她们是「韩餐+零食」：</b>年糕搜索 20.8 万次排全榜第 19；炒年糕 17.2 万、年糕做法 14.7 万、黄油年糕 9.3 万（TGI 1141）、辣炒年糕 5.9 万、韩式炒年糕 5.6 万——<em>年糕词族完整成型，且 10 月搜索量是 7 月的近 7 倍</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>性别（占比 vs TGI）</h4><div class="ccbox" id="t_g"></div></div>
+      <div class="chartcard tomato"><h4>年龄结构（占比 vs TGI）</h4><div class="ccbox" id="t_a"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>城市等级（占比 vs TGI）</h4><div class="ccbox" id="t_c"></div></div>
+      <div class="chartcard tomato"><h4>婚恋状态（占比 vs TGI）</h4><div class="ccbox" id="t_m"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>孩子年龄（占比 vs TGI）</h4><div class="ccbox" id="t_k"></div></div>
+      <div class="chartcard tomato"><h4>消费金额分布（占比 vs TGI）</h4><div class="ccbox" id="t_s"></div></div>
+    </div>
+
+    <h2 class="tmt" style="margin-top:34px">她在搜什么 · 搜索端信号</h2>
+    <div class="cap">近90天热门搜索词 Top30 · ★=搜索量相对档位 · TGI = 相对全体用户的偏好强度</div>
+
+    <div class="box tomato">
+      <h3>搜索端的三个信号</h3>
+      <p><b>① 年糕词族是「做法驱动」的：</b>年糕做法 14.7 万、年糕的做法大全 6.2 万——攻略类词占全部搜索词的 23%；可乐鸡翅的做法（23.7 万）、茄子的做法（22.2 万）等通用家常攻略同样在榜——<em>她们搜年糕是为了「复刻」</em>。</p>
+      <p><b>② 网红新品词浓度高：</b>黄油年糕（9.3 万，TGI 1141）是今年的现象级年糕新品；脆皮捏捏 35.2 万、迪拜软曲奇 23.7 万、全冰黑巧美式 46.3 万——<em>跟着热点吃，搜索是打卡的一部分</em>。</p>
+      <p><b>③ 渠道与日料心智：</b>盒马（TGI 605）、盒马推荐必买、滨寿司 68.2 万、寿司郎——「去哪买、去哪吃」是明确的决策搜索，<em>渠道词已经进榜</em>。</p>
+    </div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>排名</th><th>搜索词</th><th>热度</th><th>TGI</th><th>信号</th></tr></thead>
+      <tbody id="t_tb"></tbody>
+    </table></div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>搜索词偏好 Top10</h4><div class="ccbox" id="t_sp"></div></div>
+      <div class="chartcard tomato"><h4>搜索词属性结构（词量占比）</h4><div class="ccbox" id="t_attr"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>年糕词族 · 搜索量（本人群包内）</h4><div class="ccbox" id="t_ng"></div></div>
+      <div class="chartcard tomato"><h4>KOL 类型偏好（占比 vs TGI）</h4><div class="ccbox" id="t_kol"></div></div>
+    </div>
+
+    <h2 class="tmt" style="margin-top:34px">她在看什么 · 内容兴趣下钻</h2>
+    <div class="cap">内容兴趣类目层级（二/三级）· 柱=渗透率% · 线=TGI · 按 TGI 取 Top10</div>
+
+    <div class="box tomato">
+      <h3>内容兴趣怎么读</h3>
+      <p><b>① 美食内容偏「看与逛」：</b>美食渗透 77.9%（TGI 216），吃播 TGI 497、美食测评 491、零食测评 643、餐厅探店渗透 41.5%——<em>内容消费是「看别人吃 + 自己种草」</em>。</p>
+      <p><b>② 减脂是隐藏主线：</b>健身饮食 TGI 429、减脂饮食 460、低热量 499、减脂餐 425——「糯叽叽但罪恶」是年糕内容要解的题，<em>低负担做法是天然内容切口</em>。</p>
+      <p><b>③ 行业品类直接指向「韩式+烘焙+速食」：</b>包装西式点心 TGI 321、即食/速冻 305、韩国 278、日韩 274、方便速食 242——<em>年糕的韩式化、零食化有品类土壤</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>内容二级类目 Top10（按 TGI）</h4><div class="ccbox" id="t_c2"></div></div>
+      <div class="chartcard tomato"><h4>内容三级类目 Top10（按 TGI）</h4><div class="ccbox" id="t_c3"></div></div>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard tomato"><h4>内容关键词偏好（她看什么）</h4><div class="ccbox" id="t_ck"></div></div>
+      <div class="chartcard tomato"><h4>二十大人群 Top5（她是哪类人）</h4><div class="ccbox" id="t_cr"></div></div>
+    </div>
+
+    <div class="box tomato">
+      <h3>平台年糕人群小结</h3>
+      <p>这是一群<b>被内容喂养大的年轻人</b>——他们通过吃播、韩剧、网红烘焙认识年糕，搜「黄油年糕」「韩式炒年糕」是跟风打卡，搜「年糕做法」是想复刻。二十大人群 Top5 是<em>短逃离自愈派、好孕预备役、娇宠彼得潘、风格日抛党</em>——年轻、潮流、情绪消费。年糕在这里是零食和韩餐：芝士拉丝、甜辣酱、黄油烤。对他们的打法：<em>用网红吃法和韩式内容把年糕做成「想复刻的梗」，而不是讲原料工艺</em>。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ P3 对比与打法 ============ -->
+<div class="pane" id="p3">
+  <div class="sec">
+    <h2>相似处 · 底层需求是一致的</h2>
+    <div class="cap">两个人群共享的底座——这部分可以复用同一套内容资产</div>
+
+    <div class="cg3">
+      <div class="card"><h4>① 同样的女性主导 + 一线浓度</h4><p>女 94.5% vs 91.1%；一线+新一线 55.9% vs 41.1%——两边都是高线城市女性在托住年糕话题，内容语气回避硬广，用「姐妹分享」两边通吃。</p></div>
+      <div class="card"><h4>② 同样的「家常菜+大菜攻略」底座</h4><p>家常菜都是第一搜索词，糖醋排骨、可乐鸡翅、梭子蟹、馒头两边都在搜——年糕嵌在同一个「做饭内容生态」里，攻略类词都占两成上下（20% vs 23%）。</p></div>
+      <div class="card"><h4>③ 同样的长三角基因</h4><p>品牌人群上海+杭州+南京+苏州+无锡+宁波合计 26.5%；平台人群浙江+江苏+上海 26.8%——<b>宁波年糕的地域正宗心智两边通用</b>。</p></div>
+    </div>
+
+    <div class="cg3">
+      <div class="card"><h4>④ 同样的 KOL 生态</h4><p>美食博主两边都是第一偏好（77.7% vs 75.9%）；厚皮橙同时出现在两个人群的偏好列表（TGI 1836 / 550）——<b>头部美食教程博主可以两边通投</b>，这是现成的桥。</p></div>
+      <div class="card"><h4>⑤ 同样的「糯叽叽」口感母题</h4><p>平台端糯米烧卖 TGI 1177、糯糯米粒 469；品牌端年糕本身 TGI 1.1 万——口感是年糕共同的记忆点，<b>「拉丝、软糯、锅气」的特写镜头两边通吃</b>。</p></div>
+      <div class="card"><h4>⑥ 同样的热度上升期</h4><p>年糕词族搜索：品牌端 7→10 月涨近 9 倍（230→2039 次），平台端近 7 倍——品类在入冬前集体起量，<b>现在进场是顺水推舟</b>。</p></div>
+    </div>
+
+    <h2 style="margin-top:34px">差异点 · 六个关键分野</h2>
+    <div class="cap">这些差异决定了品牌年糕和平台年糕要分开做内容，不能一锅烩</div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th style="width:110px">维度</th><th>南食召年糕人群</th><th>平台年糕人群</th></tr></thead>
+      <tbody>
+        <tr><td><b>人生阶段</b></td><td>36 岁+已婚妈妈（已婚 73.8%，0-3 岁孩子妈妈 TGI 199）</td><td>19-30 岁未婚年轻人（未婚 69.5%，大学生 TGI 213）</td></tr>
+        <tr><td><b>消费力</b></td><td>高消费 42.4%（TGI 220），5000 元+段占 36.8%（TGI 1298）</td><td>中消费 73.8%，高消费仅 21.2%——价格敏感</td></tr>
+        <tr><td><b>年糕的角色</b></td><td><b>家庭主食/点心</b>：年糕汤、梭子蟹炒年糕——配菜逻辑</td><td><b>韩餐/网红零食</b>：黄油年糕、韩式炒年糕——打卡逻辑</td></tr>
+        <tr><td><b>搜索方式</b></td><td><b>带着品牌认知搜</b>：南食召 TGI 6.3 万，年糕词根 TGI 全部 2000+</td><td><b>跟着内容热点搜</b>：脆皮捏捏、迪拜软曲奇，年糕词根 TGI 500~1200</td></tr>
+        <tr><td><b>内容消费</b></td><td>明星娱乐+华语剧+<b>餐厨具（TGI 609）</b>——「边追剧边研究锅」</td><td>吃播（497）+零食测评（643）——「看别人吃自己种草」</td></tr>
+        <tr><td><b>决策因子</b></td><td>蹲守直播间 TGI 3829、加热方式 1269、短决策周期 55.9%——「怎么用+马上买」</td><td>季节限定 493、网红品牌 480、烘焙自制 483——「潮不潮+想复刻」</td></tr>
+        <tr><td><b>品牌偏好</b></td><td>MUJI、宜家、盒马、山姆、LAMER、卡地亚、始祖鸟——<b>中产品质生活清单</b></td><td>奥利奥、喜茶、古茗、茶百道、肯德基、麦当劳——<b>新茶饮快餐一代</b></td></tr>
+        <tr><td><b>地域结构</b></td><td>城市高度集中：上海一城 12.4%（TGI 353），Top5 全是一线+新一线</td><td>省份分散：浙江 11.9% 居首，广东、江苏、山东跟进——<b>下沉面更广</b></td></tr>
+        <tr><td><b>规模与含义</b></td><td>7.4 万人——小而精，值得一对一深耕（直播间、复购、会员化）</td><td>399.5 万人——大而广，适合内容投放与渠道铺货去捞</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 style="margin-top:34px">结构对比 · 打标之后差异更清楚</h2>
+    <div class="cap">左图=内容二级类目 TGI 对比（空白=未进该人群 Top 区）· 右图=年糕词族搜索量对比（对数轴）</div>
+
+    <div class="box">
+      <h3>打标后的两个结构差异</h3>
+      <p><b>① 内容侧：一个是「做饭的人」，一个是「看饭的人」。</b>品牌人群的峰值在「追剧+厨房」（影视片段 341、餐厨具 609、明星娱乐 256），平台人群的峰值在「看吃+测评」（吃播 497、零食测评 643、健身饮食 429）——<em>同一个美食大类，两种内容逻辑</em>。</p>
+      <p><b>② 搜索侧：品牌人群「深而窄」，平台人群「浅而宽」。</b>品牌人群年糕词根 TGI 是平台人群的 4~10 倍（年糕 11100 vs 1131），但词族只有 5 个；平台人群词族 8 个且有黄油年糕这类新爆点——<em>品牌人群做搜索承接，平台人群做内容引爆</em>。</p>
+    </div>
+
+    <div class="cg2">
+      <div class="chartcard"><h4>内容兴趣 TGI 对比（二级类目）</h4><div class="ccbox" id="p_c2"></div></div>
+      <div class="chartcard"><h4>年糕词族搜索量对比（对数轴）</h4><div class="ccbox" id="p_ng"></div></div>
+    </div>
+
+    <div class="chartcard"><h4>年糕词族周搜索趋势（双轴 · 各自人群包内含「年糕」的词合计）</h4><div class="ccbox" id="p_trend"></div><div class="cnote">注：最后一周为不完整周（数据截至 10-20）；平台端 9 月末起放量，与入冬年糕季+黄油年糕热度同步</div></div>
+
+    <h2 style="margin-top:34px">打法建议 · 一个人群一套动作</h2>
+    <div class="cap">基于以上差异，把动作拆到笔记选题、开品、达人、人群包四层</div>
+
+    <div class="vs">
+      <div class="side l">
+        <h4>南食召年糕 · 对「家庭主厨」做深</h4>
+        <ul>
+          <li><b>笔记内容方向：</b>菜谱教程承接——梭子蟹炒年糕、年糕汤、雪菜肉丝面（本品关联词 TGI 2 万+）直接出菜谱；把「年糕×时令」做成栏目（秋季梭子蟹、冬季酒酿红枣、冬至桂花糖年糕）。</li>
+          <li><b>场景钩子：</b>早餐场景（内容关键词 TGI 842 全场第一）——年糕早餐化：烤年糕、年糕三明治；孩子点心（0-3 岁妈妈 TGI 199）——「蒸一蒸就能吃」。</li>
+          <li><b>达人组合：</b>美食教程类为主（KOL 偏好美食 77.7%），叠加家居餐厨博主（餐厨具 TGI 609）与母婴博主（母婴 KOL TGI 177）；厚皮橙等已合作博主加深绑定。</li>
+          <li><b>转化动作：</b>蹲守直播间 TGI 3829 + 短决策周期人群 55.9%——直播间是主转化场，「年糕做法」搜索词做承接页。</li>
+        </ul>
+      </div>
+      <div class="mid">VS</div>
+      <div class="side r">
+        <h4>面向平台年糕人群 · 对「年轻人」做宽</h4>
+        <ul>
+          <li><b>笔记内容方向：</b>黄油年糕/韩式炒年糕等网红吃法——把石磨年糕放进「糯叽叽」赛道；吃播、测评类内容种草，突出拉丝、脆皮、蘸料。</li>
+          <li><b>场景钩子：</b>一人食（内容关键词 TGI 585）、宿舍/追剧零食、减脂诉求（低热量 TGI 499）——小包装、空气炸锅 10 分钟出餐的话术空间。</li>
+          <li><b>达人组合：</b>吃播/测评/韩系内容博主（吃播 TGI 497、零食测评 643）；避开纯家庭叙事和硬广菜谱。</li>
+          <li><b>转化动作：</b>季节限定+联名包装（限定控 TGI 490、季节限定 493）；盒马等渠道词已在搜索榜（TGI 605）——渠道共建陈列与搜索卡位。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 style="margin-top:34px">笔记选题库 · 每个人群给 6 个可直接开的选题</h2>
+    <div class="cap">选题均从两个人群的内容关键词/搜索词/内容兴趣交叉验证得出，非拍脑袋</div>
+
+    <div class="cg2">
+      <div class="card">
+        <h4>妈妈盘选题（南食召年糕人群）</h4>
+        <p><b>① 梭子蟹炒年糕教程：</b>本人群 TGI 4595 的现成搜索词，秋天正当季——菜谱+选蟹技巧双主题。</p>
+        <p><b>② 年糕汤的一人份晚餐：</b>年糕汤 TGI 1.2 万；「下班 15 分钟一碗热汤饭」击中已婚妈妈的疲惫感。</p>
+        <p><b>③ 雪菜肉丝面+年糕搭配：</b>雪菜 TGI 2.5 万是本品强关联爆品——老客内容直接复用。</p>
+        <p><b>④ 孩子点心的蒸年糕：</b>0-3 岁妈妈 TGI 199——「无添加、蒸一蒸」的安心牌。</p>
+        <p><b>⑤ 追剧零食化吃法：</b>明星娱乐渗透 68.9%、华语剧 TGI 322——「追〈XX〉同款烤年糕」借剧热点。</p>
+        <p><b>⑥ 厨房好物×年糕：</b>餐厨具 TGI 609——「这口锅烤年糕不粘底」器具向内容，天然带货。</p>
+      </div>
+      <div class="card tomato">
+        <h4>年轻盘选题（平台年糕人群）</h4>
+        <p><b>① 黄油烤年糕复刻：</b>黄油年糕 9.3 万次搜索、TGI 1141——直接接住品类最大热点。</p>
+        <p><b>② 韩式辣炒年糕教程：</b>辣炒年糕 5.9 万、韩式炒年糕 5.6 万——韩流决策因子 TGI 671 的现成承接。</p>
+        <p><b>③ 一人食空气炸锅年糕：</b>一人食 TGI 585+低热量 499——「10 分钟、免开火、罪恶感减半」。</p>
+        <p><b>④ 糯叽叽零食测评：</b>零食测评 TGI 643——年糕混搭测评（年糕×麻薯×糯米烧卖 TGI 1177）。</p>
+        <p><b>⑤ 减脂期年糕吃法：</b>健身饮食 TGI 429——「减脂也能吃年糕」的低卡酱料方案。</p>
+        <p><b>⑥ 便利店/盒马年糕吃法：</b>盒马 TGI 605——「盒马年糕这么买」渠道种草+清单式内容。</p>
+      </div>
+    </div>
+
+    <h2 style="margin-top:34px">差异化与破圈 · 怎么 reach 到更多人</h2>
+    <div class="cap">年糕品类热度正在上升（平台端 7→10 月近 7 倍），窗口期内建议四步走</div>
+
+    <div class="box">
+      <h3>四条增量路径</h3>
+      <p><b>① 借「黄油年糕」的热度做融合：</b>平台端黄油年糕搜索 9.3 万次、TGI 1141，是年糕品类最大的新流量口——南食召可推「黄油烤年糕」吃法内容与对应规格，把品类热度导向本品；品牌词 TGI 6.3 万意味着<em>搜「南食召」的人极容易被承接</em>，内容里埋「南食召年糕+黄油」的组合词。</p>
+      <p><b>② 两代人群互补拉新：</b>品牌人群 35+ 妈妈、平台人群 19-30 学生/初职场——用「一人食小包装+韩式吃法」内容试水年轻盘，用「家庭装+菜谱」守住妈妈盘；<em>两个人群的 KOL 不复用</em>，避免内容互相稀释。</p>
+      <p><b>③ 早餐是最大空白场景：</b>早餐 TGI 842、一人食 711、晚餐 638，但搜索端「年糕+早餐」词族尚未成型——先发「年糕早餐」内容卡位（烤年糕、年糕三明治、酒酿年糕），把这个场景吃成品牌专属。</p>
+      <p><b>④ 长三角心智做透再外溢：</b>品牌人群长三角城市 TGI 全部 160+，「宁波石磨」是现成的地域正宗叙事；平台人群浙江 TGI 175 同样验证——地域故事可同时打两个人群，再借旅游/探店内容向全国外溢。</p>
+    </div>
+
+    <h2 style="margin-top:34px">差异化定位 · 一句话讲清「为什么是南食召」</h2>
+    <div class="cap">年糕赛道竞争者众，定位要避开「又一家年糕」，占住别人讲不了的点</div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th style="width:150px">竞争维度</th><th>常见对手的位置</th><th>南食召该占的位置</th></tr></thead>
+      <tbody>
+        <tr><td><b>工艺叙事</b></td><td>工业年糕讲「方便、便宜」</td><td><b>宁波石磨、传统水磨工艺</b>——工艺故事+地域正宗，对手难模仿</td></tr>
+        <tr class="tr-alt"><td><b>场景占位</b></td><td>韩式炒年糕赛道已拥挤（年轻盘）</td><td><b>家常菜配菜+早餐</b>——「餐桌上的年糕」心智空着，先占先得</td></tr>
+        <tr><td><b>内容资产</b></td><td>网红品牌追热点、生命周期短</td><td><b>菜谱库+时令栏目</b>——年糕×梭子蟹/酒酿/桂花，资产可复用三年</td></tr>
+        <tr class="tr-alt"><td><b>人群纵深</b></td><td>单打年轻盘或单打妈妈盘</td><td><b>两代人群双线</b>——妈妈盘给利润，年轻盘给增量，互不干扰</td></tr>
+      </tbody>
+    </table></div>
+
+    <h2 style="margin-top:34px">搜索词布局清单 · 按优先级直接拿去用</h2>
+    <div class="cap">从两个人群包 1000 个搜索词里筛出值得布局的词，按「先承接后占位」排序</div>
+
+    <div class="tscroll"><table>
+      <thead><tr><th>优先级</th><th style="width:230px">词</th><th>动作</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag" style="background:var(--tint);color:var(--wine)">P0 承接</span></td><td><b>年糕做法 / 梭子蟹炒年糕 / 年糕汤</b></td><td>本人群 TGI 2000~1.1 万的现成词——菜谱笔记标题直接嵌入，商详页同名承接</td></tr>
+        <tr class="tr-alt"><td><span class="tag" style="background:var(--tint);color:var(--wine)">P0 承接</span></td><td><b>南食召 / 南食召年糕</b></td><td>品牌词 TGI 6.3 万——搜索品牌专区+评论区维护，把 2.75% 的搜索占比接稳</td></tr>
+        <tr><td><span class="tag" style="background:var(--tint2);color:var(--wine3)">P1 卡位</span></td><td><b>烤年糕 / 年糕三明治 / 酒酿年糕</b></td><td>早餐场景词族尚未成型——先发 3-5 篇优质内容占住搜索首屏</td></tr>
+        <tr class="tr-alt"><td><span class="tag" style="background:#f5e3d7;color:var(--tomato3)">P1 借力</span></td><td><b>黄油年糕 / 韩式炒年糕</b></td><td>品类热点词——用「石磨年糕做黄油烤年糕」内容蹭量，导向本品</td></tr>
+        <tr><td><span class="tag" style="background:#f5e3d7;color:var(--tomato3)">P2 观察</span></td><td><b>辣炒年糕 / 糯米烧卖 / 糯糯米粒</b></td><td>年轻盘口感母题词——测评/混吃内容带一笔，不作为主战场</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="box">
+      <h3>一页话术卡 · 直接用</h3>
+      <p><b>南食召年糕一句话：</b>「今晚的梭子蟹炒年糕——宁波石磨年糕，孩子抢着吃的家常味。」</p>
+      <p><b>面向平台人群一句话：</b>「黄油烤年糕，糯叽叽界的新宠——刷到就想吃，一人食刚刚好。」</p>
+      <p style="margin-top:8px"><span class="hl">共同提醒：</span>两个人群女性都占九成以上、长三角都是基本盘——地域正宗叙事通用；但「妈妈盘」讲菜谱与家人，「年轻盘」讲网红吃法与一人食，<em>别互相套用</em>。</p>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <b>数据说明</b>：人群画像与热门搜索词来自「南食召 年糕P+TI+I人群」与「年糕 兴趣人群」两个人群包导出（RedBI）· 搜索窗口 2026-07-22 ~ 10-20，逐日趋势来自热门搜索词明细 · 人群规模：品牌人群 7.4 万 / 平台人群 399.5 万 · TGI&gt;100 表示该人群相对全体用户显著偏好 · 词条属性（品类/攻略/行为等）为平台原生打标 · 生成于 2026-10-29
+</div>
+
+</div>
+
+<script>
+/* ---------- Data ---------- */
+var D = {"nsz": {"gender": [{"name": "女", "pct": 94.51, "tgi": 144.2}, {"name": "男", "pct": 5.5, "tgi": 16.1}], "age": [{"name": "19-22", "pct": 3.37, "tgi": 22.7}, {"name": "23-25", "pct": 5.59, "tgi": 52.3}, {"name": "26-30", "pct": 15.06, "tgi": 90.7}, {"name": "31-35", "pct": 19.62, "tgi": 146.0}, {"name": "36-40", "pct": 23.68, "tgi": 202.0}, {"name": "41以上", "pct": 32.71, "tgi": 155.3}], "city": [{"name": "一线", "pct": 27.59, "tgi": 222.4}, {"name": "新一线", "pct": 28.35, "tgi": 133.2}, {"name": "二线", "pct": 20.95, "tgi": 108.6}, {"name": "三线", "pct": 11.71, "tgi": 65.7}, {"name": "四线", "pct": 6.69, "tgi": 42.2}, {"name": "五线", "pct": 3.06, "tgi": 31.2}], "marry": [{"name": "已婚", "pct": 73.78, "tgi": 201.5}, {"name": "未婚", "pct": 26.23, "tgi": 49.0}], "kids": [{"name": "备孕", "pct": 5.85, "tgi": 82.7}, {"name": "孕早期", "pct": 3.54, "tgi": 67.8}, {"name": "孕晚期", "pct": 6.1, "tgi": 130.5}, {"name": "0-3月", "pct": 11.02, "tgi": 198.6}, {"name": "4-6月", "pct": 5.39, "tgi": 118.5}, {"name": "7-9月", "pct": 7.2, "tgi": 186.4}, {"name": "10-12月", "pct": 5.22, "tgi": 118.0}, {"name": "13-24月", "pct": 14.8, "tgi": 127.1}, {"name": "25-36月", "pct": 7.59, "tgi": 79.6}, {"name": "4-6岁", "pct": 10.32, "tgi": 63.6}, {"name": "7-12岁", "pct": 23.02, "tgi": 84.4}], "spend": [{"name": "0-300", "pct": 16.69, "tgi": 23.4}, {"name": "300-500", "pct": 6.03, "tgi": 74.4}, {"name": "500-1000", "pct": 10.36, "tgi": 124.2}, {"name": "1000-3000", "pct": 20.25, "tgi": 268.7}, {"name": "3000-5000", "pct": 9.87, "tgi": 534.8}, {"name": "5000以上", "pct": 36.83, "tgi": 1298.4}], "ck": [{"name": "早餐", "pct": 19.98, "tgi": 842.0}, {"name": "一人食", "pct": 14.59, "tgi": 710.5}, {"name": "晚餐", "pct": 4.75, "tgi": 638.1}, {"name": "面包", "pct": 6.19, "tgi": 635.9}, {"name": "谭松韵", "pct": 17.99, "tgi": 615.7}, {"name": "网球", "pct": 5.77, "tgi": 606.8}, {"name": "通勤穿搭", "pct": 9.85, "tgi": 551.4}, {"name": "珠宝", "pct": 3.66, "tgi": 536.2}, {"name": "烘焙", "pct": 5.27, "tgi": 512.4}, {"name": "毛衣", "pct": 4.44, "tgi": 482.8}], "crowd": [{"name": "身心觉察师", "pct": 45.0, "tgi": 1266.0}, {"name": "友伴式父母", "pct": 11.63, "tgi": 1221.1}, {"name": "心灵远行客", "pct": 36.39, "tgi": 1170.5}, {"name": "熟龄悦己中年", "pct": 10.69, "tgi": 1069.0}, {"name": "气场大女主", "pct": 23.12, "tgi": 1002.3}], "kol": [{"name": "美食", "pct": 77.7, "tgi": 166.7}, {"name": "时尚", "pct": 73.85, "tgi": 202.9}, {"name": "生活记录", "pct": 53.71, "tgi": 136.4}, {"name": "家居家装", "pct": 43.14, "tgi": 172.1}, {"name": "美妆", "pct": 36.0, "tgi": 134.0}, {"name": "娱乐", "pct": 33.39, "tgi": 103.1}, {"name": "母婴", "pct": 30.19, "tgi": 177.4}, {"name": "教育", "pct": 24.92, "tgi": 112.4}, {"name": "旅游", "pct": 24.08, "tgi": 125.9}, {"name": "健身减肥", "pct": 20.56, "tgi": 168.3}], "sp": [{"name": "雪菜", "pct": 1.14, "tgi": 19202.6}, {"name": "芝麻盐", "pct": 0.8, "tgi": 16539.6}, {"name": "年糕", "pct": 1.39, "tgi": 4878.5}, {"name": "厚皮橙", "pct": 1.15, "tgi": 2665.1}, {"name": "鹰嘴豆", "pct": 0.78, "tgi": 2313.6}, {"name": "牛肋条", "pct": 1.15, "tgi": 1687.2}, {"name": "小红书双十一", "pct": 2.29, "tgi": 1457.1}, {"name": "清炖牛肋条", "pct": 0.99, "tgi": 1277.2}, {"name": "恰巴塔", "pct": 1.04, "tgi": 1274.5}, {"name": "三明治", "pct": 0.85, "tgi": 1197.6}], "c2": [{"name": "影视-影视片段（视频）", "pct": 34.25, "tgi": 341.0}, {"name": "影视-电视（图文）", "pct": 6.25, "tgi": 306.0}, {"name": "体育运动-综合体育", "pct": 6.33, "tgi": 300.0}, {"name": "家居家装-家居用品", "pct": 8.23, "tgi": 264.0}, {"name": "美食-美食展示", "pct": 18.6, "tgi": 256.0}, {"name": "娱乐-明星娱乐资讯", "pct": 68.94, "tgi": 256.0}, {"name": "娱乐-综艺片段", "pct": 4.91, "tgi": 237.0}, {"name": "美食-美食测评", "pct": 2.18, "tgi": 233.0}, {"name": "时尚-穿搭", "pct": 31.85, "tgi": 232.0}, {"name": "体育运动-游泳", "pct": 0.66, "tgi": 224.0}], "c3": [{"name": "家居家装-家居用品-餐厨具", "pct": 8.48, "tgi": 609.0}, {"name": "时尚-穿搭-上衣", "pct": 10.73, "tgi": 383.0}, {"name": "影视-电视（图文）-华语剧", "pct": 18.65, "tgi": 322.0}, {"name": "美食-美食测评-零食测评", "pct": 2.99, "tgi": 319.0}, {"name": "城市出行-沉浸式活动-戏剧话剧", "pct": 0.92, "tgi": 288.0}, {"name": "家居家装-家用电器-厨房家电", "pct": 2.98, "tgi": 260.0}, {"name": "健身减肥-瑜伽-瑜伽教程", "pct": 0.77, "tgi": 258.0}, {"name": "时尚-箱包-单肩包", "pct": 6.1, "tgi": 253.0}, {"name": "潮流-穿搭ootd-穿搭造型", "pct": 9.04, "tgi": 249.0}, {"name": "美食-美食教程-菜品教程", "pct": 37.73, "tgi": 246.0}], "attr": [{"name": "纯品类", "pct": 72.2}, {"name": "含攻略(做法/推荐)", "pct": 19.8}, {"name": "含行为", "pct": 6.0}, {"name": "其他(体验/产地等)", "pct": 2.0}], "ng": [{"name": "年糕", "pct": 4982.0, "tgi": 11100.0}, {"name": "梭子蟹炒年糕", "pct": 2611.0, "tgi": 4595.0}, {"name": "炒年糕", "pct": 2458.0, "tgi": 5433.0}, {"name": "年糕做法", "pct": 751.0, "tgi": 2123.0}, {"name": "年糕汤", "pct": 667.0, "tgi": 11735.0}], "words": [{"w": "家常菜", "attr": "品类_产品", "vol": 26018.0, "tgi": 1371.12, "stars": "★★★", "sig": "通用入口"}, {"w": "厚皮橙", "attr": "品类_产品", "vol": 11747.0, "tgi": 15761.69, "stars": "★★★", "sig": "关联博主"}, {"w": "牛肋条", "attr": "品类_产品", "vol": 8937.0, "tgi": 8291.67, "stars": "★★★", "sig": "大菜·牛肉"}, {"w": "清炖牛肋条", "attr": "品类_产品", "vol": 8570.0, "tgi": 6074.7, "stars": "★★★", "sig": "大菜·牛肉"}, {"w": "梭子蟹", "attr": "品类_品种", "vol": 8316.0, "tgi": 4224.04, "stars": "★★★", "sig": "时令水产"}, {"w": "糖醋排骨", "attr": "品类_产品", "vol": 7696.0, "tgi": 2636.02, "stars": "★★★", "sig": "通用大菜"}, {"w": "咖啡", "attr": "品类_产品", "vol": 7117.0, "tgi": 3083.06, "stars": "★★★", "sig": "饮品"}, {"w": "滨寿司", "attr": "品类_产品", "vol": 6813.0, "tgi": 1506.85, "stars": "★★★", "sig": ""}, {"w": "牛肉", "attr": "品类_产品", "vol": 6556.0, "tgi": 3968.03, "stars": "★★★", "sig": ""}, {"w": "蛋糕", "attr": "品类_产品", "vol": 6411.0, "tgi": 1089.4, "stars": "★★★", "sig": ""}, {"w": "三明治", "attr": "品类_产品", "vol": 6355.0, "tgi": 5235.28, "stars": "★★★", "sig": "早餐西式"}, {"w": "排骨", "attr": "品类_产品", "vol": 6292.0, "tgi": 3251.24, "stars": "★★★", "sig": "通用大菜"}, {"w": "馒头", "attr": "品类_产品", "vol": 5932.0, "tgi": 4977.28, "stars": "★★★", "sig": "中式主食"}, {"w": "红烧排骨", "attr": "品类_产品", "vol": 5847.0, "tgi": 1882.23, "stars": "★★★", "sig": "通用大菜"}, {"w": "月饼", "attr": "品类_产品", "vol": 5776.0, "tgi": 2507.91, "stars": "★★", "sig": "时令"}, {"w": "无花果", "attr": "品类_产品", "vol": 5760.0, "tgi": 4264.91, "stars": "★★", "sig": "时令水果"}, {"w": "三文鱼", "attr": "品类_产品", "vol": 5384.0, "tgi": 4730.06, "stars": "★★", "sig": "食材"}, {"w": "梭子蟹的做法", "attr": "品类_产品", "vol": 5347.0, "tgi": 2493.34, "stars": "★★", "sig": "时令·攻略"}, {"w": "面包", "attr": "品类_产品", "vol": 5207.0, "tgi": 3372.35, "stars": "★★", "sig": "早餐西式"}, {"w": "豆腐", "attr": "品类_产品", "vol": 5067.0, "tgi": 4018.99, "stars": "★★", "sig": ""}, {"w": "可乐鸡翅", "attr": "品类_产品", "vol": 5035.0, "tgi": 1631.03, "stars": "★★", "sig": "通用大菜"}, {"w": "全冰黑巧美式", "attr": "品类_产品", "vol": 5011.0, "tgi": 1811.98, "stars": "★★", "sig": "饮品"}, {"w": "年糕", "attr": "品类_产品", "vol": 4982.0, "tgi": 11100.25, "stars": "★★", "sig": "年糕词根"}, {"w": "汤", "attr": "品类_产品", "vol": 4926.0, "tgi": 3232.93, "stars": "★★", "sig": ""}, {"w": "吐司", "attr": "品类_产品", "vol": 4485.0, "tgi": 6833.38, "stars": "★★", "sig": ""}, {"w": "美食", "attr": "品类_产品", "vol": 4477.0, "tgi": 938.77, "stars": "★★", "sig": ""}, {"w": "蒸菜", "attr": "品类_产品", "vol": 4368.0, "tgi": 4945.6, "stars": "★★", "sig": ""}, {"w": "鸡翅", "attr": "品类_产品", "vol": 4318.0, "tgi": 3912.68, "stars": "★★", "sig": ""}, {"w": "卤牛腱子", "attr": "品类_产品", "vol": 4289.0, "tgi": 4818.44, "stars": "★★", "sig": ""}, {"w": "恰巴塔做法", "attr": "品类_产品", "vol": 4276.0, "tgi": 3760.66, "stars": "★★", "sig": "攻略·早餐"}]}, "plat": {"gender": [{"name": "女", "pct": 91.09, "tgi": 138.9}, {"name": "男", "pct": 8.92, "tgi": 26.0}], "age": [{"name": "19-22", "pct": 23.94, "tgi": 161.1}, {"name": "23-25", "pct": 19.4, "tgi": 181.5}, {"name": "26-30", "pct": 24.86, "tgi": 149.8}, {"name": "31-35", "pct": 13.71, "tgi": 102.0}, {"name": "36-40", "pct": 8.83, "tgi": 75.2}, {"name": "41以上", "pct": 9.3, "tgi": 44.1}], "city": [{"name": "一线", "pct": 16.09, "tgi": 129.8}, {"name": "新一线", "pct": 25.03, "tgi": 117.5}, {"name": "二线", "pct": 21.82, "tgi": 113.1}, {"name": "三线", "pct": 15.54, "tgi": 87.2}, {"name": "四线", "pct": 10.58, "tgi": 66.9}, {"name": "五线", "pct": 5.2, "tgi": 53.1}], "marry": [{"name": "未婚", "pct": 69.5, "tgi": 129.8}, {"name": "已婚", "pct": 30.51, "tgi": 83.3}], "kids": [{"name": "备孕", "pct": 14.38, "tgi": 203.5}, {"name": "孕早期", "pct": 5.79, "tgi": 111.0}, {"name": "孕晚期", "pct": 5.83, "tgi": 124.8}, {"name": "0-3月", "pct": 7.32, "tgi": 131.9}, {"name": "4-6月", "pct": 3.4, "tgi": 74.9}, {"name": "7-9月", "pct": 6.72, "tgi": 174.0}, {"name": "10-12月", "pct": 7.1, "tgi": 160.3}, {"name": "13-24月", "pct": 16.7, "tgi": 143.3}, {"name": "25-36月", "pct": 10.17, "tgi": 106.7}, {"name": "4-6岁", "pct": 9.23, "tgi": 56.9}, {"name": "7-12岁", "pct": 13.41, "tgi": 49.1}], "spend": [{"name": "0-300", "pct": 59.27, "tgi": 83.1}, {"name": "300-500", "pct": 10.29, "tgi": 126.9}, {"name": "500-1000", "pct": 11.79, "tgi": 141.3}, {"name": "1000-3000", "pct": 11.64, "tgi": 154.5}, {"name": "3000-5000", "pct": 2.87, "tgi": 155.4}, {"name": "5000以上", "pct": 4.17, "tgi": 146.7}], "ck": [{"name": "面包", "pct": 8.67, "tgi": 891.9}, {"name": "韩国", "pct": 6.34, "tgi": 591.5}, {"name": "一人食", "pct": 12.02, "tgi": 585.2}, {"name": "烘焙", "pct": 5.7, "tgi": 554.1}, {"name": "吃播", "pct": 11.21, "tgi": 547.4}, {"name": "小吃", "pct": 6.04, "tgi": 529.1}, {"name": "低热量", "pct": 4.53, "tgi": 498.7}, {"name": "asmr", "pct": 4.66, "tgi": 461.0}, {"name": "测评", "pct": 31.02, "tgi": 460.8}, {"name": "减脂餐", "pct": 6.31, "tgi": 425.2}], "crowd": [{"name": "短逃离自愈派", "pct": 10.86, "tgi": 609.7}, {"name": "好孕预备役", "pct": 6.64, "tgi": 572.6}, {"name": "娇宠彼得潘", "pct": 13.66, "tgi": 512.6}, {"name": "风格日抛党", "pct": 22.71, "tgi": 475.2}, {"name": "街头潮客", "pct": 22.64, "tgi": 470.8}], "kol": [{"name": "美食", "pct": 75.88, "tgi": 162.8}, {"name": "时尚", "pct": 55.83, "tgi": 153.4}, {"name": "生活记录", "pct": 50.89, "tgi": 129.3}, {"name": "娱乐", "pct": 41.88, "tgi": 129.3}, {"name": "美妆", "pct": 38.07, "tgi": 141.8}, {"name": "兴趣爱好", "pct": 30.93, "tgi": 117.4}, {"name": "家居家装", "pct": 27.1, "tgi": 108.1}, {"name": "教育", "pct": 23.55, "tgi": 106.2}, {"name": "二次元", "pct": 23.26, "tgi": 109.3}, {"name": "旅游", "pct": 20.94, "tgi": 109.5}], "sp": [{"name": "年糕", "pct": 0.89, "tgi": 3131.7}, {"name": "炒年糕", "pct": 0.84, "tgi": 2894.9}, {"name": "脆皮捏捏", "pct": 1.22, "tgi": 781.0}, {"name": "盒马", "pct": 1.17, "tgi": 604.6}, {"name": "盒马推荐必买", "pct": 0.88, "tgi": 544.5}, {"name": "吃播", "pct": 1.23, "tgi": 516.0}, {"name": "a2olite", "pct": 1.34, "tgi": 515.7}, {"name": "源麦甜", "pct": 0.79, "tgi": 512.8}, {"name": "滨寿司", "pct": 1.24, "tgi": 510.7}, {"name": "喜茶买一送一", "pct": 0.85, "tgi": 509.0}], "c2": [{"name": "美食-吃播", "pct": 6.08, "tgi": 497.0}, {"name": "美食-美食测评", "pct": 4.58, "tgi": 491.0}, {"name": "健身减肥-健身饮食", "pct": 1.95, "tgi": 429.0}, {"name": "美食-美食展示", "pct": 26.35, "tgi": 363.0}, {"name": "美食-美食探店", "pct": 23.25, "tgi": 308.0}, {"name": "美食-美食其他", "pct": 4.54, "tgi": 287.0}, {"name": "健身减肥-减肥", "pct": 3.13, "tgi": 204.0}, {"name": "娱乐-明星娱乐资讯", "pct": 52.86, "tgi": 196.0}, {"name": "娱乐-综艺片段", "pct": 3.81, "tgi": 184.0}, {"name": "影视-影视片段（视频）", "pct": 18.11, "tgi": 180.0}], "c3": [{"name": "美食-美食测评-零食测评", "pct": 6.02, "tgi": 643.0}, {"name": "健身减肥-健身饮食-减脂饮食", "pct": 4.53, "tgi": 460.0}, {"name": "美食-美食展示-普通美食展示", "pct": 50.6, "tgi": 316.0}, {"name": "美食-美食教程-烘焙&甜品教程", "pct": 6.93, "tgi": 304.0}, {"name": "美食-美食探店-餐厅探店", "pct": 41.5, "tgi": 296.0}, {"name": "美食-美食测评-饮品测评", "pct": 2.29, "tgi": 286.0}, {"name": "健身减肥-减肥-减肥其他", "pct": 7.1, "tgi": 263.0}, {"name": "教育-留学教育-留学生活", "pct": 0.96, "tgi": 205.0}, {"name": "美食-美食教程-减肥餐教程", "pct": 1.86, "tgi": 201.0}, {"name": "城市出行-购物-其他购物体验", "pct": 5.68, "tgi": 197.0}], "attr": [{"name": "纯品类", "pct": 66.8}, {"name": "含攻略(做法/推荐)", "pct": 23.0}, {"name": "含行为", "pct": 8.6}, {"name": "其他(体验/产地等)", "pct": 1.6}], "ng": [{"name": "年糕", "pct": 208422.0, "tgi": 1131.0}, {"name": "炒年糕", "pct": 171720.0, "tgi": 925.0}, {"name": "年糕做法", "pct": 147358.0, "tgi": 1015.0}, {"name": "梭子蟹炒年糕", "pct": 112942.0, "tgi": 484.0}, {"name": "黄油年糕", "pct": 92813.0, "tgi": 1141.0}, {"name": "年糕的做法大全", "pct": 62016.0, "tgi": 671.0}, {"name": "辣炒年糕", "pct": 59307.0, "tgi": 1215.0}, {"name": "韩式炒年糕", "pct": 55540.0, "tgi": 1117.0}], "words": [{"w": "家常菜", "attr": "品类_产品", "vol": 1421954.0, "tgi": 182.58, "stars": "★★★", "sig": "通用入口"}, {"w": "滨寿司", "attr": "品类_产品", "vol": 681884.0, "tgi": 367.48, "stars": "★★★", "sig": "日料餐饮"}, {"w": "蛋糕", "attr": "品类_产品", "vol": 512535.0, "tgi": 212.22, "stars": "★★★", "sig": "烘焙甜品"}, {"w": "全冰黑巧美式", "attr": "品类_产品", "vol": 463493.0, "tgi": 408.36, "stars": "★★★", "sig": "饮品"}, {"w": "美食", "attr": "品类_产品", "vol": 388333.0, "tgi": 198.42, "stars": "★★★", "sig": "通用入口"}, {"w": "脆皮捏捏", "attr": "品类_产品", "vol": 352012.0, "tgi": 558.65, "stars": "★★★", "sig": "网红零食"}, {"w": "月饼", "attr": "品类_产品", "vol": 286037.0, "tgi": 302.63, "stars": "★★★", "sig": "时令"}, {"w": "糖醋排骨", "attr": "品类_产品", "vol": 282270.0, "tgi": 235.56, "stars": "★★★", "sig": "通用大菜"}, {"w": "甜品", "attr": "品类_产品", "vol": 255135.0, "tgi": 463.74, "stars": "★★★", "sig": "烘焙甜品"}, {"w": "可乐鸡翅", "attr": "品类_产品", "vol": 246880.0, "tgi": 194.87, "stars": "★★★", "sig": "通用大菜"}, {"w": "面包", "attr": "品类_产品", "vol": 246457.0, "tgi": 388.93, "stars": "★★★", "sig": "烘焙甜品"}, {"w": "馒头", "attr": "品类_产品", "vol": 241631.0, "tgi": 494.01, "stars": "★★★", "sig": "中式主食"}, {"w": "迪拜软曲奇", "attr": "地区_产地", "vol": 237377.0, "tgi": 657.09, "stars": "★★★", "sig": "网红烘焙"}, {"w": "可乐鸡翅的做法", "attr": "攻略", "vol": 237123.0, "tgi": 135.95, "stars": "★★★", "sig": "攻略·大菜"}, {"w": "茄子的做法", "attr": "攻略", "vol": 222137.0, "tgi": 182.98, "stars": "★★", "sig": "攻略·家常"}, {"w": "火鸡面", "attr": "品类_产品", "vol": 213544.0, "tgi": 347.61, "stars": "★★", "sig": "网红速食"}, {"w": "梭子蟹", "attr": "品类_品种", "vol": 212189.0, "tgi": 262.62, "stars": "★★", "sig": "时令水产"}, {"w": "星巴克推荐必喝", "attr": "行为_操作行为", "vol": 210750.0, "tgi": 218.22, "stars": "★★", "sig": "饮品·品牌"}, {"w": "年糕", "attr": "品类_产品", "vol": 208422.0, "tgi": 1131.49, "stars": "★★", "sig": "年糕词根"}, {"w": "奶茶", "attr": "品类_产品", "vol": 207067.0, "tgi": 268.41, "stars": "★★", "sig": "饮品"}, {"w": "咖啡", "attr": "品类_产品", "vol": 205988.0, "tgi": 217.42, "stars": "★★", "sig": "饮品"}, {"w": "红烧排骨", "attr": "品类_产品", "vol": 202495.0, "tgi": 158.83, "stars": "★★", "sig": ""}, {"w": "虾做法大全", "attr": "攻略", "vol": 196103.0, "tgi": 171.43, "stars": "★★", "sig": ""}, {"w": "巴斯克蛋糕", "attr": "品类_产品", "vol": 195405.0, "tgi": 308.2, "stars": "★★", "sig": ""}, {"w": "鸡翅做法", "attr": "攻略", "vol": 195087.0, "tgi": 227.89, "stars": "★★", "sig": ""}, {"w": "麻辣香锅", "attr": "品类_产品", "vol": 195024.0, "tgi": 269.23, "stars": "★★", "sig": ""}, {"w": "大湾鸡", "attr": "品类_产品", "vol": 194748.0, "tgi": 1959.84, "stars": "★★", "sig": ""}, {"w": "鸡胸肉怎么做好吃", "attr": "攻略", "vol": 193521.0, "tgi": 172.07, "stars": "★★", "sig": ""}, {"w": "三明治", "attr": "品类_产品", "vol": 193500.0, "tgi": 388.39, "stars": "★★", "sig": ""}, {"w": "排骨做法", "attr": "品类_产品", "vol": 190177.0, "tgi": 209.13, "stars": "★★", "sig": ""}]}, "totN": 73869, "totP": 3995325, "p_c2": {"labels": ["美食展示", "美食测评", "美食探店", "美食教程", "吃播", "明星娱乐资讯", "影视片段（视频）", "综艺片段", "家居用品", "健身饮食"], "a": [256.0, 233.0, 163.0, 211.0, 88.0, 256.0, 341.0, 237.0, 264.0, 178.0], "b": [363.0, 491.0, 308.0, 161.0, 497.0, 196.0, 180.0, 184.0, 98.0, 429.0]}, "p_ng": {"labels": ["年糕", "炒年糕", "梭子蟹炒年糕", "年糕做法(含大全)", "黄油年糕", "辣炒年糕", "韩式炒年糕", "年糕汤"], "a": [4982, 2458, 2611, 751, null, null, null, 667], "b": [208422, 171720, 112942, 209374, 92813, 59307, 55540, null]}, "trend": {"labels": ["07/20", "07/27", "08/03", "08/10", "08/17", "08/24", "08/31", "09/07", "09/14", "09/21", "09/28", "10/05", "10/12", "10/19"], "a": [148, 280, 410, 631, 1077, 713, 672, 637, 713, 905, 904, 1172, 1313, 470], "b": [16550, 23875, 20657, 24824, 28574, 21080, 18075, 26012, 28997, 30119, 67031, 92369, 100708, 28617]}};
+function p(s){return parseFloat(String(s).replace('%',''));}
+function tg(v){return (v>=1000? (v/1000).toFixed(1)+'k' : Math.round(v*10)/10);}
+
+document.getElementById('k1').textContent = (D.totN/10000).toFixed(1)+' 万';
+document.getElementById('k2').textContent = (D.totP/10000).toFixed(1)+' 万';
+
+/* ---------- 组合图（柱=占比，线=TGI） ---------- */
+var comboRegistry={};
+function regCombo(id,buildFn){comboRegistry[id]={build:buildFn,chart:null};renderCombo(id);}
+function renderCombo(id){
+  var cfg=comboRegistry[id];if(!cfg)return;
+  var el=document.getElementById(id);if(!el||el.offsetWidth===0)return;
+  if(!cfg.chart)cfg.chart=cfg.build(el);else cfg.chart.resize();
+}
+function renderCombos(root){if(!root)return;root.querySelectorAll('.ccbox').forEach(function(x){renderCombo(x.id);});}
+window.addEventListener('resize',function(){Object.keys(comboRegistry).forEach(function(k){if(comboRegistry[k].chart)comboRegistry[k].chart.resize();});});
+
+function comboOpt(el,lbl,pct,tgi,o){
+  o=o||{};
+  var color=o.color||'#8E354A',gold=o.gold||'#CCA352',unit=o.unit==null?'%':o.unit;
+  var hasTgi=tgi&&tgi.some(function(v){return v!==null&&v!==undefined;});
+  var series=[{name:'占比'+(unit==='%'?'%':''),type:'bar',data:pct,barMaxWidth:32,
+    itemStyle:{color:color,borderRadius:[3,3,0,0]},
+    label:{show:true,fontSize:10.5,color:'#555',position:'top',distance:3,fontWeight:600,
+      formatter:function(pp){var v=pp.value;if(v==null||v==='')return '';var s=v>=10?String(Math.round(v)):String(Math.round(v*10)/10);return s+unit;}}}];
+  var y2={};
+  if(hasTgi){
+    series.push({name:o.tgiName||'TGI',type:'line',yAxisIndex:1,data:tgi,smooth:true,
+      symbol:'circle',symbolSize:6.5,itemStyle:{color:gold,borderColor:'#fff',borderWidth:1},lineStyle:{color:gold,width:2.5},emphasis:{focus:'series'},z:5});
+    y2={type:'value',splitLine:{show:false},axisLabel:{fontSize:10.5,color:'#8a8a8a'}};
+  }
+  var c=echarts.init(el);
+  var pctMax=Math.max.apply(null,pct.filter(function(v){return v!=null;}));
+  var yMax=(pctMax>0? Math.ceil(pctMax*1.25*10)/10 : null);
+  c.setOption({animationDuration:400,
+    grid:{left:48,right:52,top:34,bottom:4,containLabel:true},
+    legend:{show:hasTgi,top:0,right:0,itemWidth:12,itemHeight:8,textStyle:{fontSize:11,color:'#666'}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'},textStyle:{fontSize:12}},
+    xAxis:{type:'category',data:lbl,axisLabel:{rotate:o.rot||0,fontSize:10.5,color:'#555',interval:0,margin:12,formatter:o.xbreak?function(v){return v.replace('-','-'+String.fromCharCode(10));}:null},axisLine:{lineStyle:{color:'#ddd'}},axisTick:{show:false}},
+    yAxis:[{type:'value',max:yMax,splitLine:{lineStyle:{type:'dashed',color:'#e8e8e8'}},axisLabel:{fontSize:10.5,color:'#8a8a8a',formatter:function(v){return v+unit;}}},y2],
+    series:series});
+  return c;
+}
+function combo2Opt(el,lbl,s1,s2,o){
+  o=o||{};
+  var c=echarts.init(el);
+  var yAxis=o.log?{type:'log',splitLine:{lineStyle:{type:'dashed',color:'#e8e8e8'}},axisLabel:{fontSize:10.5,color:'#8a8a8a',formatter:function(v){return v>=10000?(v/10000)+'万':v;}}}
+              :{type:'value',splitLine:{lineStyle:{type:'dashed',color:'#e8e8e8'}},axisLabel:{fontSize:10.5,color:'#8a8a8a',formatter:function(v){return v+(o.unit||'');}}};
+  c.setOption({animationDuration:400,
+    grid:{left:44,right:20,top:40,bottom:10,containLabel:true},
+    legend:{top:0,right:0,itemWidth:12,itemHeight:8,textStyle:{fontSize:11,color:'#666'}},
+    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    xAxis:{type:'category',data:lbl,axisLabel:{rotate:o.rot||20,fontSize:10.5,color:'#555',interval:0,margin:10},axisLine:{lineStyle:{color:'#ddd'}},axisTick:{show:false}},
+    yAxis:yAxis,
+    series:[
+      {name:s1.name,type:'bar',data:s1.data,barMaxWidth:20,itemStyle:{color:s1.color,borderRadius:[3,3,0,0]}},
+      {name:s2.name,type:'bar',data:s2.data,barMaxWidth:20,itemStyle:{color:s2.color,borderRadius:[3,3,0,0]}}
+    ]});
+  return c;
+}
+
+function mk(id,rows,o){regCombo(id,function(el){return comboOpt(el,rows.map(function(r){return r.name;}),rows.map(function(r){return r.pct;}),rows.map(function(r){return r.tgi;}),o);});}
+var TOM={color:'#C4622D',gold:'#D9A05B'};
+
+/* ---------- P1 南食召 ---------- */
+mk('n_g', D.nsz.gender);
+mk('n_a', D.nsz.age);
+mk('n_c', D.nsz.city);
+mk('n_m', D.nsz.marry);
+mk('n_k', D.nsz.kids, {rot:40});
+mk('n_s', D.nsz.spend, {xbreak:true});
+mk('n_sp', D.nsz.sp, {rot:30});
+mk('n_attr', D.nsz.attr, {outside:true});
+mk('n_ng', D.nsz.ng, {rot:20, unit:' 次', outside:true, tgiLabel:false});
+mk('n_kol', D.nsz.kol, {rot:30});
+mk('n_c2', D.nsz.c2, {rot:32});
+mk('n_c3', D.nsz.c3, {rot:40});
+mk('n_ck', D.nsz.ck, {rot:35});
+mk('n_cr', D.nsz.crowd, {rot:12});
+
+/* ---------- P2 平台 ---------- */
+mk('t_g', D.plat.gender, TOM);
+mk('t_a', D.plat.age, TOM);
+mk('t_c', D.plat.city, TOM);
+mk('t_m', D.plat.marry, TOM);
+mk('t_k', D.plat.kids, Object.assign({rot:40},TOM));
+mk('t_s', D.plat.spend, Object.assign({xbreak:true},TOM));
+mk('t_sp', D.plat.sp, Object.assign({rot:30},TOM));
+mk('t_attr', D.plat.attr, Object.assign({outside:true},TOM));
+mk('t_ng', D.plat.ng, Object.assign({rot:20, unit:' 次', outside:true, tgiLabel:false},TOM));
+mk('t_kol', D.plat.kol, Object.assign({rot:30},TOM));
+mk('t_c2', D.plat.c2, Object.assign({rot:32},TOM));
+mk('t_c3', D.plat.c3, Object.assign({rot:40},TOM));
+mk('t_ck', D.plat.ck, Object.assign({rot:35},TOM));
+mk('t_cr', D.plat.crowd, Object.assign({rot:12},TOM));
+
+/* ---------- P3 对比 ---------- */
+regCombo('p_c2',function(el){return combo2Opt(el,D.p_c2.labels,{name:'南食召年糕人群',data:D.p_c2.a,color:'#8E354A'},{name:'平台年糕人群',data:D.p_c2.b,color:'#C4622D'},{rot:24});});
+regCombo('p_ng',function(el){return combo2Opt(el,D.p_ng.labels,{name:'南食召年糕人群',data:D.p_ng.a,color:'#8E354A'},{name:'平台年糕人群',data:D.p_ng.b,color:'#C4622D'},{rot:24,log:true});});
+regCombo('p_trend',function(el){
+  var c=echarts.init(el);
+  c.setOption({animationDuration:400,
+    grid:{left:56,right:60,top:36,bottom:10,containLabel:true},
+    legend:{top:0,right:0,itemWidth:14,itemHeight:8,textStyle:{fontSize:11,color:'#666'}},
+    tooltip:{trigger:'axis'},
+    xAxis:{type:'category',data:D.trend.labels,axisLabel:{fontSize:10,color:'#666',interval:0},axisLine:{lineStyle:{color:'#ddd'}},axisTick:{show:false}},
+    yAxis:[{type:'value',name:'南食召',splitLine:{lineStyle:{type:'dashed',color:'#e8e8e8'}},axisLabel:{fontSize:10.5,color:'#8a8a8a'}},
+           {type:'value',name:'平台',splitLine:{show:false},axisLabel:{fontSize:10.5,color:'#8a8a8a'}}],
+    series:[{name:'南食召年糕人群',type:'line',smooth:true,data:D.trend.a,itemStyle:{color:'#8E354A'},lineStyle:{color:'#8E354A',width:2.5},areaStyle:{opacity:.07}},
+            {name:'平台年糕人群',type:'line',yAxisIndex:1,smooth:true,data:D.trend.b,itemStyle:{color:'#C4622D'},lineStyle:{color:'#C4622D',width:2.5}}]});
+  return c;
+});
+
+/* ---------- 词表 ---------- */
+function wordRows(id, words){
+  document.getElementById(id).innerHTML = words.map(function(w,i){
+    return '<tr'+(i%2?' class="tr-alt"':'')+'><td class="num">'+(i+1)+'</td>'+
+    '<td style="font-weight:600;color:var(--ink)">'+w.w+'</td>'+
+    '<td style="letter-spacing:1px;color:var(--gold)">'+w.stars+'</td>'+
+    '<td class="num">'+(w.tgi>=10000? Math.round(w.tgi/1000)+'k%': Math.round(w.tgi).toLocaleString()+'%')+'</td>'+
+    '<td>'+(w.sig?'<span class="tag" style="background:var(--tint);color:var(--wine)">'+w.sig+'</span>':'')+'</td></tr>';
+  }).join('');
+}
+wordRows('n_tb', D.nsz.words);
+wordRows('t_tb', D.plat.words);
+
+/* ---------- Tabs ---------- */
+function showPane(pid){
+  document.querySelectorAll('.pane').forEach(function(x){x.classList.toggle('on', x.id===pid);});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on', t.dataset.p===pid);});
+  renderCombos(document.getElementById(pid));
+}
+document.querySelectorAll('.tab').forEach(function(t){
+  t.addEventListener('click', function(){ showPane(t.dataset.p); });
+});
+</script>
+</body>
+</html>
